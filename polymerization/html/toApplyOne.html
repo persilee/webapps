@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>聚合收款</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			.mui-content .tips {
+				padding: 8px;
+				background-color: bisque;
+				text-align: center;
+			}
+
+			.mui-content .tips .tip-info {
+				color: dimgray;
+			}
+
+			.mui-content .container {
+				padding: 26px;
+			}
+
+			.mui-content .container .title {
+				font-size: 16px;
+				margin-bottom: 6px;
+				font-weight: bold;
+			}
+
+			.mui-content .container .describe {
+				font-size: 14px;
+				margin-bottom: 6px;
+			}
+
+			.mui-content .container .steps {
+				width: 100%;
+				height: 60px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+			}
+
+			.mui-content .container .steps .step-line {
+				width: 100%;
+				height: 3px;
+				background-color: #ccc;
+			}
+
+			.mui-content .container .steps .step-one,
+			.mui-content .container .steps .step-two,
+			.mui-content .container .steps .step-three {
+				width: 36px;
+				height: 36px;
+				background-color: #C7C7C7;
+				border: 1px solid #333;
+				border-radius: 50%;
+				position: absolute;
+				left: 0;
+				text-align: center;
+				line-height: 34px;
+			}
+
+			.mui-content .container .steps .step-two {
+				left: 46%;
+				background-color: white;
+			}
+
+			.mui-content .container .steps .step-three {
+				left: 90%;
+				background-color: white;
+			}
+			
+			.mui-content .container .from-box .mui-input-group {
+				background-color: #efeff4;
+			}
+
+			.mui-content .container .from-box .mui-input-group .mui-input-row {
+				    height: 46px;
+					background-color: #fff;
+					margin: 10px;
+					border-radius: 4px;
+					box-shadow: 0px 1px 6px #8888881f;
+					border: 1px solid #8888884d;
+			}
+
+			.mui-content .container .from-box .mui-input-group::before,
+			.mui-content .container .from-box .mui-input-group::after {
+				background-color: transparent;
+			}
+
+			.mui-content .container .from-box .mui-input-group .mui-input-row:after {
+				background-color: transparent;
+			}
+
+			html{-webkit-text-size-adjust:none;}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="tips">
+				<div class="tip-info">不会填写？<span class="tip-link">联系客服</span>线下申请</div>
+			</div>
+			<div class="container">
+				<div class="title">商户收款，申请入驻</div>
+				<div class="describe">法人/经营者姓名必须同本账户姓名一致</div>
+				<div class="steps">
+					<div class="step-line">
+						
+					</div>
+					<div class="step-one">
+						1
+					</div>
+
+					<div class="step-two">
+						2
+					</div>
+					<div class="step-three">
+						3
+					</div>
+				</div>
+				<div class="from-box">
+					<form class="mui-input-group">
+						<div class="mui-input-row">
+							<label>Input</label>
+							<input type="text" placeholder="普通输入框">
+						</div>
+						<div class="mui-input-row">
+							<label>Input</label>
+							<input type="text" class="mui-input-clear" placeholder="带清除按钮的输入框">
+						</div>
+					
+						<div class="mui-input-row mui-plus-visible">
+							<label>Input</label>
+							<input type="text" class="mui-input-speech mui-input-clear" placeholder="语音输入">
+						</div>
+						<div class="mui-button-row">
+							<button type="button" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+							<button type="button" class="mui-btn mui-btn-danger" onclick="return false;">取消</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,topBranchNo,term_type;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			typename = $.getUrlParam('typename');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			console.log('term_type==',term_type)
+			getProfitInfo();
+//			getUpgradeInfo();
+		});
+		//获取等级分润信息merch/getProfitInfo.do
+		function getProfitInfo(){
+			var url = urlpath + 'merch/getProfitInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo,
+					version:'1.1'
+				},
+				success:function(data){
+					console.log('getProfitInfo=========',data)
+					if(data.code == 200 && data.data.length != 0){
+						for(var i = 0;i<data.data.length;i++){
+							if(data.data[i].levels == 0){
+								$('.levelName0').html(data.data[i].levelName);
+								$('.condition0').html(data.data[i].condition);
+								$('.shareFee0').html(data.data[i].shareFee);
+								$('.tradeFee0').html(data.data[i].tradeFee);
+							}else if(data.data[i].levels == 1){
+								$('.levelName1').html(data.data[i].levelName);
+								$('.condition1').html(data.data[i].condition);
+								$('.shareFee1').html(data.data[i].shareFee);
+								$('.tradeFee1').html(data.data[i].tradeFee);
+							}else if(data.data[i].levels == 2){
+								$('.levelName2').html(data.data[i].levelName);
+								$('.condition2').html(data.data[i].condition);
+								$('.shareFee2').html(data.data[i].shareFee);
+								$('.tradeFee2').html(data.data[i].tradeFee);
+							}else if(data.data[i].levels == 3){
+								$('.levelName3').html(data.data[i].levelName);
+								$('.condition3').html(data.data[i].condition);
+								$('.shareFee3').html(data.data[i].shareFee);
+								$('.tradeFee3').html(data.data[i].tradeFee);
+							}else if(data.data[i].levels == 4){
+								$('.levelName4').html(data.data[i].levelName);
+								$('.condition4').html(data.data[i].condition);
+								$('.shareFee4').html(data.data[i].shareFee);
+								$('.tradeFee4').html(data.data[i].tradeFee);
+							}else if(data.data[i].levels == 5){
+								$('.levelName5').html(data.data[i].levelName);
+								$('.condition5').html(data.data[i].condition);
+								$('.shareFee5').html(data.data[i].shareFee);
+								$('.tradeFee5').html(data.data[i].tradeFee);
+							}
+						}
+					}else{
+//						mui.alert(data.message);
+					}
+				}
+			});
+		}
+//		//显示等级个数
+//		function getUpgradeInfo(){
+//			var url = urlpath +'merch/getUpgradeInfo.do';
+//			$.ajax({
+//				type:"post",
+//				url:url,
+//				async:false,
+//				data:{
+//					topBranchNo:topBranchNo,
+//					merchId:merchId,
+//					version:'1.1'
+//				},
+//				success:function(data){
+//					console.log('getUpgradeInfo==',data);
+//					if(data.code == 200){
+//						$('.num0').html(`${data.data.firstLevel}`);
+//						$('.num1').html(`${data.data.secondLevel}`);
+//						$('.num2').html(`${data.data.thirdLevel}`);
+//					}else{
+////						mui.alert(data.message);
+//					}
+//				}
+//			});
+//		}
+		
+	</script>
+</html>
