@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+		<meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>直推人信息</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #D53C27;margin-bottom: 50px;}
+			.img_box{margin: 20px auto;width: 80%;}
+			.img_box img{width: 100%;}
+			.title_box{width: 75%;margin: 0 auto;color: #FFFFFF;line-height: 45px;font-size: 15px;}
+			.title_l{display: inline-block;width: 22%;}
+			.title_c{display: inline-block;width: 50%;text-align: center;font-weight:bold;}
+			.title_r{display: inline-block;width: 22%;text-align: right;}
+			.share_ul{margin-top: 10px;}
+			.share_ul li{padding: 20px 10px;margin: 10px 12px 0;background-color: #FFFFFF;}
+			.li_t{border-radius: 10px;}
+			.l_l{width: 60px;float: left;}
+			.l_l img{width: 100%;}
+			.l_r{float: left;line-height: 35px;margin-left: 12px;}
+			.con_title{font-size: 30px;color:red;font-weight:bold;}
+			.con_tips{color: #666666;font-size: 20px;}
+			
+		</style>
+	</head>
+	<body>
+		<div class="img_box"><img src="../img/share/img_share.png"/></div>
+		<div class="title_box clearfix">
+			<div class="title_l">———</div>
+			<div class="title_c">直推人信息</div>
+			<div class="title_r">———</div>
+		</div>
+		<ul class="share_ul clearfix">
+			<li class="li_t clearfix shareImg">
+				<div class="l_l"><img src="../img/share/124.png"/></div>
+				<div class="l_r">
+					<p class="con_title">姓名：</p>
+					<p class="con_tips"><span class="merchName"></span></p>
+				</div>
+			</li>
+			<li class="li_t clearfix shareLink">
+				<div class="l_l"><img src="../img/share/133.png"/></div>
+				<div class="l_r">
+					<p class="con_title">电话：</p>
+					<p class="con_tips"><span class="phoneNo"></span></p>
+				</div>
+			</li>
+		</ul>
+
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		
+				mui.init();
+				var merchId,topBranchNo,term_type,html1;
+				$(function(){
+				    $.getUrlParam = function(name) {
+						var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+						var r = window.location.search.substr(1).match(reg);
+						if(r != null) return unescape(r[2]);
+						return null;
+						console.log(reg, r);
+						
+					}
+					//得到url参数  
+					merchId = $.getUrlParam('merchId');
+					topBranchNo = $.getUrlParam('topBranchNo');
+					term_type = $.getUrlParam('term_type');
+					queryUpperMerchInfo();
+					
+				});
+				//options
+				
+				function queryUpperMerchInfo(){
+						var url = urlpath + 'merch/queryUpperMerchInfo.do';
+							$.ajax({
+								type:"post",
+								url:url,
+								dataType: 'json',
+								async:false,
+								data:{
+									merchId:merchId,
+									topBranchNo:topBranchNo,
+									version:'1.0'
+								},
+								success:function(data){
+									if(data.code == 200){
+										console.log('queryUpperMerchInfo=========',data)
+										$(".merchName").html(data.data.merchName);
+										$(".phoneNo").html(data.data.phoneNo);
+									}else{
+										$(".merchName").html("该用户没有上级");
+										$(".phoneNo").html("该用户没有上级");
+									}
+								}
+					});
+				}
+				
+				
+	</script>
+</html>

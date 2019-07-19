@@ -1,0 +1,54 @@
+body{
+	background: url('../img/bg_myLand.png') no-repeat;
+	background-size: 100%;
+}
+h2{line-height: 100px;opacity: 0;}
+.land_table_box{margin-top: 41%;overflow: hidden;color: #FFFFFF;position: relative;overflow: hidden;}
+.table_ul_box{margin:0 auto;text-align:center;overflow: hidden;}
+.title_li_box{
+	display:inline-block;font-size: 16px;
+	line-height: 40px;background-color: #8e42eb;
+	margin: 0 3px;text-align: center;
+}
+.dengji{
+	width: 16%;
+}
+.shengji,.fenxiang,.jiaoyi{width: 22%;}
+.con_ul_box{
+	position: relative;
+	opacity: .8;text-align:center;
+	overflow: hidden;height: 50px;
+	margin: 5px -17px 0;
+	}
+
+.con_ul_box .con_li_box1{
+	display:inline-block;width: 20%;
+	background-color: #6d31b3;
+	margin: 0 3px;text-align: center;
+}
+.con_ul_box li:first-child{width: 15%;}
+.con_li_box{
+	display:inline-block;width: 20%;
+	background-color: #6d31b3;
+	margin: 0 3px;text-align: center;
+}
+.con_li_box2{position: relative;top: -20px;height: 51px;}
+.con_li_box span{line-height: 51px;}
+.con_bold{font-weight: bold;font-size: 15px;}
+.con_li_box textarea{
+	background-color: #6d31b3;margin: 0;padding: 5px 0;
+	font-size: 12px;height: 100%;
+	line-height: 1.6;text-align: center;resize: none;
+	outline: none;display: inline-block;border: 0;
+}
+.con_li_box .title2{
+	font-weight: bold;
+	font-size: 15px;
+	position: relative;
+	top: 13px;
+	padding: 0;
+	height: 50px;
+}
+.span_block1{
+	display: block;
+}

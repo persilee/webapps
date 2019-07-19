@@ -1,0 +1,21 @@
+body{background-color: #FFFFFF;}
+.tab_box{
+	margin: 10px 0 0;
+	border-bottom: 1px solid #CECECE;
+	
+}
+.title_ul_box,.li_list_box{
+	border-bottom: 1px solid #CECECE;
+	overflow: hidden;
+}
+.title_li_box{
+	display: inline-block;
+	width: 24%;text-align: center;
+	line-height: 52px;font-size: 12px;
+	font-weight: bold;
+}
+.user_list_box{
+	display: inline-block;
+	width: 24%;text-align: center;
+	line-height: 52px;
+}

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>我的申请</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			.tab_box{
+				position: fixed;top: 0;width: 100%;
+				border-bottom: 1px solid #CECECE;
+				background-color: #FFFFFF;z-index: 1000;
+			}
+			.content_box{margin-top: 40px; overflow: hidden;}
+			.ul_item_box{background-color: #FFFFFF; margin: 10px 0 0;overflow: hidden;}
+			.top_title_box{padding: 18px 0; margin: 0 12px;border-bottom: 1px solid #CECECE; overflow: hidden;}
+			.logo_box{width: 22px;height: 22px;float: left;}
+			.logo_box img{width: 100%;height: 100%;}
+			.bank_name{float: left;margin-left: 10px;font-size: 16px;}
+			.status_box{float: right;color: #F0932F;font-weight: bold;}
+			.li_item_box{margin: 0 12px; padding: 15px 0; border-bottom: 1px dotted #CECECE; overflow: hidden;}
+			.li_item_box:last-child{border: 0;}
+			.l_item,.m_item,.r_item{float: left;width: 33%;}
+			.top_name{ font-size: 12px;color: #666666;}
+			.bottom_num{margin-top: 5px; font-size: 16px;color: #D53C27;}
+			.r_item .bottom_num{color: #333333;}
+			.m_l_item{float: left;width: 55%;}
+			.m_r_item{float: right;width: 40%;}
+			.top_box{overflow: hidden;}
+			.top_l_box{color: #666666;display: inline-block;width: 30%;}
+			.top_r_box{margin-left: 10px;color: #333333;}
+			.m_r_item .top_l_box{width: 41%;}
+			.bottom_box{margin-top: 5px;}
+			.dolt_orange{padding: 5px;background-color: #F0932F;display: inline-block;border-radius: 50%;}
+			.dolt_grey{padding: 5px;background-color: #C2C2C2;display: inline-block;border-radius: 50%;}
+			.time_box{margin-left: 10px; display: inline-block;}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="tab_box">
+			<div id="segmentedControl" style="line-height: 60px;" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
+				<a class="mui-control-item clickBtn all" id="all" href="#item1" data-type = "all">全部</a>
+				<a class="mui-control-item clickBtn commitType" id="commitType" href="#item2" data-type = "00">交资料</a>
+				<a class="mui-control-item clickBtn firstType" id="firstType" href="#item3" data-type = "01">初审中</a>
+				<a class="mui-control-item clickBtn finalType" id="finalType" href="#item4" data-type = "02">终审中</a>
+				<a class="mui-control-item clickBtn waitType" id="waitType" href="#item5" data-type = "03">待放款</a>
+				<a class="mui-control-item clickBtn successType" id="successType" href="#item6" data-type = "04">已成功</a>
+				<a class="mui-control-item clickBtn failType" id="failType" href="#item7" data-type = "05">已失败</a>
+			</div>
+		</div>
+		<div class="content_box dataList">
+			<div id="item1" class="mui-control-content">
+				<div class="contentBox1">
+					
+				</div>
+			</div>
+			<div id="item2" class="mui-control-content">
+				<div class="contentBox2">
+					
+				</div>
+			</div>
+			<div id="item3" class="mui-control-content ">
+				<div class="contentBox3">
+					
+				</div>
+			</div>
+			<div id="item4" class="mui-control-content ">
+				<div class="contentBox4">
+					
+				</div>
+			</div>
+			<div id="item5" class="mui-control-content ">
+				<div class="contentBox5">
+					
+				</div>
+			</div>
+			<div id="item6" class="mui-control-content ">
+				<div class="contentBox6">
+					
+				</div>
+			</div>
+			<div id="item7" class="mui-control-content ">
+				<div class="contentBox7">
+					
+				</div>
+			</div>
+		</div>
+		
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		var type;
+		$(function(){
+			$.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			//需判空
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			type = $('.clickBtn').data('type');
+			console.log('当前tab type==',type);
+			if(type == 'all'){
+				$('#all').addClass('mui-active');
+				$('#item1').addClass('mui-active');
+				getLoanRecord(type);
+			}else{
+				$('#all').remove('mui-active');
+				$('#item1').remove('mui-active');
+			}
+			
+		});
+		
+		//点击
+		$('.all').on('tap',function(e){
+//			console.log('点击data-type-all',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		$('.commitType').on('tap',function(e){
+//			console.log('点击data-type1',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		$('.firstType').on('tap',function(e){
+//			console.log('点击data-type2',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		$('.finalType').on('tap',function(){
+//			console.log('点击data-type3',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		$('.waitType').on('tap',function(e){
+//			console.log('点击data-type4',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		$('.successType').on('tap',function(e){
+//			console.log('点击data-type5',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		$('.failType').on('tap',function(e){
+//			console.log('点击data-type6',$(this).data('type'));
+			getLoanRecord($(this).attr('data-type'));
+		})
+		
+		
+		
+		//获取贷款记录loan/getLoanRecord.do
+		var html = '';
+		var status = '';
+		var statusType,pageSize;
+		var page = 1;
+		function getLoanRecord(type){
+			console.log('showPage',page);
+			if(type == 'all'){
+				statusType = '';
+			}else{
+				statusType = type;
+			}
+			var url = urlpath + 'loan/getLoanRecord.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					status:statusType,
+					page:page,
+					pageSize:50,
+					version:version
+				},
+				success:function(data){
+					
+					console.log('获取贷款记录loan/getLoanRecord.do==',data);
+					if(data.code == 200){
+						if(statusType == ''){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}else if(statusType == '00'){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}else if(statusType == '01'){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}else if(statusType == '02'){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}else if(statusType == '03'){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}else if(statusType == '04'){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}else if(statusType == '05'){
+							console.log('statusType==================',statusType)
+							combineData(data)
+						}
+					}else{
+						mui.toast(data.message);
+					}
+				}
+			});
+		}
+		var logoSrc,checkType;
+		function combineData(data){
+			console.log('data.data.lists.length',data.data.list.length);
+			if(data.data.list.length>0){
+				html = '';
+				for(var i = 0;i<data.data.list.length;i++){
+					if(data.data.list[i].status == '00'){
+						status = `交资料`;
+					}else if(data.data.list[i].status == '01'){
+						status = `初审中`;
+					}else if(data.data.list[i].status == '02'){
+						status = `终审中`;
+					}else if(data.data.list[i].status == '03'){
+						status = `待放款`;
+					}else if(data.data.list[i].status == '04'){
+						status = `已成功`;
+					}else if(data.data.list[i].status == '05'){
+						status = `已失败`;
+					}
+					logoSrc ='<img src="'+data.data.list[i].goodsLogo+'" />';
+					html += `<ul class="ul_item_box" data-type=${data.data.list[i].status}>
+						<div class="top_title_box">
+							<div class="logo_box">${logoSrc}</div>
+							<div class="bank_name">${data.data.list[i].goodsName}</div>
+							<div class="status_box statusBox">${status}</div>
+						</div>
+						<li class="li_item_box">
+							<div class="l_item">
+								<div class="top_name">申请额度</div>
+								<div class="bottom_num">${data.data.list[i].loanAmount}</div>
+							</div>
+							<div class="m_item">
+								<div class="top_name">可贷额度</div>
+								<div class="bottom_num">${data.data.list[i].loanLimit}</div>
+							</div>
+							<div class="r_item">
+								<div class="top_name">贷款利息</div>
+								<div class="bottom_num">${data.data.list[i].interest}%</div>
+							</div>
+						</li>
+						<li class="li_item_box">
+							<div class="m_l_item">
+								<div class="top_box">
+									<span class="top_l_box">还款方式</span>
+									<span class="top_r_box">${data.data.list[i].repayment}</span>
+								</div>
+								<div class="bottom_box">
+									<span class="top_l_box">服务费</span>
+									<span class="top_r_box">￥${data.data.list[i].fee}</span>
+								</div>
+							</div>
+							<div class="m_r_item">
+								<div class="top_box">
+									<span class="top_l_box">还款期数</span>
+									<span class="top_r_box">${data.data.list[i].loanTimes}期</span>
+								</div>
+								<div class="bottom_box">
+									<span class="top_l_box">服务费率</span>
+									<span class="top_r_box">${data.data.list[i].feeRate}%</span>
+								</div>
+							</div>
+						</li>
+						<li class="li_item_box">
+							<div class="li_top_box">
+								<i class="dolt_orange"></i>
+								<div class="time_box">
+									<span class="time_name">申请时间：</span>
+									<span class="time_det_num">${data.data.list[i].insertTime}</span>
+								</div>
+							</div>
+							<div class="li_bot_box">
+								<i class="dolt_grey"></i>
+								<div class="time_box">
+									<span class="time_name">结束时间：</span>
+									<span class="time_det_num">${data.data.list[i].updateTime}</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+					`;
+					checkType = data.data.list[i].status;
+				}
+				page = page+1;
+				console.log('nextPage',page);
+				if(statusType == ''){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox1').html(html);
+				}else if(statusType == '00'){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox2').html(html);
+				}else if(statusType == '01'){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox3').html(html);
+				}else if(statusType == '02'){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox4').html(html);
+				}else if(statusType == '03'){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox5').html(html);
+				}else if(statusType == '04'){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox6').html(html);
+				}else if(statusType == '05'){
+					console.log('写入。。。。。',statusType);
+					$('.contentBox7').html(html);
+				}
+			}else{
+				mui.toast(data.message);
+			}
+		}
+		
+		
+		
+		
+		
+	</script>
+</html>

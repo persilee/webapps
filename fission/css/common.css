@@ -1,0 +1,33 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #F2F2F2;
+	font-size: 12px;
+	color: #333333;
+	font-family: "微软雅黑" "arial, helvetica, sans-serif" "blackadder itc";
+	
+}
+
+a,a:hover,a:active{ 
+	text-decoration: none;
+	color: #333333;
+}
+ul,
+li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+p{margin: 0;}
+
+/*清除浮动代码*/
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	zoom: 1;
+}

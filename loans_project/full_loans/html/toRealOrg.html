@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>闪付还款</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../../lib/font_nic/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style type="text/css">
+			.process_box{background-color: #FFFFFF;padding: 18px;}
+			.process_top{overflow: hidden;}
+			.icon_li{float: left;}
+			.icon_li:first-child{margin-left: 47px;width: 33%;}
+			.icon_li:nth-child(2){width: 33%;}
+			.icon_temp{width: 20px;height: 20px;}
+			.icon_temp img{width: 100%;height: 100%;}
+			.process_bottom{overflow: hidden;margin-top: 10px;}
+			.temp_con{float: left;width: 33%;text-align: center;color: #999999;}
+			.process_bottom .active{color: #333333;}
+			.border_box{
+				height: 1px;background-color: #CECECE;
+				margin-left: 20px;
+			    position: relative;
+			    top: -10px;
+			}
+			.icon_li:nth-child(1)>.border_box{background-color: #D53C27;}
+			.content_box{
+				background-color: #fff;
+				margin-top: 12px;
+				overflow: hidden;
+			}
+			.con_box{height: 100%;}
+			.img_box{margin: 0 28px;}
+			.title_name{line-height: 50px;text-align: center;}
+			.pic_box{margin: 12px 0;}
+			.pic_box img{width: 100%;height: 100%;}
+			.zhima_box{
+				width: 90%;
+				border: 1px solid #CECECE;
+				border-radius: 10px;
+				margin: 18px auto;
+				padding: 8px 0;
+				overflow: hidden;
+			}
+			.zm_l{width: 83px;height: 30px;margin: 0 12px;float: left;}
+			.zm_l img{width: 100%;height: 100%;}
+			.zm_r{float: right;line-height: 30px;margin: 0 12px 0 0;color: #999999;}
+			.zm_r_con{padding: 0 12px 0 0;}
+			.zm_r_con1{color: #D53C27;}
+			.zm_r .type_sel{
+				float: right;line-height: 30px;height: 26px;
+				font-size: 12px;
+			}
+			.finish_btn{background-color: #D43C27;width: 90%;
+				margin: 60% auto;line-height: 50px;text-align: center;
+				color: #fff;border-radius: 10px;font-size: 18px;
+				overflow: hidden;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="process_box">
+			<div class="process_top">
+				<li class="icon_li">
+					<div class="icon_temp"><img src="../img/icon_one_finish.png"/></div>
+					<div class="border_box"></div>
+				</li>
+				<li class="icon_li">
+					<div class="icon_temp"><img src="../img/icon_two_ing.png"/></div>
+					<div class="border_box"></div>
+				</li>
+				<li class="icon_li">
+					<div class="icon_temp"><img src="../img/icon_three_un.png"/></div>
+				</li>
+			</div>
+			<div class="process_bottom">
+				<li class="temp_con active">授信认证</li>
+				<li class="temp_con active">芝麻授权</li>
+				<li class="temp_con">认证付费</li>
+			</div>
+		</div>
+		<div class="content_box">
+			<div class="con_box">
+				<div class="zhima_box">
+					<div class="zm_l"><img src="../img/logo_zhima.png"/></div>
+					<div class="zm_r">
+						<span class="zm_r_con">去授权</span>
+						<span class="type_sel iconfont icon-you"></span>
+					</div>
+					
+				</div>
+				<div class="zhima_box" style="display: none;">
+					<div class="zm_l"><img src="../img/logo_zhima.png"/></div>
+					<div class="zm_r">
+						<span class="zm_r_con1">已授权</span>
+					</div>
+				</div>
+				<div class="finish_btn conNextBtn">确认并下一步</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		$('.conNextBtn').on('click',function(){
+			window.location.href = 'toRealPay.html';
+		})
+	</script>
+</html>

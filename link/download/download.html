@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<title>APP下载</title>
+		<link rel="stylesheet" type="text/css" href="../js/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;overflow: hidden;}
+			.top{
+				width: 12rem;
+				height: 12rem;
+				margin: 6rem auto 0;
+				background: url('img/bg_logo.png') no-repeat;
+				background-size: 12rem 12rem;
+			}
+			/*.top img{width: 100%;}*/
+			#iconUrl{width: 60%;position: relative;top: 20%;margin: 0 auto;}
+			#iconUrl img{width: 100%;}
+			.pro_name{
+				font-size: 28px;font-weight: bold;text-align: center;
+				margin-top: 1rem;
+			}
+			.desc_box{
+				margin-top: 1rem;
+			}
+			.desc{
+				font-size: 14px;
+			}
+			.down_btn{margin: 5rem 1.2rem 0;}
+			.down_btn li{float: left;width: 47%;height: 4.4rem;}
+			.down_btn li:last-child{
+				float: right;width: 47%;
+				background: url('img/btn_android.png') no-repeat;
+				background-size: 100% 4.4rem;
+			}
+			.down_btn li:first-child{
+				background: url('img/btn_ios.png') no-repeat;
+				background-size: 100% 4.4rem;
+			}
+			.down_btn li a{opacity: 0;display: block;line-height: 4.4rem;width: 100%;}
+			
+			.down_btn li img{width: 100%;}
+			
+			.desc_ul{margin: 15% 1.2rem 0;}
+			.title{font-size: 18px;font-weight: bold;}
+			.desc_ul li{color: #666666;float: left;width: 46%;padding-left: 0.5rem;line-height: 1.8;}
+			.desc_ul li:last-child{float: right;padding-left: 1.3rem;}
+			.os_name{font-size: 16px;}
+			/*正在加载*/
+			.load_pop,.code_pop{
+				height: 100%;
+				width: 100%;
+				background-color: #666666;
+				opacity: .8;
+				position: fixed;
+				top: 0;
+				z-index: 100000;
+			}
+			.load_text{
+				width: 86%;line-height: 6;text-align: center;
+				border-radius: 10px;font-size: 16px;
+				position: absolute;
+				left: 5%;
+				top: 10px;
+				z-index: 100001;
+			}
+			.load_text img{width: 100%;}
+		</style>
+	</head>
+	<body>
+		<div class="con" style="display: none;">
+			<div class="top clearfix">
+				<div id="iconUrl"></div>
+				<!--<img src="img/logo.png"/>-->
+			</div>
+			<div class="pro_name appName"></div>
+			
+			<ul class="down_btn clearfix">
+				<li>
+					<div class="iOSBtn">
+						<a id="iOSLink">下载</a>
+					</div>
+				</li>
+				<li>
+					<div class="AndBtn">
+						<a id="AndLink">下载</a>
+					</div>
+					
+				</li>
+			</ul>
+			<ul class="desc_ul clearfix">
+				<div class="title"></div>
+				<li>
+					<div class="desc_box">
+						<div class="os_name iOSName"></div>
+						<div class="desc iosUpdateTime"></div>
+						<div class="desc iosVersion"></div>
+						<div class="desc iosSize"></div>
+					</div>
+				</li>
+				<li>
+					<div class="desc_box">
+						<div class="os_name AndName"></div>
+						<div class="desc andUpdateTime"></div>
+						<div class="desc andVersion"></div>
+						<div class="desc andSize"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<!--加载遮罩-->
+		<div class="loadBox" style="display: none;">
+			<div class="load_pop loadPop"></div>
+			<div class="load_text"><img src="img/to_jt.png"/></div>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/getParams.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="js/download.js"></script>
+	<script src="../js/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		
+		
+	</script>
+	
+</html>

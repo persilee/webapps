@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>一键贷款</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.content_box{margin-top: 10px;background-color: #FFFFFF;}
+			.top_box{padding: 15px 0;margin: 0 12px;border-bottom: 1px solid #CECECE; overflow: hidden;}
+			.logo_box{
+				width: 27px;height: 27px;
+				border: 1px solid #CECECE;
+				border-radius: 50%;float: left;
+			}
+			.logo_box img{width: 100%;height: 100%;padding: 3px;}
+			.m_box{padding: 15px 12px;margin: 0 12px;border-bottom: 1px solid #CECECE; overflow: hidden;}
+			.bank_name{float: left; margin-left: 20px;font-size: 16px;line-height: 1.6;}
+			.title_box{margin: 5px 0;font-size: 18px;font-weight: bold;}
+			.flag_box{font-size: 24px;}
+			.m_box input{width: 90%;font-size: 24px;border: 0; outline: none;margin: 0;}
+			.b_box{margin: 0 12px; padding: 25px 0;font-size: 16px;}
+			.radius_box{padding: 2px;display: inline-block;width: 22px;height: 22px;border: 1px solid #F0932F;border-radius: 50%;}
+			.dolt_orange{
+				width: 100%;height: 100%;
+				background-color: #F0932F;
+				border-radius: 50%;display: inline-block;
+			}
+			.con_box{margin-left: 12px;}
+			.agree_box{color: #D53C27;}
+			.next_btn{
+				margin: 25px auto;width: 90%;text-align: center;
+				background-color: #D53C27;line-height: 44px;border-radius: 5px;
+				color: #FFFFFF;font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content_box">
+			<div class="top_box">
+				<div class="logo_box goodsLogo">
+				</div>
+				<div class="bank_name goodsName"></div>
+			</div>
+			<div class="m_box">
+				<div class="title_box">贷款金额</div>
+				<span class="flag_box">￥ </span>
+				<input type="number" name="loansMon" oninput="if(value.length>9)value=value.slice(0,9); javascript:this.value=this.value.replace(/[^\d\.]/g,'');" class="loansMon" id="loansMon" placeholder="请输入贷款金额" />
+			</div>
+			<div class="b_box">
+				<span class="radius_box">
+					<i class="dolt_orange"></i>
+				</span>
+				<span class="con_box">我已阅读并同意<span class="agree_box">《贷款协议》</span></span>
+			</div>
+			<div class="next_btn nextBtn">下一步</div>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,topBranchId,id,goodsId;
+		//获取参数
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return decodeURI(r[2]);
+				return null;
+				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			id = $.getUrlParam('goodsId');
+			repayment = $.getUrlParam('repayment');
+			console.log('repayment',decodeURI(repayment));
+			//需判空
+			console.log('id=====',id)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			getLoanGoodsInfoDetail();
+		});
+		
+		//商品详情信息loan/getLoanGoodsInfoDetail.do
+		function getLoanGoodsInfoDetail(){
+			var url = urlpath + 'loan/getLoanGoodsInfoDetail.do';
+			var loansFilter;
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					id:id,
+					merchId:merchId,
+					loansFilter:loansFilter,
+					version:version
+				},
+				success:function(data){
+					console.log('getLoanGoodsInfoDetail==',data);
+					if(data.code == 200){
+						//头部信息
+						$('.goodsLogo').html(`<img class="logo_img" src=${data.data.head.goodsLogo} />`)
+						$('.goodsName').html(`${data.data.head.goodsName}`);
+					}else{
+						mui.alert(data.message);
+					}
+				}
+			});
+		}
+		var loansMon;
+		$('#loansMon').on('blur',function(){
+			loansMon = $('.loansMon').val();
+		})
+		
+		
+		//新增贷款记录/loan/addLoanRecord.do
+		function addLoanRecord(){
+			var url = urlpath + 'loan/addLoanRecord.do';
+			var status = '00';
+			var loanTimes = 1;
+			var d = new Date();
+			var insertTime = d.getFullYear() + '' + (d.getMonth() + 1) + '' + d.getDate() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
+			console.log('insertTime',insertTime);
+			loansMon = Number($('.loansMon').val());
+			
+			console.log('loansMon11==',loansMon);
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					status:status,
+					loanAmount:loansMon,
+					goodsId:id,
+					loanTimes:loanTimes,
+					repayment:repayment,
+					insertTime:insertTime,
+					version:version
+				},
+				success:function(data){
+					console.log('addLoanRecord==',data);
+				}
+			});
+			
+		}
+		
+		//点击下一步
+		$('.nextBtn').on('click',function(){
+			console.log('loansMon=========',loansMon,typeof(loansMon));
+			if(loansMon>0){
+				var btnArray = ['否', '是'];
+				mui.confirm('确定贷款'+loansMon+'元？',function(e){
+					if (e.index == 1) {
+						addLoanRecord();
+			            window.location.href = 'firstTrial.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&goodsId='+id+'&loansMon='+loansMon;
+			        } else {
+			            
+			        }
+				});
+			}else{
+				mui.alert('贷款金额必填且不能小于0元');
+			}
+		})
+		
+		
+	</script>
+	
+</html>

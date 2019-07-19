@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+	    <link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<title>文案图片</title>
+		<style type="text/css">
+			ul{background-color: #FFFFFF;}
+			ul li{
+				padding: 18px 12px;
+				border-bottom: 1px solid #CECECE;
+			}
+			.title{font-size: 18px;font-weight: bold;color: #333333;}
+			.msg{color: #666666;margin-top: 12px;line-height: 22px;}
+			.msg_l{float: left;}
+			.msg_r{float: right;}
+			.save_pic{
+				background-color: #D53C27;
+				color: #FFFFFF;padding: 4px 7px;
+				border-radius: 5px;
+			}
+			.copy_con{
+				margin-left: 15px;
+				color: #D53C27;
+				border: 1px solid #D53C27;
+				padding: 3px 7px;
+				border-radius: 5px;
+			}
+			.text{
+				margin-top: 15px;color: #666666;
+				font-size: 15px;line-height: 25px;
+			}
+			.need_img{width: 100%;margin-top: 18px;}
+			.need_img img{width: 100%;}
+		</style>
+	</head>
+	<body>
+		<ul class="clearfix">
+			<li>
+				<div class="title">帮助别人，顺便赚钱</div>
+				<div class="msg clearfix">
+					<div class="msg_l">发布于 2018-05-30</div>
+					<div class="msg_r">
+						<!--<span class="save_pic saveBtn" imgId="img_1">保存图片</span>-->
+						<span class="copy_con copyBtn" textId="text_1" data-clipboard-action="copy" data-clipboard-target=".textContent" >复制文字</span>
+					</div>
+				</div>
+				<div class="text textContent" id="text_1">体验不错，分享身边朋友也用，激活码298赚50%即149元，好友再推荐好友赚20%，推荐不断，红包不停，赶紧赚钱去。</div>
+				<div class="need_img"><img class="save1" src="../img/share/share_pic_1.png" id="img_1"/></div>
+			</li>
+			<li>
+				<div class="title">帮助别人，顺便赚钱</div>
+				<div class="msg clearfix">
+					<div class="msg_l">发布于 2018-05-30</div>
+					<div class="msg_r">
+						<!--<span class="save_pic saveBtn" imgId="img_2">保存图片</span>-->
+						<span class="copy_con copyBtn" textId="text_2" data-clipboard-action="copy" data-clipboard-target=".textContent" >复制文字</span>
+					</div>
+				</div>
+				<div class="text textContent" id="text_2">分享身边朋友也用，激活码298赚50%即149元，好友再推荐好友赚20%，推荐不断，红包不停，赶紧赚钱去。</div>
+				<div class="need_img"><img src="../img/share/share_pic_2.png" id="img_2"/></div>
+			</li>
+		</ul>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/clipboard-2.0.1.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		 $(function(){
+	    	$.getUrlParam = function(name) {
+	    		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	    		var r = window.location.search.substr(1).match(reg);
+	    		if(r != null) return unescape(r[2]);
+	    		return null;
+	    	}
+	    	//得到url参数  
+	    	merchId = $.getUrlParam('merchId');
+	    	term_type = $.getUrlParam('term_type');
+	    	topBranchNo = $.getUrlParam('topBranchNo');
+	    	console.log(merchId,term_type,topBranchNo)
+	    });
+		
+		/*------------复制---------------*/
+		$('.copyBtn').on('click',function(e){
+			copyFunction();
+		})
+		function copyFunction(){
+			var clipboard = new ClipboardJS('.copyBtn', {
+		    // 通过target指定要复印的节点
+		        text: function(trigger) {
+		        	console.log(trigger.getAttribute('textId'));
+					return $('#'+trigger.getAttribute('textId')).html();
+	          	}
+		    });
+			
+		    clipboard.on('success', function(e) {
+		        mui.toast('已复制');
+				console.info('Action:', e.action);
+			    console.info('Text:', e.text);
+			    console.info('Trigger:', e.trigger);
+		        e.clearSelection();
+		    });
+		
+		    clipboard.on('error', function(e) {
+		        console.log('请复制内容',e);
+		    });
+		}
+		
+		/*------------保存----------------*/
+		/*$(".saveBtn").click(function(){
+//			mui.toast('正在升级中。。')
+			console.log($(this));
+			var imgPathURL=$(this).parent().parent().next().next().find("img").attr("src");
+			DownLoadReportIMG(imgPathURL);  
+//			DownLoadReportIMG("http://127.0.0.1:8020/fission/img/share/share_pic1.png"); 
+		})
+		
+		function DownLoadReportIMG(imgPathURL) { 
+			console.log(imgPathURL);
+		    //如果隐藏IFRAME不存在，则添加  
+		    if (!document.getElementById("IframeReportImg"))  
+		        $('<iframe style="display:none;" id="IframeReportImg" name="IframeReportImg" onload="DoSaveAsIMG();" width="0" height="0" src="about:blank"></iframe>').appendTo("body");  
+		    if (document.all.IframeReportImg.src != imgPathURL) {  
+		        //加载图片  
+		        document.all.IframeReportImg.src = imgPathURL;  
+		        console.log('document.all.IframeReportImg.src',document.all.IframeReportImg.src)
+		    }  
+		    else {  
+		        //图片直接另存为  
+		        DoSaveAsIMG();  
+		         console.log('imgPathURL',imgPathURL)
+		    }  
+		}  
+		function DoSaveAsIMG(){  
+		    if (document.all.IframeReportImg.src != "about:blank") window.frames["IframeReportImg"].document.execCommand("SaveAs");  
+			console.log('999999');
+		}*/
+		var imgURL;
+		$(".saveBtn").on('click',function(e){
+			SaveAs5();
+		})
+		function SaveAs5(){
+			var img = $('.save1').attr("src");
+			var alink = document.createElement("a");
+			console.log('img',img)
+			console.log('alink',alink)
+			alink.href = img;
+			alink.download = "testImg.jpg";
+			alink.click();
+		} 
+
+	</script>
+</html>

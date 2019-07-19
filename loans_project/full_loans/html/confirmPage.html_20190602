@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>闪付还款</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{
+				background-color: #fff;
+			}
+			.title {
+				text-align: center;
+				font-size: 18px;
+				color: #fff;
+			}
+			.main_box{
+				text-align: center;
+			}
+			.big_radius{
+				width: 210px;height: 210px;
+				background-color: #F2F2F2;
+				margin: 50px auto 0;
+				padding: 15px;border-radius: 50%;
+			}
+			.radius_box{
+			    background-color: #F9F9F9;
+			    width: 180px;
+			    height: 180px;
+			    border-radius: 50%;
+			    box-shadow: 0px 0px 10px #EBEBEB;
+			}
+			.radius_p{
+				padding-top: 60px;
+			    font-size: 16px;
+			    color: #333333;
+			}
+			.radius_b{
+				font-size: 30px;
+				color: #D53C27;
+				margin-top: 15px;
+			}
+			.money_box{
+				margin: 30px;
+			}
+			.money_box>li{
+				float: left;
+				width: 49%;
+			}
+			.money_li{
+				border-right: 1px solid #ccc;
+			}
+			.money_p{
+				color: #666;
+				font-size: 16px;
+			}
+			.money_b{
+				font-weight: bold;
+				color: #333;
+				padding-top: 10px;
+				font-size: 24px;
+			}
+			.main_p{
+				text-align: left;
+			    margin: 0 10px;
+			    color: #333;
+			    padding-top: 18px;
+			    border-top: 1px solid #ccc;
+			}
+			.main_span{
+				color: #f0922e;
+			}
+			.finish_btn{background-color: #D43C27;width: 90%;
+				margin: 30px auto;line-height: 50px;text-align: center;
+				color: #fff;border-radius: 10px;font-size: 18px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main_box">
+			<div class="big_radius">
+				<div class="radius_box">
+					<img src="../../../apply/img/com.png" class="radius_box">
+				</div>
+			</div>
+			<ul class="money_box clearfix">
+				<li class="money_li">
+					<p class="money_p">还款金额</p>
+					<p class="money_b amount">-</p>
+				</li>
+				<li>
+					<p class="money_p">还款服务费</p>
+					<p class="money_b fee">-</p>
+				</li>
+			</ul>
+			<p class="main_p">本次还款将从您的银行卡中扣除<span class="main_span fee">-</span> 元还款服务费，确认请继续</p>
+		</div>
+		<div class="finish_btn confirmNextBtn">确认</div>
+	</body>
+	
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,term_type,topBranchNo,cardId,amount,phone;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			cardId = $.getUrlParam('cardId');
+			amount = $.getUrlParam('repayNum');
+			phone = $.getUrlParam('phone');
+			console.log(cardId,amount)
+			//需判空
+			console.log('term_type=====',term_type)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+		});
+		
+		
+		//获取额度 merch/getCreditInfo.do
+		var msg,msgCode,fee;
+		$(function getCreditInfo(){
+			var url = urlpath + 'merch/getCreditInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					amount:amount,
+					cardId:cardId,
+					version:version
+				},
+				success:function(data){
+					console.log('获取额度 merch/getCreditInfo.do',data);
+					msgCode = data.code;
+					msg = data.message;
+					if(data.code == 200){
+						if(data.data != null){
+							fee = data.data.fee;
+							console.log('fee',fee);
+							$('.amount').html(data.data.amount+'.00');
+							$('.credits').html(data.data.credits+'.00');
+							$('.fee').html(parseFloat(data.data.fee).toFixed(2));
+						}
+					}else{
+						mui.toast(data.message);
+					}
+				}
+			});
+		})
+		//点击下一步
+		//?topBranchNo=20000029&merchId=18826426220&repayNum=50000&phone=18826426220&term_type=2&cardId=4581240717786918
+		var compareCredits,compareAmount;
+		$('.confirmNextBtn').on('click',function(){
+			console.log(Number($('.credits').html()),Number($('.amount').html()));
+			compareCredits = Number($('.credits').html());
+			compareAmount = Number($('.amount').html());
+
+				if(msgCode == 200){
+					window.location.href = 'generalDetail.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&amount='+amount+'&phone='+phone+'&term_type='+term_type+'&cardId='+cardId;
+				}else{
+					mui.alert(msg);
+				}
+
+		//	if(compareAmount>compareCredits){
+		//		mui.alert('您当前还款金额大于授信额度，请修改还款金额');
+		//	}else{
+		//	}
+
+		})
+	</script>
+	
+</html>

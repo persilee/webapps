@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>我的地盘</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{
+				background: url('../img/bg_myLand.png') no-repeat;
+				background-size: 100%;
+			}
+			h2{line-height: 100px;opacity: 0;}
+			.land_table_box{margin-top: 41%;overflow: hidden;color: #FFFFFF;}
+			.table_ul_box{margin:0 auto;text-align:center;overflow: hidden;}
+			.title_li_box{
+				display:inline-block;font-size: 16px;
+				line-height: 40px;background-color: #8e42eb;
+				margin: 0 3px;text-align: center;
+			}
+			.dengji{
+				width: 16%;
+			}
+			.shengji,.fenxiang,.jiaoyi{width: 22%;}
+			.con_ul_box{opacity: .8;text-align:center;overflow: hidden;}
+			.con_li_box{
+				display:inline-block;line-height: 30px;padding: 10px 0;
+				background-color: #6d31b3;
+				margin: 5px 3px;text-align: center;
+				position: relative;top: -10px;
+			}
+			.con_li_box1{
+				display: inline-block;position: relative;
+				background-color: #6d31b3;
+				margin: 5px 3px;padding: 4px 0;
+			}
+			.span_block1{
+				display: block;
+			}
+			.con_ul_box1{position: relative;top: -15px;}
+			.con_ul_box2{position: relative;top: -30px;}
+			.con_ul_box3{position: relative;top: -45px;}
+		</style>
+	</head>
+	<body>
+		<h2>title2</h2>
+		<div class="land_table_box">
+			<ul class="table_ul_box">
+				<li class="title_li_box dengji">等级</li>
+				<li class="title_li_box shengji">升级条件</li>
+				<li class="title_li_box fenxiang">分享返佣</li>
+				<li class="title_li_box jiaoyi">交易返佣</li>
+			</ul>
+			<!--<span class="span_block">10个用户</span>-->
+			<ul class="con_ul_box">
+				<li class="con_li_box dengji levl0">--</li>
+				<li class=" con_li_box1 shengji">
+					<span class="span_block">成功分享</span>
+					<span class="span_block1"><span class="num0">-</span>个用户</span>
+				</li>
+				<li class="con_li_box fenxiang extfee0">--</li>
+				<li class="con_li_box jiaoyi profitfee0">--</li>
+			</ul>
+			<ul class="con_ul_box con_ul_box1">
+				<li class="con_li_box dengji levl1">--</li>
+				<li class=" con_li_box1 shengji">
+					<span class="span_block">成功分享</span>
+					<span class="span_block1"><span class="num1">-</span>个用户</span>
+				</li>
+				<li class="con_li_box fenxiang extfee1">--</li>
+				<li class="con_li_box jiaoyi profitfee1">--</li>
+			</ul>
+			<ul class="con_ul_box con_ul_box2">
+				<li class="con_li_box dengji levl2">--</li>
+				<li class=" con_li_box1 shengji">
+					<span class="span_block">成功分享</span>
+					<span class="span_block1"><span class="num2">-</span>个用户</span>
+				</li>
+				<li class="con_li_box fenxiang extfee2">--</li>
+				<li class="con_li_box jiaoyi profitfee2">--</li>
+			</ul>
+			<ul class="con_ul_box con_ul_box3">
+				<li class="con_li_box dengji levl3">--</li>
+				<li class=" con_li_box1 shengji">
+					<span class="span_block">成功开通</span>
+					<span class="span_block1">即可分享</span>
+				</li>
+				<li class="con_li_box fenxiang extfee3">--</li>
+				<li class="con_li_box jiaoyi profitfee3">0</li>
+			</ul>
+		</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,topBranchNo,term_type;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			typename = $.getUrlParam('typename');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			console.log('term_type==',term_type)
+			getProfitInfo();
+			getUpgradeInfo();
+		});
+		//获取等级分润信息merch/getProfitInfo.do
+		function getProfitInfo(){
+			var url = urlpath + 'merch/getProfitInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo,
+					version:version
+				},
+				success:function(data){
+					console.log('getProfitInfo=========',data)
+					if(data.code == 200 && data.data.length != 0){
+						for(var i = 0;i<data.data.length;i++){
+							if(data.data[i].levl == 0){
+								if(data.data[i].serviceName.substring(0,2) == 83){
+									$('.levl0').html(`${data.data[i].levlName}`);
+									$('.extfee0').html(`￥${data.data[i].extFee}`);
+								}
+								if(data.data[i].serviceName.substring(0,2) == 70){
+									$('.profitfee0').html(`${parseFloat(data.data[i].profitFee*100).toFixed(2)}%`);
+								}
+							}else if(data.data[i].levl == 1){
+								if(data.data[i].serviceName.substring(0,2) == 83){
+									$('.levl1').html(`${data.data[i].levlName}`);
+									$('.extfee1').html(`￥${data.data[i].extFee}`);
+								}
+								if(data.data[i].serviceName.substring(0,2) == 70){
+									$('.profitfee1').html(`${parseFloat(data.data[i].profitFee*100).toFixed(2)}%`);
+								}
+							}else if(data.data[i].levl == 2){
+								if(data.data[i].serviceName.substring(0,2) == 83){
+									$('.levl2').html(`${data.data[i].levlName}`);
+									$('.extfee2').html(`￥${data.data[i].extFee}`);
+								}
+								if(data.data[i].serviceName.substring(0,2) == 70){
+									$('.profitfee2').html(`${parseFloat(data.data[i].profitFee*100).toFixed(2)}%`);
+								}
+							}else if(data.data[i].levl == 3){
+								if(data.data[i].serviceName.substring(0,2) == 83){
+									$('.levl3').html(`${data.data[i].levlName}`);
+									$('.extfee3').html(`￥${data.data[i].extFee}`);
+								}
+								if(data.data[i].serviceName.substring(0,2) == 70){
+									$('.profitfee3').html('0');
+								}
+							}
+						}
+					}else{
+//						mui.alert(data.message);
+					}
+				}
+			});
+		}
+		//显示等级个数
+		function getUpgradeInfo(){
+			var url = urlpath +'merch/getUpgradeInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					topBranchNo:topBranchNo,
+					merchId:merchId,
+					version:version
+				},
+				success:function(data){
+					console.log('getUpgradeInfo==',data);
+					if(data.code == 200){
+						$('.num0').html(`${data.data.firstLevel}`);
+						$('.num1').html(`${data.data.secondLevel}`);
+						$('.num2').html(`${data.data.thirdLevel}`);
+					}else{
+//						mui.alert(data.message);
+					}
+				}
+			});
+		}
+		
+	</script>
+</html>

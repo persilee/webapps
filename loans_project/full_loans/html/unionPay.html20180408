@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>银联支付</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/loading.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			.top_box{line-height: 3;margin: 0 12px;font-weight: bold;font-size: 14px;}
+			.big_box{background-color: #FFFFFF;margin-top: 10px;}
+			.card_det{
+				margin: 0 12px;padding: 15px 0;
+				display: inline-block;overflow: hidden;width: 94%;
+			}
+			.bank_logo{
+				width: 36px;height: 36px;display: inline-block; 
+				background-color: #F2F2F2;border-radius: 50%;
+				padding: 5px;display: inline-block;
+			}
+			.bank_logo img{width: 100%;height: 100%;}
+			.bank_det{display: inline-block;padding: 0 15px;}
+			.content{margin:0 12px;margin-top: 10px;overflow: hidden;}
+			.bank_name{display: block;font-size: 16px;line-height: 24px;}
+			.bank_numDet{padding-left: 5px;}
+			.cardType{padding-left: 14px;}
+			.iconFlag{display: inline-block;float: right;width: 30px;height: 26px;margin: 5px 10px 0 0;}
+			.iconFlag img{width: 100%;}
+			.bank_num{color: #666;}
+			.bzj_box{
+				height: 60px;
+				line-height: 60px;
+				border-bottom: 1px solid #CECECE;
+			}
+			.bzj{display:inline-block;color: #666666;font-size: 16px;width: 24%;}
+			.total_box{display: inline-block;margin-left: 36px;font-size: 18px;}
+			.moneyDet{font-size: 24px;color: #333333;}
+			.flag1{position: relative;top: -2px;color: #666;}
+			.fee_amount{font-size: 26px;}
+			.phone_box{height: 50px;line-height: 50px;color: #666;font-size: 16px;border-bottom: 1px solid #c2c2c2;}
+			.phoneName,.yzmName{font-size: 16px;display: inline-block;width: 64px;}
+			.con_det{margin-left: 36px;}
+			.identify_box{font-size: 16px; border-bottom:0;height: 50px;line-height: 50px;}
+			.identify{color: #666;}
+			.identify input[type="text"]{
+				border: 0;outline: none;width: 73%;display: inline-block;margin-left:36px;font-size: 14px;line-height: 46px;
+			}
+			.sendIdentify{
+				font-size: 12px; background-color: #F0922E;
+				padding:0 5px;border-radius: 10px;
+				color: #fff;position: relative;
+				float: right;height: 30px;line-height: 30px;
+				top: 10px;display: inline-block;
+			}
+			.main_box{margin-top: 10px; background-color: #FFFFFF;overflow: hidden;}
+			.main_ul{overflow: hidden;}
+			.main_con{margin: 0 12px;overflow: hidden;}
+			.main_li{overflow: hidden;padding: 16px 0;border-bottom: 1px solid #CECECE;}
+			.main_li:last-child{border: 0;}
+			/*.main_li:first-child{line-height: 40px;}*/
+			.main_li_l{float: left;font-size: 16px;width: 30%;}
+			.main_li_l1{font-size: 12px;color: #999999;}
+			.main_li_r{float: left;font-size: 16px;font-weight: bold;}
+			.main_li_r1{color: #999999;}
+			.main_li_r3{color: #999999;float: left;width: 40%;}
+			.main_li_r3 input{
+				width: 100%;margin: 0;
+				line-height: 20px;height: 20px;
+				border: 0;outline: none;
+				font-size: 14px;
+			}
+			.main_li_r2{float: right;position: relative;top: -5px;}
+			.nextBtn{background-color: #CECECE;width: 90%;
+				margin: 50px auto;line-height: 50px;text-align: center;
+				color: #fff;border-radius: 10px;font-size: 16px;
+			}
+			
+			.icon_box{
+				width: 18px;height: 18px;
+				display: inline-block;position: relative;top: 3px;
+			}
+			.icon_box img{width: 100%;height: 100%;}
+			.type_name{margin-left: 10px;font-size: 14px;}
+			
+			.paytype_ul_box{background-color: #FFFFFF;}
+			.paytype_li_box{padding: 0 12px;border-bottom: 1px solid #CECECE;overflow: hidden;}
+			.paytype_li_box .show_box{float: left;width: 80%;}
+			.pay_type_box{
+				font-size: 16px;
+				border-bottom: 1px solid #CECECE;
+				overflow: hidden;
+			}
+			.pay_type_box .pay_con_box{
+				margin: 0 12px;padding: 18px 0;
+				line-height: 30px;overflow: hidden;
+			}
+			.l_con_box{float: left;}
+			.r_con_box{float: right;}
+			.pay_type_list{
+				animation:myfirst 1.5s;
+				-moz-animation:myfirst 1.5s; /* Firefox */
+				-webkit-animation:myfirst 1.5s; /* Safari and Chrome */
+				-o-animation:myfirst 1.5s; /* Opera */
+				position: fixed;width: 100%;bottom: 0;
+				z-index: 1000;background-color: #FFFFFF;
+				height: 255px;overflow-x: auto;
+			}
+			
+			@keyframes myfirst
+			{
+				from {opacity: .1;}
+				to {opacity: 1;}
+			}
+			
+			@-moz-keyframes myfirst /* Firefox */
+			{
+				from {opacity: .1;}
+				to {opacity: 1;}
+			}
+			@-webkit-keyframes myfirst /* Safari and Chrome */
+			{
+				from {opacity: .1;}
+				to {opacity: 1;}
+			}
+			
+			@-o-keyframes myfirst /* Opera */
+			{
+				from {opacity: .1;}
+				to {opacity: 1;}
+			}
+			.icon_queren{float: right;width: 20px;height: 20px;position: relative;top: 16px;}
+			.icon_queren img{width: 100%;height: 100%;}
+		</style>
+	</head>
+	<body>
+		<div class="top_box">点击可选择支付银行卡</div>
+		<div class="big_box" style="margin-top: 0;">
+			<div class="card_det changeCard">
+				<div class="bank_logo logoUrl"></div>
+				<div class="bank_det">
+					<span class="bank_name checkName">-</span>
+					<span class="bank_num">尾号<span class="bank_numDet acctNo">-</span><span class="cardType">-</span></span>
+				</div>
+				<div class="iconFlag"></div>
+			</div>
+		</div>
+		
+		<div class="main_box">
+			<div class="main_con">
+				<ul class="main_ul">
+					<li class="main_li">
+						<div class="main_li_l">商品</div>
+						<div class="main_li_r">代还服务费</div>
+					</li>
+					<li class="main_li">
+						<div class="main_li_l">金额</div>
+						<div class="main_li_r" style="color: #333333;"><span class="feeAmount"></span></div>
+					</li>
+					<li class="main_li">
+						<div class="main_li_l">代还卡号</div>
+						<div class="main_li_r1 cardId"></div>
+					</li>
+					<!--<li class="main_li">
+						<div class="main_li_l main_li_l1">银行卡名称</div>
+						<div class="main_li_r1 cardName"></div>
+					</li>-->
+					<li class="main_li">
+						<div class="main_li_l">手机号码</div>
+						<div class="main_li_r1 phoneNum PHONE_NO"></div>
+					</li>
+					<li class="main_li">
+						<div class="main_li_l">短信验证码</div>
+						<div class="main_li_r3"><input type="tel" placeholder="请输入验证码" maxlength="6" name="" id="CODE" value="" /></div>
+						<div class="main_li_r2">
+							<input type="button" id="smsCode" class="yzm_btn getCodeBtn" style="color: #FFFFFF;border-radius: 10px;display: inline-block;float: right;text-align:center;background-color: #F0932F;padding: 0 5px;height: 32px;line-height: 32px;font-size: 12px;" value="发送验证码" />
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="nextBtn toCommitBtn" id="submitBtn">提交</div>
+		
+		<!--银行列表-->
+		<div class="popBOx" style="display: none;">
+			<div class="mui-popup-backdrop mui-active shadowBox" style="display: block;"></div>
+			<ul class="pay_type_list payTypeSel payTypeList">
+				
+			</ul>
+		</div>
+		
+		<div class="popCon" style="display: none;">
+			<div id="loading">
+				<div id="loading-center">
+					<div id="loading-center-absolute" style="color: #FFFFFF;opacity: 1;">
+						<div class="object" id="object_one"></div>
+						<div class="object" id="object_two"></div>
+						<div class="object" id="object_three"></div>
+						<div class="object" id="object_four"></div>
+						<div class="object" id="object_five"></div>
+						<div class="object" id="object_six"></div>
+						<div class="object" id="object_seven"></div>
+						<div class="object" id="object_eight"></div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+		
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script src="../lib/layer/layer.js"></script>
+	<script type="text/javascript">
+		var merchId,term_type,topBranchNo,cardId,cardId1,cardId2,amount,phone,acctNo,cardName,feeAmount,PHONE_NO,orderId,code;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return decodeURI(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			cardId = $.getUrlParam('cardId');
+			cardId1 = $.getUrlParam('cardId');
+			amount = $.getUrlParam('amount');
+			phone = $.getUrlParam('phone');
+			orderId = $.getUrlParam('orderId');
+			cardName = $.getUrlParam('cardName');
+			feeAmount = $.getUrlParam('feeAmount');
+//			console.log(cardId,amount)
+			cardId2 = cardId.slice(12);
+			cardId = cardId.slice(0,4)+'****'+cardId.slice(12);
+			$('.cardId').html(cardId);
+			$('.cardName').html(cardName);
+			$('.feeAmount').html('￥ '+feeAmount);
+			//需判空
+			console.log('term_type=====',term_type)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			//选择
+			setTimeout(function(){
+				radio1 = $("input[name='radio1']").attr('id');
+				j = radio1;
+//				console.log(datalist)
+//				console.log('radio1==',radio1)
+				if($("input[name='radio1']:checked").val()==0){
+					if(datalist.length>0){
+						cardNo = datalist[j].acctNo;
+						phone = datalist[j].phone;
+						cardDesc = datalist[j].cardDesc;
+						acctNo =  datalist[j].acctNo.substr( datalist[j].acctNo.length-4);
+						var logoUrl = '<img src="../img/bankLogo/'+datalist[j].cardInst+'.png" />';
+						$('.logoUrl').html(logoUrl);
+						$('.checkName').html(cardDesc);
+						$('.checkName').attr('data-type',j);
+						$('.acctNo').html(datalist[j].acctNo.slice(12));
+						PHONE_NO = phone;
+						$('.phoneNum').html(phone.slice(0,3)+'****'+phone.slice(8));
+						if(datalist[j].cardType == '00'){
+							$('.cardType').html('贷记卡');
+						}else if(datalist[j].cardType == '01'){
+							$('.cardType').html('借记卡');
+						}
+						$('.iconFlag').html('<img src="../img/icon_union.png" alt="" />');
+					}
+				}
+//				msgSend();
+			},100);
+			
+		});
+		
+		//点击页面跳转
+		var index;
+		var msg,msgCode;
+		$('.toCommitBtn').on('click',function(){
+			if(flag == 1){
+				layer.confirm('是否确认支付'+feeAmount+'元？', function(index2){
+					flag=0;
+					layer.close(index2);
+					index= layer.load(2); //又换了种风格，并且设定最长等待10秒 
+					payAuthRepayment();
+				});
+				/*var btnArray = ['否', '是'];
+				mui.confirm('是否确认支付'+feeAmount+'元？',function(e){
+					if (e.index == 1) {
+//						$('.popCon').show();
+						payAuthRepayment();
+			        } else {
+//			            $('.popCon').hide();
+			        }
+				});*/
+			}else{
+				return 0;
+			}
+			
+		})
+		//支付手续费/cardManager/payAuthRepayment.do
+		function payAuthRepayment(){
+			var url = urlpath + 'cardManager/payAuthRepayment.do';
+			code = $('#CODE').val();
+			console.log(merchId,cardNo,cardId1,orderId,code);
+			$.ajax({
+				type:"post",
+				url:url,
+				async:true,
+				data:{
+					merchId:merchId,
+					payCardId:cardNo,
+					cardId:cardId1,
+					orderId:orderId,
+					confirmType:'confirm',
+					code:code,
+					version:version
+				},
+				success:function(data){
+					console.log('支付手续费/cardManager/payAuthRepayment.do',data);
+					layer.close(index);
+					msg = data.message;
+					msgCode = data.code;
+					if(data.code == 100 || data.code == 200 || data.code == 400){
+//						$('.popCon').hide();
+						window.location.href = 'payStatus.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&term_type='+term_type+'&orderId='+orderId+'&cardName='+cardName+'&cardId='+cardId2+'&msg='+msg+'&msgCode='+msgCode;
+					}else{
+						flag=1;
+						mui.alert(data.message);
+//						$('.popCon').hide();
+					}
+				}
+			});
+		}
+		
+		//显示所有卡
+		$('.changeCard').on('click',function(){
+			$('.popBOx').show();
+		})
+		
+		
+		/*------------------------------*/
+		//选择支付方式
+		$('.payType').on('click',function(){
+			$('.popBOx').show();
+		})
+		//隐藏
+		var radio1,j;
+		$('.popBOx').on('click',function(){
+			
+			setTimeout(function(){
+				$('.popBOx').hide();
+			},1000);
+			radio1 = $("input[name='radio1']:checked").val();
+			j = radio1;
+//			console.log('j',j);
+			if(datalist.length>0){
+				cardNo = datalist[j].acctNo;
+				phone = datalist[j].phone;
+				cardDesc = datalist[j].cardDesc;
+				acctNo =  datalist[j].acctNo.substr( datalist[j].acctNo.length-4);
+				var logoUrl = '<img src="../img/bankLogo/'+datalist[j].cardInst+'.png" />';
+				$('.logoUrl').html(logoUrl);
+				$('.checkName').html(cardDesc);
+				$('.checkName').attr('data-type',j);
+				$('.acctNo').html(datalist[j].acctNo.slice(12));
+				if(datalist[j].cardType == '00'){
+					$('.cardType').html('贷记卡');
+				}else if(datalist[j].cardType == '01'){
+					$('.cardType').html('借记卡');
+				}
+				$('.iconFlag').html('<img src="../img/icon_union.png" alt="" />');
+			}
+		})
+		
+		//切换银行卡
+		/*-------------获取信息方法------------------*/
+		//获取银行卡merch/getCardInfo.do
+		var html3 = '';
+		var html2 = '';
+		var cardNo,datalist,phone,cardDesc;
+		$(function getCardInfo(){
+			var url = urlpath + 'merch/getCardInfo.do'
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					version:version
+				},
+				success:function(data){
+					console.log('merch/getCardInfo.do',data);
+					if(data.code == 200){
+						if(data.data.length>0){
+							datalist = data.data;
+							for(var i = 0;i<data.data.length;i++){
+								cardNo = data.data[i].acctNo.slice(12);
+								bankLogo = '<img src="../img/bankLogo/'+data.data[i].cardInst+'.png" />'
+								//列表
+								html3 += `<li class="mui-input-row mui-radio paytype_li_box">
+									<label>
+										<span class="icon_box selLogo">${bankLogo}</span>
+										<span class="type_name selName">${data.data[i].cardDesc}（<span class="">${cardNo}）</span></span>
+									</label>
+									<input name="radio1" class="radio1 api1" id=${i} type="radio" style="top: 10px;" value=${i} data-type=${i} />
+								</li>`;
+							}
+							$('.payTypeList').html(html3);
+							if($('.payTypeList').find("input[name='radio1']").attr('id') == 0){
+								$('.payTypeList').find("#0").attr('checked',true);
+							}
+						}else{
+							mui.alert('您尚未绑卡，请先绑卡');
+						}
+						
+					}else{
+						mui.alert(data.message);
+					}
+				}
+			});
+		});
+		
+		/*-----------------获取验证码btn------------------*/
+		//监听输入框改变
+		$('input').on('keyup parste change',function(){
+			flagChange();
+		})
+		var flag;
+		function flagChange(){
+			flag=0;
+			CODE = $('#CODE').val();
+			console.log(CODE);
+			//获取验证码
+			if(CODE!=''&&CODE!=null){
+				if(CODE.length==6){
+				    flag++;
+			   }else {
+		        	return false;
+			    }
+			}
+			if(flag==1){
+		    	$('#submitBtn').css('background-color','#D53C27');
+		    }else{
+		    	$('#submitBtn').css('background-color','#CECECE');
+		    }
+		}
+		
+		//点击获取验证码
+		$('.getCodeBtn').on('click',function(){
+			msgSend();
+		})
+		
+		function msgSend(){
+			PHONE_NO = PHONE_NO;
+			console.log('PHONE_NO=',PHONE_NO)
+			if(PHONE_NO.length==11){
+				settime();
+				var data={
+					phoneNo:PHONE_NO
+				}
+				$.ajax({
+					type:"post",
+					url:urlpath+'regeist/getSmsCode.do?type=1',
+					data:data,
+					async:true,
+					success:function(){
+						console.log('success',data);
+					}
+				});
+			}else{
+				mui.alert('手机号不能为空');
+				return false;
+			}
+		}
+		
+		//获取验证码
+		var countdown = 60;
+		function settime() {
+			if(countdown == 0) {
+				$('#smsCode').removeAttr("disabled");
+				$('#smsCode').val("获取验证码");
+				countdown = 60;
+				return false;
+			} else {
+				$('#smsCode').attr("disabled", true);
+				$('#smsCode').val("重新发送(" + countdown + ")");
+				countdown--;
+			}
+			setTimeout(function() {
+				settime();
+			}, 1000);
+		}
+		
+	</script>
+</html>

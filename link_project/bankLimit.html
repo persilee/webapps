@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	  <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+    <title>支持在线支付银行</title>
+		<style type="text/css">
+			thead{background-color: #ddd;}
+			td,th{text-align: center;padding: 5px 2px;border: 1px solid #CCCCCC;}
+			.bank_list{text-align: center;padding: 10px 20px;font-weight: bold;}
+			
+		</style>
+  </head>
+  
+	<body>
+		<div class="bank_list bankTitle"></div>
+		<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+			<thead><th>银行</th><th style="width: 150px;">类型</th><!--<th>单笔限额(元)</th><th>日累计限额(元)</th>--><th>客服电话</th>
+			</thead>
+			<tbody class="dataList">
+				
+			</tbody>
+		</table>
+	</body>
+	<script src="js/jquery-3.2.1.js"></script>
+	<script src="js/pathUrl.js"></script>
+	<script type="text/javascript">
+		var merchId,tradeType,status;
+		$(function(){
+	    $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			tradeType = $.getUrlParam('tradeType');
+			status = $.getUrlParam('status');
+			console.log(merchId,tradeType,status);
+			if(tradeType == '00'){
+				$('title').html('实名认证支持银行列表');
+			}else if(tradeType == '01'){
+				$('title').html('闪付收款支持银行列表');
+			}else if(tradeType == '02'){
+				$('title').html('闪付收款支持银行列表');
+			}else if(tradeType == '03'){
+				$('title').html('闪付收款支持银行列表');
+			}else if(tradeType == '04'){
+				$('title').html('闪付收款支持银行列表');
+			}else if(tradeType == '05'){
+				$('title').html('闪付规划支持银行列表');
+			}else if(tradeType == '06'){
+				$('title').html('闪付还款支持银行列表');
+			}
+			
+			getBankAbility();
+		})
+		
+		//?merchId=15999519806&tradeType=05&status=1
+		function getBankAbility(){
+			var url = urlpath +'merch/getBankAbility.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				data:{
+					merchId:merchId,
+					tradeType:tradeType,
+					status:status
+				},
+				success:function(data){
+					if(data.code == 200){
+						var datalist = data.data;
+						var html = '';
+						var cardType;
+						if(data.data.length ==0){
+							$('.dataList').html('暂无支持银行');
+						}else{
+							for(var i=0;i<datalist.length;i++){
+								if(datalist[i].cardType == '00'){
+									cardType = '借记卡';
+								}else if(datalist[i].cardType == '01'){
+									cardType = '贷记卡';
+								}else if(datalist[i].cardType == '02'){
+									cardType = '借贷合一卡';
+								}else if(datalist[i].cardType == '03'){
+									cardType = '都支持';
+								}
+								html += '<div><tr>'+
+									'<td rowspan="2">'+datalist[i].bankName+'</td>'+
+									'<td rowspan="2">借记卡、贷记卡</td>'+
+								//	'<td rowspan="2">'+cardType+'</td>'+
+								//  '<td rowspan="2">'+datalist[i].onceLimit+'</td>'+
+								//	'<td rowspan="2">'+datalist[i].dayLimit+'</td>'+
+									'<td rowspan="2">'+datalist[i].bankPhone+'</td>'+
+								'</tr></div>';
+							}
+							html += '<div><tr></tr></div>';
+							$('.dataList').html(html);
+						}
+					}
+				}
+				
+			});
+		}
+		
+		
+		
+		
+	</script>
+	
+</html>

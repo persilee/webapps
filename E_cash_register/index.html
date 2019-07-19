@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+		<script type="text/javascript" src="./js/jquery.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=0.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>工易付收银台</title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			
+			body{
+				font-family: sans-serif;
+			}
+			
+			#img{
+				display: block;
+				margin: 0 auto;
+				width: 4.5rem;
+				height: 4.5rem;
+				background-size: 100%;
+				margin-top:12vh;
+				
+			}
+			form > p[title="merch"]{
+				display: block;
+				margin: 0 auto;
+				
+				margin-top: 2vh;
+				font-size: 1.25rem;
+				text-align: center;
+				font-weight: bolder;
+			}
+			form > p[title="remark"]{
+				display: block;
+				margin: 0 auto;
+				margin-top: 1vh;
+				font-size: 0.87rem;
+				font-weight: bolder;
+				color: #eccc68;
+				text-align: center;
+			}
+			form input[type="text"]{
+				display: block;
+				margin:0 auto;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance:none ;
+				outline: 0;
+				width: 70%;
+				height: 40px;
+				border:0px solid #fff;
+				border-radius: 20px;
+				box-shadow:0 0 5px 2px rgba(0,0,0,0.1);
+				padding: 0 30px 0 15px;
+				margin-top: 5vh;
+				text-align: right;
+				font-size: 1.25rem;
+			}
+			form input[type="button"]{
+				display: block;
+				margin:0 auto;
+				height: 42px;
+				border: 1px solid #F0F1F1;						
+				text-align: center;
+				line-height: 40px;
+				border-radius: 50px;
+				text-shadow: 0px 1px 1px gray;
+				width: 15rem;
+				background-color: #1e90ff;
+				margin-top:17vh;
+				font-weight: bolder;
+				font-size: x-large;
+				letter-spacing: 1rem;
+				color: white;
+				margin-bottom: 5vh;
+			} 
+			#icon{
+				margin-top: 20vh;
+			}
+			#icon > a:link{
+				text-decoration:none;
+			}
+			#icon > a > p{
+				display: block;
+				margin:0 auto;
+				width: 6rem;
+				height: 2rem;
+				font-size: 0.8rem;
+				
+			}
+			#icon > a > p:before{
+				content: " ";
+				display: block;
+				background-image: url(img/gyf-login.png);
+				width: 1.2rem;
+				height: 1.2rem;
+				background-size: 100%;
+				float: left;
+			}	
+			/*利用<i>来安放图标*/
+			form > i{
+	          height: 60px;
+	          width: 50px;
+			  background-image: url(img/cny.jpg)
+			}
+		</style>
+		
+		<script type="text/javascript">
+			function pay() {
+				var result = document.getElementById("amt").value;
+				if(!result){
+					alert("交易金额不能为空！");
+					return false;
+				}
+			//	document.getElementById("amt").value=result * 100;
+			//	document.getElementById("amt").setAttribute('value', result * 100);
+				document.getElementById("h5ICash").submit();
+			}
+
+			function getParamString(name) {
+				var paramUrl = window.location.search.substr(1);
+				var paramStrs = paramUrl.split('&');
+				var params = {};
+				for(var index = 0; index < paramStrs.length; index++) {
+					params[paramStrs[index].split('=')[0]] = decodeURI(paramStrs[index].split('=')[1]);
+				}
+				return params[name];
+			}
+			
+			function chk() {
+				 var patrn = /^\d+(\.\d+)?$/;
+				 var result = true;
+				 $("input[type=text]").each(function () {
+					 if (!patrn.exec(this.value)) {
+						 alert("请输入正确的数字！");
+						 result = false;
+					 }
+				 })
+		 
+				 return result;
+		}
+			
+
+		</script>
+
+		
+	</head>
+	
+	<body>
+			<img src="img/gyf-login.png" id="img"/>
+			<form id="h5ICash" method="post" name="h5ICash" action="http://api.worepay.com/app/scanpay/unionApplyQrCode.do">
+				<input type="hidden" id="merchId" name="merchId"/>
+				<p id="merchName" title="merch"></p>
+				<script type="text/javascript">
+						document.getElementById("merchName").innerText= getParamString("merchName");
+						document.getElementById("merchId").value= getParamString("merchId");
+				</script>
+				<p title="remark">添加备注</p>
+				<input id="amt" type="text" name="txnAmt" placeholder="消费金额" onchange="if(!this.value.match(/^\d+(\.\d+)?$/)){alert('只能输入数字');this.value='';}else{ this.value=this.value*100;}"/>
+ 
+				<i title="cny"></i>
+				<input type="button" onclick="javascript:pay();" value="支付"/>
+			</form>
+			<div id="icon">
+				<a href="#"><p >&nbsp;&nbsp;工易付支付</p></a>
+			</div>
+	</body>
+
+</html>

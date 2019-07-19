@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>我的商户</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;overflow: hidden;}
+			.header_box{position: absolute;top: 0px; width: 100%;z-index: 100;}
+			.tab_box{
+				margin: 10px 0 0;
+				border-bottom: 1px solid #CECECE;
+				
+			}
+			.title_ul_box,.li_list_box{
+				border-bottom: 1px solid #CECECE;
+				overflow: hidden;
+			}
+			.title_li_box{
+				display: inline-block;
+				width: 24%;text-align: center;
+				line-height: 52px;font-size: 12px;
+				font-weight: bold;
+			}
+			.user_list_box{
+				display: inline-block;
+				width: 24%;text-align: center;
+				line-height:25px;
+			}
+			
+			.list_box{top: 105px;overflow-x: hidden;}
+			
+		</style>
+	</head>
+	<body>
+		<div class="header_box">
+			<div class="tab_box">
+				<div id="segmentedControl" style="line-height: 60px;" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
+					<a class="mui-control-item tabChange" id="direct" href="#item1" data-type = "00">直推商户</a>
+					<a class="mui-control-item tabChange" id="indirect" href="#item2" data-type = "01">间推商户</a>
+				</div>
+			</div>
+			<ul class="title_ul_box">
+				<li class="title_li_box">商户</li>
+				<li class="title_li_box">注册时间</li>
+				<li class="title_li_box">开通状态</li>
+				<li class="title_li_box">等级</li>
+			</ul>
+		</div>
+		
+		<div class="list_box mui-content mui-scroll-wrapper" id="refreshContainer">
+			<div class="mui-scroll" id="item1">
+				<ul id="cc" class="user_list userList  mui-table-view mui-table-view-chevron">
+
+				</ul>
+				
+			</div>
+			<div class="mui-scroll" id="item2">
+				<!--<ul class="user_list indirectUserList mui-table-view mui-table-view-chevron">
+					
+				</ul>-->
+				<ul class="user_list userList  mui-table-view mui-table-view-chevron">
+				</ul>
+			</div>
+			
+		</div>
+	</body>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		
+			
+			
+		mui.init();
+		var merchId,type;
+		//直推商户merch/getSubMerch.do
+		$(function(){
+            $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+				console.log(reg, r);
+			}
+			//得到url参数  
+			type = $.getUrlParam('type');
+			merchId = $.getUrlParam('merchId');
+			console.log('type===========',type);
+			//根据type不同显示tab选项
+			if(type=='00'){
+				console.log('切换0')
+				$('#direct').remove('mui-active');
+				$('#item2').remove('mui-active');
+				$('#direct').addClass('mui-active');
+				$('#item1').addClass('mui-active');
+//				directType(type);
+			}else if(type=='01'){
+				console.log('切换1')
+				$('#direct').remove('mui-active');
+				$('#item1').remove('mui-active');
+				$('#indirect').addClass('mui-active');
+				$('#item2').addClass('mui-active');
+//				directType(type);
+			}
+			
+		})
+		//显示列表
+		mui.init({
+			pullRefresh: {
+				container: '#refreshContainer', //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+				up: {
+					height: 50, //可选,默认false.自动上拉加载一次
+					contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+					auto:true,
+					contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+					callback: function(){
+						directType(type)
+					}
+				}
+			}
+		});
+
+		//列表数据渲染
+		var html = '';
+		function directType(type){
+			setTimeout(function(){
+				mui('#refreshContainer').pullRefresh().endPullupToRefresh(false);
+				var page = 1;
+				var pageSize = 10;
+				var url = urlpath+'merch/getSubMerch.do';
+				
+				type = $('.mui-active').data('type');
+				
+				console.log('type====',type);
+				$.ajax({
+					type:"post",
+					url:url,
+					async:false,
+					data:{
+						merchId:merchId,
+						merchName:merchName,
+						type:type,
+						page:page,
+						pageSize:pageSize,
+						version:version
+					},
+					success:function(data){
+						console.log('获取商户信息',data);
+						if(data.code == 200){
+							//遍历生成列表
+							console.log(data.data.list.length);
+							if(type == '00'){
+								if(data.data.list.length>0){
+									html = '';
+									for(var i = 0;i < data.data.list.length;i++){
+										html +=`<li class="li_list_box">
+											<div class="user_list_box">${data.data.list[i].merchId}.substring(0, 3)+"****"+tel.substr(tel.length-4)<p style="margin:0px">${data.data.list[i].merchName}</p></div>
+											<div class="user_list_box" style="line-height: 1;position:relative;top:7px;">${data.data.list[i].createTime}</div>
+											<div class="user_list_box">${data.data.list[i].isNetting}</div>
+											<div class="user_list_box">${data.data.list[i].merchLevel}</div>
+										</li>`;
+									}
+									$('.userList').html(html);
+									
+								}else{
+									mui.alert('您还未有推荐商户,赶紧去推荐吧~');
+								}
+							}else if(type == '01'){
+								if(data.data.list.length>0){
+									html = '';
+									for(var i = 0;i < data.data.list.length;i++){
+										html += `<li class="li_list_box">
+											<div class="user_list_box">${data.data.list[i].merchId}.substring(0, 3)+"****"+tel.substr(tel.length-4)<p style="margin:0px">${data.data.list[i].merchName}</p></div>
+											<div class="user_list_box" style="line-height: 1;position:relative;top:7px;">${data.data.list[i].createTime}</div>
+											<div class="user_list_box">${data.data.list[i].isNetting}</div>
+											<div class="user_list_box">${data.data.list[i].merchLevel}</div>
+										</li>`;
+									}
+									$('.userList').html(html);
+//									$('.indirectUserList').html(html);
+								}else{
+									mui.alert('您还未有推荐商户,赶紧去推荐吧~');
+								}
+							}else{
+								mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+							}
+							
+						}else{
+							mui.toast(data.message);
+						}
+						
+					}
+				});
+			},500);
+		}
+		
+		
+		
+		
+		//直推点击事件
+		$('#direct').on('tap',function(e){
+			directType($(this).attr('data-type'));
+		})
+		//间推点击事件
+		$('#indirect').on('tap',function(e){
+			directType($(this).attr('data-type'));
+		})
+		
+		
+		
+	</script>
+</html>

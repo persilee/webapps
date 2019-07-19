@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>还款记录</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../../lib/font_nic/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style type="text/css">
+			body{
+				background-color: #fff;
+			}
+			.detail_box{
+				padding-bottom: 50px;
+			}
+			
+			.ul_detail {
+				margin: 0 12px;
+			}
+			.ul_detail>li{
+				padding: 18px 0;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.detail_box_s1{
+				color: #666;
+				font-size: 15px;
+			}
+			.detail_box_b1{
+				float: right;
+				color: #666;
+				font-size: 15px;
+			}
+			.detail_box_b1_un{
+				float: right;
+				color: #999999;
+				font-size: 15px;
+			}
+			.detail_box_b2{
+				float: right;
+				color: #333;
+				font-size: 15px;
+			}
+			.detail_p2{
+				text-align: right;
+				color: #666;
+				padding-top: 5px;
+			}
+			.detail_p3{
+				padding-top: 5px;
+			}
+			.detail_box_s2,.detail_box_s3{
+				color: #666;
+			}
+			.detail_box_s3{
+				float: right;
+			}
+			.detail_box_s4{
+				font-size: 15px;
+    			color: #000;color: #333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="detail_box">
+			<ul class="ul_detail">
+				<li>
+					<p class="detail_p1 clearfix toDetail">
+						<span class="detail_box_s1">还款</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b1 detail_box_b1_un">未完成</b>
+					</p>
+					<p class="detail_p2">2018.03.15</p>
+					<p class="detail_p3">
+						<span class="detail_box_s1">消费</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b1 detail_box_b1_un">未完成</b>
+					</p>
+					<p class="detail_p3 clearfix">
+						<span class="detail_box_s2">还款还款还款还款还款还款还款</span>
+						<span class="detail_box_s3">2018.03.25</span>
+					</p>
+				</li>
+				<li>
+					<p class="detail_p1 clearfix">
+						<span class="detail_box_s1">还款</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b2">已完成</b>
+					</p>
+					<p class="detail_p2">2018.03.15</p>
+					<p class="detail_p3">
+						<span class="detail_box_s1">消费</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b2">已完成</b>
+					</p>
+					<p class="detail_p3 clearfix">
+						<span class="detail_box_s2">还款还款还款还款还款还款还款</span>
+						<span class="detail_box_s3">2018.03.25</span>
+					</p>
+				</li>
+				<li>
+					<p class="detail_p1 clearfix">
+						<span class="detail_box_s1">还款</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b1">未完成</b>
+					</p>
+					<p class="detail_p2">2018.03.15</p>
+					<p class="detail_p3">
+						<span class="detail_box_s1">消费</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b1">未完成</b>
+					</p>
+					<p class="detail_p3 clearfix">
+						<span class="detail_box_s2">还款还款还款还款还款还款还款</span>
+						<span class="detail_box_s3">2018.03.25</span>
+					</p>
+				</li>
+				<li>
+					<p class="detail_p1 clearfix">
+						<span class="detail_box_s1">还款</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b2">已完成</b>
+					</p>
+					<p class="detail_p2">2018.03.15</p>
+					<p class="detail_p3">
+						<span class="detail_box_s1">消费</span>
+						<span class="detail_box_s4">1000.00</span>
+						<b class="detail_box_b2">已完成</b>
+					</p>
+					<p class="detail_p3 clearfix">
+						<span class="detail_box_s2">还款还款还款还款还款还款还款</span>
+						<span class="detail_box_s3">2018.03.25</span>
+					</p>
+				</li>
+				
+			</ul>
+		</div>
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		$('.toDetail').on('click',function(){
+			window.location.href = 'recordDetail.html';
+		})
+	</script>
+
+</html>

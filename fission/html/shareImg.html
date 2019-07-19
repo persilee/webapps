@@ -1,0 +1,496 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link rel="stylesheet" type="text/css" href="../lib/swiper-4.2.6/dist/css/swiper.css"/>
+		<link rel="stylesheet" type="text/css" href="../lib/layer/mobile/need/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<title>图片分享</title>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			
+			/*.bg_color{
+				height: 320px;
+				background-color: #D53C27;
+				border-bottom-left-radius: 40%;
+				border-bottom-right-radius: 40%;
+			}*/
+			.bg_color{position: fixed;top: 0;width: 100%;z-index: -1;}
+			.bg_color img{width: 100%;}
+			.show_img{
+				/*position: fixed;*/
+				margin-top: 50px;width: 100%;
+				height: 60%;
+			}
+			.show_area{height: 360px;width: 200px;}
+			.show_area img{width: 100%;height: 100%; margin: 0 auto;display: block;}
+			.share_btn{
+				width: 80%;
+				margin: 50px auto 0;
+				background-color: #D53C27;
+				line-height: 44px;color: #FFFFFF;
+				text-align: center;
+				border-radius: 10px;
+				font-size: 18px;
+			}
+			
+			.bg_img{display: none;}
+			.paint_canvas{
+				z-index: 10000;
+				text-align: center;
+				margin: 0 auto;
+				display: block;
+			}
+			.paint_canvas img{width: 100%;}
+			
+			.swiper-slide {
+			    background-position: center;
+			    background-size: cover;
+			}
+			.init_bg{position: relative;}
+			
+			.show_init{margin-top: 85%;}
+			
+			.width100{width: 100%;}
+			.width100 img{width: 100%;}
+			.qrcode{
+				z-index: 1;
+				position: absolute;
+				bottom: 85px;
+				left:40%;
+				background-color: #FFFFFF;
+				margin: 0 auto 17px 11px;
+			}
+			.qrcode2{
+				z-index: 1;
+				position: absolute;
+				bottom: 70px;
+				left: 23%;
+				background-color: #FFFFFF;
+				margin: 0 auto 17px 11px;
+			}
+			
+			.qrcode img{
+				width: 100%;height: 100%;
+				margin: 0 auto;
+			}
+			
+			/*正在加载*/
+			.load_pop,.code_pop{
+				height: 100%;
+				width: 100%;
+				background-color: #666666;
+				opacity: .8;
+				position: fixed;
+				top: 0;
+				z-index: 100000;
+			}
+			.load_text{
+				width: 62%;line-height: 6;text-align: center;
+				border-radius: 10px;font-size: 16px;
+				position: absolute;
+				left: 30%;
+				top: 10px;
+				z-index: 100001;
+			}
+			.load_text img{width: 100%;}
+
+		</style>
+	</head>
+	<body>
+		<div class="clearfix">
+			<div class="bg_color"><img src="../img/share/bg_bg.jpg"/></div>
+			<div class="show_img clearfix">
+				<div class="swiper-container">
+				   <div class="swiper-wrapper">
+				      	<div class="swiper-slide show_area">
+				      		<img class="share1" id="pic1" src="../img/share/bg_share4.png" />
+				      	</div>
+				      	<div class="swiper-slide show_area">
+				      		<img class="share2" id="pic2" src="../img/share/bg_share6.png" />
+				      	</div>
+				    </div>
+				    <div class="swiper-pagination"></div>
+				</div>
+				  	
+			</div>
+			<div class="share_btn shareBtn">-</div>
+		</div>
+		<ul class="show_init initShow">
+			<li class="width100 init_bg clearfix" id="init1">
+				<img src="../img/share/7c9e992e1cf9f49eb1f5f932cff941d.jpg" alt="" />
+				<div class="qrcode" id="qrcode1"></div>
+			</li>
+			<li class="width100 init_bg clearfix" id="init2">
+				<img src="../img/share/0d8c6f896de367fef2ae6062af5c691.jpg" alt="" />
+				<div class="qrcode2" id="qrcode2"></div>
+			</li>
+		</ul>
+		<!-- <div class="clearfix">
+			<div class="bg_color"><img src="../img/share/bg_bg.jpg"/></div>
+			<div class="show_img clearfix">
+				<div class="swiper-container">
+				   <div class="swiper-wrapper">
+				      	<div class="swiper-slide show_area">
+				      		<img class="share1" id="pic1" src="../img/share/bg_share1.png" />
+				      	</div>
+				      	<div class="swiper-slide show_area">
+				      		<img class="share2" id="pic2" src="../img/share/bg_share2.png" />
+				      	</div>
+				      	<div class="swiper-slide show_area">
+				      		<img class="share3" id="pic3" src="../img/share/bg_share3.png" />
+				      	</div>
+				    </div>
+				    <div class="swiper-pagination"></div>
+				</div>
+				  	
+			</div>
+			<div class="share_btn shareBtn">-</div>
+		</div>
+		<ul class="show_init initShow">
+			<li class="width100 init_bg clearfix" id="init1">
+				<img src="../img/share/bg_share1.png" alt="" />
+				<div class="qrcode" id="qrcode1"></div>
+			</li>
+			<li class="width100 init_bg clearfix" id="init2">
+				<img src="../img/share/bg_share2.png" alt="" />
+				<div class="qrcode" id="qrcode2"></div>
+			</li>
+			<li class="width100 init_bg clearfix" id="init3">
+				<img src="../img/share/bg_share3.png" alt="" />
+				<div class="qrcode" id="qrcode3"></div>
+			</li>
+		</ul> -->
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="../js/qrcode.js"></script>
+	<script src="../lib/swiper-4.2.6/dist/js/swiper.js"></script>
+	<script src="../js/html2canvas.js" ></script>
+	<script src="../lib/layer/layer.js"></script>
+	<script src="../lib/sha1.js"></script>
+	<script src="../lib/wxShare_data.js"></script>
+	<script type="text/javascript">
+		/*------轮播图------*/
+		var swiper = new Swiper('.swiper-container', {
+	      	effect:'coverflow',
+	      	grabCursor:true,
+	      	centeredSlides:true,
+	      	slidesPerView:'auto',
+	      	coverflowEffect:{
+	        	rotate:50,
+	        	stretch:0,
+	        	depth:100,
+	        	modifier:1,
+	        	slideShadows:true,
+	     	},
+	      	pagination: {
+	        	el:'.swiper-pagination',
+	      	},
+	      	on: {
+		    	slideChange: function () {
+		    		/*swiper.activeIndex;
+		    		console.log('slideIndex',slideIndex);*/
+		    	}
+		  	}
+	  });
+	    /*--------自动获取参数---------*/
+	   	var tempData,tempCode; 
+	   	var term_type,topBranchNo,merchId;
+	    $(function(){
+	    	
+	    	layer.load(2,{
+	    		time: 5*1000,
+	    		shade: [0.6,'#666666']
+	    	});
+	    	console.log('swiper.activeIndex',swiper.activeIndex);
+	    	$.getUrlParam = function(name) {
+	    		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	    		var r = window.location.search.substr(1).match(reg);
+	    		if(r != null) return unescape(r[2]);
+	    		return null;
+	    	//console.log(reg, r);
+	    	}
+	    	//得到url参数  
+	    	merchId = $.getUrlParam('merchId');
+	    	term_type = $.getUrlParam('term_type');
+	    	topBranchNo = $.getUrlParam('topBranchNo');
+	    	tempData = sessionStorage.getItem('tempData',tempData);
+			tempCode = sessionStorage.getItem('tempCode',tempCode);
+	    	/*-------获取缓存qrcode Url-----------*/
+	    	if(tempData==null || tempCode==null || tempCode==undefined || tempCode==undefined){
+	    		getShareUrl();
+	    	}
+			console.log('tempData======',tempCode,tempData);
+			if(term_type=='0'){
+				$(".shareBtn").html("长按上面图片即可分享");
+			}else{
+				$(".shareBtn").html("立即分享");
+			}
+	    	combQrcode();
+combQrcode1();
+	    	/*combQrcode2();
+	    	combQrcode3();*/
+	    	
+	    	setTimeout(function(){
+	    		$('.initShow').hide();
+	    	},800);
+	    });
+	    
+	    function getShareUrl(){
+			var url = urlpath + 'merch/getShareUrl.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo
+				},
+				success:function(data){
+					if(data.code == 200){
+						tempCode = data.code;
+						tempData = data.data;
+					}else{
+						mui.alert(data.message);
+					}
+					
+				}
+			});
+		}
+	    
+	    
+	    /*---------生成二维码---------*/
+	    function combQrcode(){
+	    	for(var i=1;i<=3;i++){
+	    		console.log("i",i);
+		    	var dom = document.getElementById("qrcode"+i);
+				if(tempCode == 200){
+					var qrcode = new QRCode(dom,{
+						width : 190,
+						height : 190,
+						correctLevel : QRCode.CorrectLevel.H
+					});
+					qrcode.clear();
+					qrcode.makeCode(tempData);
+				}
+	    	}
+		}
+
+ 	  /*---------生成二维码---------*/
+		function combQrcode1() {
+			for (var i = 1; i <= 3; i++) {
+				console.log("i", i);
+				var dom1 = document.getElementById("qrcode2" + i);
+				if (tempCode == 200) {
+					var qrcode2 = new QRCode(dom1, {
+						width: 190,
+						height: 190,
+						correctLevel: QRCode.CorrectLevel.H
+					});
+					qrcode2.clear();
+					qrcode2.makeCode(tempData);
+				}
+			}
+		}
+	    /*function combQrcode2(){
+			var dom = document.getElementById("qrcode2");
+			if(tempCode == 200){
+				var qrcode = new QRCode(dom,{
+					width : 190,
+					height : 190,
+					correctLevel : QRCode.CorrectLevel.H
+				});
+				qrcode.clear();
+				qrcode.makeCode(tempData);
+			}
+		}
+		function combQrcode3(){
+			var dom = document.getElementById("qrcode3");
+			if(tempCode == 200){
+				var qrcode = new QRCode(dom,{
+					width : 190,
+					height : 190,
+					correctLevel : QRCode.CorrectLevel.H
+				});
+				qrcode.clear();
+				qrcode.makeCode(tempData);
+			}
+		}*/
+		/*-----------合成图片-------------*/
+		var imgURL;
+		var quality = 0.7;
+		$(function(obj){
+			html2canvas(document.querySelector('#init1')).then(function(canvas){
+		        dataURL =canvas.toDataURL("image/png",quality);
+		        $('.share1').attr('src',dataURL);
+		    	imgURL = dataURL;
+		    	var ctx=canvas.getContext("2d");
+			});
+		})
+		$(function(){
+			var cutBtn2 = document.querySelector('#init2');
+			html2canvas(cutBtn2).then(function(canvas){
+		        dataURL =canvas.toDataURL("image/png",quality);
+		        $('.share2').attr('src',dataURL);
+		    	imgURL = dataURL;
+		    	var ctx=canvas.getContext("2d");
+			})
+		})
+		$(function(){
+			var cutBtn3 = document.querySelector('#init3');
+			html2canvas(cutBtn3).then(function(canvas){
+		        dataURL =canvas.toDataURL("image/png",quality);
+		        $('.share3').attr('src',dataURL);
+		    	imgURL = dataURL;
+		    	var ctx=canvas.getContext("2d");
+			})
+		})
+		
+		var picUrl;
+		/*------点击分享-------*/
+		$('.shareBtn').on('click',function(e){
+			console.log('swiper.activeIndex',swiper.activeIndex)
+	    	if(swiper.activeIndex==0){
+	    		picUrl = $('#pic1').attr('src');
+	    	}else if(swiper.activeIndex==1){
+	    		picUrl = $('#pic2').attr('src');
+	    	}else if(swiper.activeIndex==2){
+	    		picUrl = $('#pic3').attr('src');
+	    	}
+	    	
+			if(term_type!='0'){
+                if(term_type  == '2'){
+                    shareImage();
+                }else if(term_type ==  '1'){
+                    shareClick();
+                }
+			}
+		})
+		/*
+		$('.loadPop').on('click',function(e){
+			$('.loadBox').hide();
+		})
+		*/
+		
+		/*----------微信分享----------*/
+		/*
+		function wxShare(){
+//			console.log(picUrl);
+			//组装FormData对象
+			var fd = new FormData();
+	        fd.append("file",wxdata.dataURLtoBlob(picUrl));
+	        fd.append("fileType","01");
+			uploadFile(fd);   //上传图片到服务器
+			
+//			wxdata.get_access_token(topBranchNo);  // 初始化数据
+
+		}
+		
+		
+		function uploadFile(fd){
+			var index = layer.load(1);
+    		$.ajax({
+    			type : 'POST',
+    			url : "http://new.iccm.yiyoupay.net/wxSer/web/uploadPicture.do",
+    			data : fd,
+    			async : false,
+    			contentType : false,   // 告诉jQuery不要去设置Content-Type请求头
+    			processData : false    // 告诉jQuery不要去处理发送的数据
+    		}).then(function(data) {
+    			console.log(data);
+    			if(data.respCode == "00") {
+//  				$("#imgPath").val("http://121.201.20.215/"+data.data.imgUrl);
+//  				$("#imgName").val("http://121.201.20.215/"+data.data.imgUrl);
+//  				return "http://121.201.20.215/"+data.data.imgUrl;
+    				//组装微信分享数据
+    				wxdata.get_access_token(topBranchNo,"http://new.iccm.yiyoupay.net/wxSer/"+data.data.imgUrl);  // 初始化数据
+    				initWxShare();
+    				layer.close(index);
+    				$('.loadBox').show(); //冒出指引箭头
+    			} else {
+    				layer.msg("上传图片失败", {icon: 2,time: 4000}); 
+    			}
+    		}, function(data) {
+    			layer.msg("上传图片失败【系统异常】", {icon: 2,time: 4000}); 
+    		});
+    	}
+		
+		function initWxShare(){
+			
+            var $wx_account = wxdata.wx_account, // 自定义数据，见wxShare_data.js
+                $wx_share = wxdata.wx_share;    // 自定义数据  ，见wxShare_data.js
+            //配置微信信息
+            wx.config ({   // true:调试时候弹窗
+//          	debug : true,
+                appId : $wx_account[0],  // 微信appid
+                timestamp : $wx_account[1], // 时间戳
+                nonceStr : $wx_account[2],  // 随机字符串
+                signature : $wx_account[3], // 签名
+                jsApiList : [
+                    // 所有要调用的 API 都要加到这个列表中
+                    'onMenuShareTimeline',       // 分享到朋友圈接口
+                    'onMenuShareAppMessage',  //  分享到朋友接口
+                    'onMenuShareQQ',         // 分享到QQ接口
+                    'onMenuShareWeibo'      // 分享到微博接口
+                ]
+            });
+            wx.ready (function () {
+                console.log("config信息验证成功");
+                // 微信分享的数据
+                var shareData = {
+                    "imgUrl" : $wx_share[0],    // 分享显示的缩略图地址
+                    "link" : $wx_share[1],    // 分享地址
+                    "desc" : $wx_share[2],   // 分享描述
+                    "title" : $wx_share[3],   // 分享标题
+                    success : function () {
+                        // 分享成功可以做相应的数据处理
+                        //alert("分享成功");
+                    }
+                };
+                wx.onMenuShareTimeline (shareData);
+                wx.onMenuShareAppMessage (shareData);
+                wx.onMenuShareQQ (shareData);
+                wx.onMenuShareWeibo (shareData);
+            });
+
+
+            wx.error(function(res){
+                console.log("config信息验证失败["+res+"]");
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，
+                // 具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，
+                // 对于SPA可以在这里更新签名。
+            });
+		}
+		*/
+		
+		/*----------回调----------*/
+	    //安卓回调分享图片base64 地址
+	    function shareImage(){
+	    	
+	    	if (window.android != null && typeof(window.android) != "undefined") {
+		        var finalInfo = new Object();//将对象转换为json格式
+		        finalInfo.shareImage = encodeURI(picUrl);
+		        var finalInfoStr = JSON.stringify(finalInfo);
+		        window.android.shareImage(finalInfoStr);
+		    } else {
+		        //            alert(typeof(window.android));
+		    }
+	    }
+	    //回调ios
+        function shareClick(){
+        	
+        	var shareImage1 = encodeURI(picUrl);
+            window.webkit.messageHandlers.Share.postMessage({
+            	shareImage:shareImage1
+            });
+       }
+        
+		
+	</script>
+</html>

@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<title>我要分享</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../lib/layer/mobile/need/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #D53C27;margin-bottom: 50px;}
+			.img_box{margin: 20px auto;width: 80%;}
+			.img_box img{width: 100%;}
+			.title_box{width: 75%;margin: 0 auto;color: #FFFFFF;line-height: 45px;font-size: 15px;}
+			.title_l{display: inline-block;width: 22%;}
+			.title_c{display: inline-block;width: 50%;text-align: center;}
+			.title_r{display: inline-block;width: 22%;text-align: right;}
+			.share_ul{margin-top: 10px;}
+			.share_ul li{padding: 20px 10px;margin: 10px 12px 0;background-color: #FFFFFF;}
+			.li_t{border-radius: 10px;}
+			.l_l{width: 60px;float: left;}
+			.l_l img{width: 100%;}
+			.l_r{float: left;line-height: 30px;margin-left: 12px;}
+			.con_title{font-size: 15px;color: #333333;}
+			.con_tips{color: #666666;font-size: 12px;}
+			/*正在加载*/
+			.load_pop,.code_pop{
+				height: 100%;
+				width: 100%;
+				background-color: #666666;
+				opacity: .8;
+				position: fixed;
+				top: 0;
+				z-index: 100000;
+			}
+			.load_text{
+				width: 62%;line-height: 6;text-align: center;
+				border-radius: 10px;font-size: 16px;
+				position: absolute;
+				left: 30%;
+				top: 10px;
+				z-index: 100001;
+			}
+			.load_text img{width: 100%;}
+		</style>
+	</head>
+	<body>
+		<div class="img_box"><img src="../img/share/img_share.png"/></div>
+		<div class="title_box clearfix">
+			<div class="title_l">———</div>
+			<div class="title_c">两种分享方式</div>
+			<div class="title_r">———</div>
+		</div>
+		<ul class="share_ul clearfix">
+			<li class="li_t clearfix shareImg">
+				<div class="l_l"><img src="../img/share/share_pic.png"/></div>
+				<div class="l_r">
+					<p class="con_title">二维码图片</p>
+					<p class="con_tips">通过设计好的携带二维码的图片推广</p>
+				</div>
+			</li>
+			<!-- <li class="li_t clearfix shareContent">
+				<div class="l_l"><img src="../img/share/share_pic2.png"/></div>
+				<div class="l_r">
+					<p class="con_title">文案图片</p>
+					<p class="con_tips">保存图片和文字在朋友圈发布</p>
+				</div>
+			</li> -->
+			<li class="li_t clearfix shareLink">
+				<div class="l_l"><img src="../img/share/share_pic3.png"/></div>
+				<div class="l_r">
+					<p class="con_title">分享链接</p>
+					<p class="con_tips">通过链接分享到朋友圈或者微信好友</p>
+				</div>
+			</li>
+		</ul>
+		<!--加载遮罩-->
+		<div class="loadBox" style="display: none;">
+			<div class="load_pop loadPop"></div>
+			<div class="load_text"><img src="../img/share/share_jt.png"/></div>
+		</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/layer/layer.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="../lib/sha1.js"></script>
+	<script src="../lib/wxShare_data.js"></script>
+		
+	<script type="text/javascript">
+		/*--------自动获取参数---------*/
+	    $(function(){
+	    	$.getUrlParam = function(name) {
+	    		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	    		var r = window.location.search.substr(1).match(reg);
+	    		if(r != null) return unescape(r[2]);
+	    		return null;
+	    	//console.log(reg, r);
+	    	}
+	    	//得到url参数  
+	    	merchId = $.getUrlParam('merchId');
+	    	term_type = $.getUrlParam('term_type');
+	    	topBranchNo = $.getUrlParam('topBranchNo');
+	    	getShareUrl();
+	    	/*layer.load(2,{
+	    		time: 2*1000,
+	    		shade: [0.6,'#666666']
+	    	});*/
+	    });
+	    
+	    /*-------请求获取qrcode Url-----------*/
+	    var tempData,tempCode;
+	    function getShareUrl(){
+			var url = urlpath + 'merch/getShareUrl.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo
+				},
+				success:function(data){
+					if(data.code == 200){
+						tempCode = data.code;
+						tempData = data.data;
+						sessionStorage.setItem('tempData',tempData);
+						sessionStorage.setItem('tempCode',tempCode)
+						console.log('tempData',tempCode,tempData)
+					}else{
+						mui.alert(data.message);
+					}
+					
+				}
+			});
+		}
+		
+		//分享图片
+		$('.shareImg').on('click',function(e){
+			window.location.href = 'shareImg.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&term_type='+term_type;
+		})
+		//文案图片
+		$('.shareContent').on('click',function(e){
+			window.location.href = 'shareContent.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&term_type='+term_type;
+		})
+		//分享链接
+		$('.shareLink').on('click',function(e){
+			if(term_type=='1'){
+				shareUrlIOS();
+			}else if(term_type=='2'){
+				shareUrlAnd();
+			}else{
+				mui.alert('正在升级。。');
+				//$('.loadBox').show();
+				//wxShare();
+			}
+		})
+		
+		
+		/*---------------回调-----------------*/
+		//安卓 回调 ---分享url
+	    function shareUrlAnd() {
+		    if (window.android != null && typeof(window.android) != "undefined") {
+		        var finalInfo = new Object();//将对象转换为json格式
+		        finalInfo.shareUrl = tempData;
+		        var finalInfoStr = JSON.stringify(finalInfo);
+		        window.android.shareUrl(finalInfoStr);
+		    } else {
+		    	//alert(typeof(window.android));
+		    }
+		}
+	    
+	    function shareUrlIOS() {
+            window.webkit.messageHandlers.shareUrlIOS.postMessage({
+            	tempData:tempData,
+            	title:'分享链接'
+            });
+        }
+	    
+	    
+	    
+	    $('.loadPop').on('click',function(e){
+			$('.loadBox').hide();
+		})
+	    
+	    /*----------微信分享----------*/
+		
+		function wxShare(){
+			
+			wxdata.get_access_token(topBranchNo,tempData);  // 初始化数据
+			initWxShare();
+		}
+		
+		function initWxShare(){
+			
+            var $wx_account = wxdata.wx_account, // 自定义数据，见wxShare_data.js
+                $wx_share = wxdata.wx_share;    // 自定义数据  ，见wxShare_data.js
+            //配置微信信息
+            wx.config ({   // true:调试时候弹窗
+                appId : $wx_account[0],  // 微信appid
+                timestamp : $wx_account[1], // 时间戳
+                nonceStr : $wx_account[2],  // 随机字符串
+                signature : $wx_account[3], // 签名
+                jsApiList : [
+                    // 所有要调用的 API 都要加到这个列表中
+                    'onMenuShareTimeline',       // 分享到朋友圈接口
+                    'onMenuShareAppMessage',  //  分享到朋友接口
+                    'onMenuShareQQ',         // 分享到QQ接口
+                    'onMenuShareWeibo'      // 分享到微博接口
+                ]
+            });
+            wx.ready (function () {
+                console.log("config信息验证成功");
+                // 微信分享的数据
+                var shareData = {
+                    "imgUrl" : $wx_share[0],    // 分享显示的缩略图地址
+                    "link" : $wx_share[1],    // 分享地址
+                    "desc" : $wx_share[2],   // 分享描述
+                    "title" : $wx_share[3],   // 分享标题
+                    success : function () {
+                        // 分享成功可以做相应的数据处理
+                        //alert("分享成功");
+                    }
+                };
+                wx.onMenuShareTimeline (shareData);
+                wx.onMenuShareAppMessage (shareData);
+                wx.onMenuShareQQ (shareData);
+                wx.onMenuShareWeibo (shareData);
+            });
+
+
+            wx.error(function(res){
+                console.log("config信息验证失败["+res+"]");
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，
+                // 具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，
+                // 对于SPA可以在这里更新签名。
+            });
+		}
+		
+		
+	</script>
+</html>

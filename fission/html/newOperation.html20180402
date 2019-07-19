@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>微创业</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			.head_box{
+				overflow: hidden;
+				color: #ffffff;
+				background-color: #d53c27;
+				position: relative;
+				overflow: hidden;
+			}
+			.bg_icon{
+				display: block;width: 100%;height: 80%;
+				position: absolute;bottom: 0;
+			}
+			.bg_icon img{
+				width: 100%;height: 100%;
+			}
+			.head_con{z-index: 1000;}
+			.head_top_box{padding-top: 10px;overflow: hidden;}
+			.head_l_top_box{text-align: center;}
+			.head_l_box,.head_r_box{
+				width: 48%;
+				float: left;
+				text-align: center;
+			}
+			.head_l_box{margin-left: 12px;}
+			.head_name{line-height: 32px;}
+			.head_num{line-height: 34px; font-size: 24px;font-weight:bold;display: block;}
+			.head_num1{line-height: 30px; font-size: 18px;font-weight:bold;display: block;}
+			.head_bottom_box{padding: 14px 0 18px;overflow: hidden;}
+			
+			.sel_ul_box{background-color: #FFFFFF;overflow: hidden;}
+			.l_li_box,.r_li_box{
+				width: 49%;margin: 10px 0;
+				float: left;color: #D53C27;
+				text-align: center;
+				line-height: 26px;
+			}
+			.l_li_box{border-right: 1px solid #cecece;}
+			/*等级*/
+			.grade_box{
+				padding: 0 0 13px 0;
+				margin-top:10px;background-color: #FFFFFF;text-align: center;}
+			.grade_title{line-height: 42px;color: #666666;}
+			.grade_status{line-height: 74px;font-size: 24px;font-weight: bold;color: #333333;}
+			.grade{color: #F0922E;}
+			.grade_img{width: 40px;height: 40px;margin: 0 auto 20px;}
+			.grade_img img{width: 100%;height: 100%;}
+			.open_btn{
+				width: 70%;line-height: 40px;
+				margin: 0 auto;color: #FFFFFF;
+				border-radius: 40px;font-size: 16px;
+				background-color: #D53C27;
+			}
+			.open_btn1{display: block;}
+			.open_btn2{display: block;}
+			/*商户类型*/
+			.usertype_ul_box{
+				margin-top: 10px;
+				background-color: #FFFFFF;
+				overflow: hidden;
+			}
+			.usertype_li_box{margin: 12px 0 12px 12px;width: 46%;float: left;}
+			.usertype_li_box:first-child{border-right: 1px solid #CECECE;}
+			.usertype_name{
+				font-size: 16px;color: #333333;
+			}
+			.total_num{
+				line-height: 48px;
+				text-align: center;font-size: 24px;color: #f0922e;
+			}
+			.isvalid_ul_box{overflow: hidden;}	
+			.valid_li_box,.unvalid_li_box{
+				float: left;margin: 6px 0;
+				text-align: center;
+				color: #999999;
+				width: 49%;
+			}
+			.valid_li_box{border-right: 1px solid #CECECE;}
+			.list_box{margin: 10px 0;font-size: 16px;color: #333333; background-color: #FFFFFF;line-height: 50px;}
+			.list_box1{margin: 10px 0 60px 0;}
+			.list_name{margin-left: 12px;}
+			.icon_right{display: block;float: right;margin: 0 12px 0 0;}
+		</style>
+	</head>
+	<body>
+		<div class="head_box">
+			<div class="head_con headCon">
+				<div class="head_top_box">
+					<div class="head_l_top_box">
+						<span class="head_name">总资产（元）</span>
+						<span class="head_num totalNum">--</span>
+					</div>
+				</div>
+				<div class="head_bottom_box">
+					<div class="head_l_box">
+						<span class="head_name">可用账户余额（元）</span>
+						<span class="head_num1 valAmt">--</span>
+					</div>
+					<div class="head_r_box">
+						<span class="head_name">冻结金额（元）</span>
+						<span class="head_num1 fznAmt">--</span>
+					</div>
+				</div>
+			</div>
+			<i class="bg_icon"><img src="../img/bg_icon.png"/></i>
+		</div>
+		<ul class="sel_ul_box">
+			<li class="l_li_box queryProfit">收益流水</li>
+			<li class="r_li_box withdraw">提现</li>
+		</ul>
+		
+		<div class="grade_box" style="height: 170px;">
+			<div class="grade_title ">您当前的等级是 <span class="grade" ></span></div>
+			<div class="showUpper">
+				<div class="grade_status">
+					<div class="tipsCon" style="font-size: 14px;font-weight: normal;line-height: 70px;">正在加载...</div>
+					<div class="grade_img gradeImg" style="display: none;">
+						<!--<img src="../img/icon_putonghuiyuan.png"/>-->
+					</div>
+				</div>
+				<div class="open_btn open_btn1 upperGrade" style="display: none;">我要升级</div>
+			</div>
+			<div class="openTrans" style="display: none;">
+				<div class="grade_status gradeStatus">您暂未开通微创业</div>
+				<div class="open_btn open_btn2 openBus">我要开通</div>
+			</div>
+			
+			
+		</div>
+		
+		<ul class="usertype_ul_box userTypeNUm">
+			<li class="usertype_li_box directType">
+				<div class="usertype_name">直推商户</div>
+				<div class="total_num sumDirect">--</div>
+				<ul class="isvalid_ul_box">
+					<li class="valid_li_box">
+						<span class="valid_name">有效：</span>
+						<span class="valid_num aDirect">--</span>
+					</li>
+					<li class="unvalid_li_box">
+						<span class="unvalid_name">无效：</span>
+						<span class="unvalid_num direct">--</span>
+					</li>
+				</ul>
+			</li>
+			<li class="usertype_li_box indirectType">
+				<div class="usertype_name">间推商户</div>
+				<div class="total_num sumIndirect">--</div>
+				<ul class="isvalid_ul_box">
+					<li class="valid_li_box">
+						<span class="valid_name">有效：</span>
+						<span class="valid_num aIndirect">--</span>
+					</li>
+					<li class="unvalid_li_box">
+						<span class="unvalid_name">无效：</span>
+						<span class="unvalid_num indirect">--</span>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<div class="list_box toShare">
+			<span class="list_name">我要分享</span>
+			<span class="icon_right"><img src="../img/icon_you.png"/></span>
+		</div>
+		
+		<div class="list_box list_box1 toMyLand">
+			<span class="list_name">我的地盘</span>
+			<span class="icon_right"><img src="../img/icon_you.png"/></span>
+		</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,term_type;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			//需判空
+			console.log('term_type=====',term_type)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+		});
+		
+		
+		//总资产
+		//本地接口http://192.168.0.211:8080/merch/getMerchAcct.do?merchId=15999519806
+		
+		//接口地址http://121.201.20.239:9758/appservice/merch/queryTrans.do?merchId=15999519806&page=1&pageSize=1
+		$(function(){
+			moneyTotal();
+		})
+		function moneyTotal(){
+			//15999519806
+			var url = urlpath+'merch/getMerchAcct.do?merchId='+merchId;
+			var data = {
+				avlbBal:'',
+				fznAmt:'',
+				syAmt:'',
+				sumAmt:'',
+				feeType:'',
+				feeValue:'',
+				version:''
+			};
+			$.ajax({
+				type:"post",
+				url:url,
+				async:true,
+				data:data,
+				success:function(data){
+					console.log('资产==',data);
+					console.log('merchId==',merchId);
+					if(data.code==200){
+						if(merchId!='' && merchId!=null){
+							$('.totalNum').html(data.data.sumAmt);
+							$('.valAmt').html(data.data.avlbBal);
+							$('.fznAmt').html(data.data.fznAmt);
+						}else{
+							mui.toast('商户号为空');
+						}
+					}else{
+						mui.toast(data.message);
+					}
+				}
+			});
+		}
+		
+		//收益流水
+		$('.queryProfit').on('click',function(){
+			window.location.href = 'queryProfit.html?merchId='+merchId+'&topBranchNo='+topBranchNo+'&term_type='+term_type;
+		});
+		
+		//提现
+		$('.withdraw').on('click',function(){
+			window.location.href = 'withdraw.html?merchId='+merchId+'&topBranchNo='+topBranchNo+'&term_type='+term_type;
+		});
+		
+		//显示商户等级
+		$(function(){
+			showGrade()
+		})
+		function showGrade(){
+			setTimeout(function(){
+				//15999519806
+				//18620028795
+				var url = urlpath+'merch/getMerchAcct.do';
+				$.ajax({
+					type:"post",
+					url:url,
+					async:false,
+					data:{
+						merchId:merchId,
+						version:version
+					},
+					success:function(data){
+						console.log('显示商户等级',data);
+						if(data.code==200){
+							if(data.data.isNetting == 1){
+								$('.gradeImg').show();
+								$('.grade').html(`${data.data.merchLevelName}`);
+								if(data.data.merchLevel == 0){
+									$('.upperGrade').hide();
+									var addAttr =$('.grade').attr('typename','0');
+									console.log('======',addAttr);
+									$('.gradeImg').html(`<img src="../img/huiyuan_super.png"/>`);
+									
+								}else if(data.data.merchLevel == 1){
+									$('.upperGrade').show();
+									var addAttr =$('.grade').attr('typename','1');
+									console.log('======',addAttr);
+									$('.gradeImg').html(`<img src="../img/huiyuan_yiji.png"/>`);
+								}else if(data.data.merchLevel == 2){
+									$('.upperGrade').show();
+									var addAttr =$('.grade').attr('typename','2');
+									console.log('======',addAttr);
+									$('.gradeImg').html(`<img src="../img/huiyuan_erji.png"/>`);
+								}else if(data.data.merchLevel == 3){
+									$('.upperGrade').show();
+									var addAttr =$('.grade').attr('typename','3');
+									console.log('======',addAttr);
+									$('.gradeImg').html(`<img src="../img/huiyuan_putong.png"/>`);
+	//								$('.open_btn1').hide();
+								}
+							}else{
+								$('.grade').html(`${data.data.merchLevelName}`);
+								$('.openTrans').show();
+							}
+						}
+					}
+				});
+				$('.tipsCon').hide();
+			},60);
+		}
+		
+		//我要升级
+		$('.upperGrade').on('click',function(){
+			console.log(topBranchNo);
+			var typename = $('.grade').attr('typename');
+			console.log('typename',typename);
+			//升级openacct=01，开通openacct=00，等级typename（0，1，2，3），终端类型term_type，商户编号merchId，一级代理商编号topBranchNo
+			window.location.href = 'upgrade.html?merchId='+merchId+'&typename='+typename+'&openacct=01&term_type='+term_type+'&topBranchNo='+topBranchNo;
+		});
+		//我要开通业务
+		$('.openBus').on('click',function(){
+			window.location.href = 'openBusiness.html?merchId='+merchId+'&openacct=00&term_type='+term_type+'&topBranchNo='+topBranchNo;
+		})
+		
+		//商户类型统计
+		$(function(){
+			typeStatus()
+		})
+		function typeStatus(){
+			//15999519806
+			//http://192.168.100.156:45607/creditCardCheck/index.html
+			var url = urlpath+'merch/getMerchAcct.do?merchId='+merchId;
+			var data = {
+				indirect:'',
+				direct:'',
+				sumIndirect:'',
+				aDirect:'',
+				aIndirect:'',
+				sumDirect:'',
+				version:''
+			}
+			$.ajax({
+				type:"post",
+				url:url,
+				async:true,
+				data:data,
+				success:function(data){
+					console.log('商户类型==',data);
+					console.log(merchId);
+					if(data.code==200){
+						if(merchId!='' && merchId!=null){
+							$('.sumDirect').html(data.data.sumDirect);
+							$('.aDirect').html(data.data.aDirect);
+							$('.direct').html(data.data.direct);
+							$('.sumIndirect').html(data.data.sumIndirect);
+							$('.aIndirect').html(data.data.aIndirect);
+							$('.indirect').html(data.data.indirect);
+						}else{
+							mui.toast('商户号为空');
+						}
+					}else{
+						mui.toast(data.message);
+					}
+				}
+			});
+		}
+		//商户类型
+		$('.directType').on('click',function(){
+			window.location.href = 'myUser.html?type=00&merchId='+merchId+'&topBranchNo='+topBranchNo+'&term_type='+term_type;
+		})
+		$('.indirectType').on('click',function(){
+			window.location.href = 'myUser.html?type=01&merchId='+merchId+'&topBranchNo='+topBranchNo+'&term_type='+term_type;
+		})
+		//我要分享
+		$('.toShare').on('click',function(){
+			window.location.href = 'toShare.html?merchId='+merchId+'&topBranchNo='+topBranchNo+'&term_type='+term_type;
+		})
+		//我的地盘
+		$('.toMyLand').on('click',function(){
+//			mui.alert('正在努力挖掘中。。')
+			window.location.href = 'myLand.html?merchId='+merchId+'&topBranchNo='+topBranchNo+'&term_type='+term_type;
+		})
+		
+	</script>
+</html>

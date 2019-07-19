@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>交易结果</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			.bg_box{
+				margin: 10px 12px 0;background-color: #fff;overflow: hidden;
+			}
+			.blj_box_con{margin: 0 15px;border-bottom: 1px solid #C2C2C2;}
+			.success_icon{width:50px;height: 50px; margin: 50px auto 20px; line-height: 30px;font-size: 16px;text-align: center;color: #333;}
+			.success_icon img{width: 100%;}
+			.tips2{text-align: center;font-weight: bold; line-height: 18px;color: #333;}
+			.moneyTotal{font-size: 40px;text-align: center;line-height: 80px;}
+			.flag1{font-size: 20px; position: relative;top: -14px;color: #666;}
+			
+			.blj_det{margin-top: 0;padding: 10px 15px;}
+			.jy_box{line-height: 34px;color: #666;}
+			.jy_total_num{float: right;}
+			
+			.jy_tips{
+				line-height: 2;font-size: 14px;color: #D53C27;text-align: center;
+				padding: 0 0 60px 0;
+			}
+			.nextBtn{
+				border: 1px solid #D43C27;
+				text-align: center;width: 80%;color: #D43C27;
+				margin: 50px auto;line-height: 50px;
+				border-radius: 10px;font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bg_box">
+			<div class="blj_box">
+				<div class="blj_box_con">
+					<div class="success_icon"><img src="../img/icon_jyclz.png"/></div>
+					<div class="tips2 stateMsg"></div>
+					<div class="moneyTotal"><span class="flag1">￥</span><span class="paytotal"></span></div>
+					<div class="jy_tips msg"></div>
+				</div>
+			</div>
+			<div class="blj_det">
+				<div class="jy_box">
+					<span class="jy_total">订单号</span>
+					<span class="jy_total_num ORDER_ID"></span>
+				</div>
+				
+			</div>
+			<!--<div class="nextBtn">完成</div>-->
+		</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var stateMsg;
+		var merchId,paytotal,stateCode,msg,ORDER_ID;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return decodeURI(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			paytotal = $.getUrlParam('paytotal');
+			stateCode = $.getUrlParam('stateCode');
+			msg = $.getUrlParam('msg');
+			ORDER_ID = $.getUrlParam('ORDER_ID');
+			console.log('msg',msg,ORDER_ID);
+			if(stateCode ==200){
+				stateMsg = '支付成功';
+			}else if(stateCode ==100){
+				stateMsg = '交易处理中';
+			}else if(stateCode ==400){
+				stateMsg = '交易失败';
+			}
+			$('.stateMsg').html(stateMsg);
+			$('.paytotal').html(paytotal);
+			$('.msg').html(msg);
+			$('.ORDER_ID').html(ORDER_ID);
+			
+		})
+		
+		
+		
+	</script>
+	
+</html>

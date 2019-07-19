@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>银联快捷支付</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/loading.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" href="../css/toPayDetail.css" />
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+		<div class="head_box unionBank">
+			<div class="head_con">
+				<div class="head_l bankLogo"><img src="../img/icon_weixin.png"/></div>
+				<div class="head_m">
+					<span class="head_m_t cardDesc" style="display: block;"></span>
+					<span class="head_m_b"><span class="grey_color acctNo"></span></span>
+				</div>
+				<div class="head_r"><img src="../img/icon_union.png" alt="" class="icon_box" /></div>
+			</div>
+		</div>
+		<div class="main_box">
+			<div class="main_con">
+				<ul class="main_ul">
+					<li class="main_li">
+						<div class="main_li_l">商品</div>
+						<div class="main_li_r1 levelName" style="color: #333333;"></div>
+					</li>
+					<li class="main_li">
+						<div class="main_li_l">支付金额</div>
+						<div class="main_li_r">￥<span class="payNum"></span></div>
+					</li>
+					<li class="main_li">
+						<div class="main_li_l">手机号码</div>
+						<div class="main_li_r1 PHONE_NO"></div>
+					</li>
+					<li class="main_li">
+						<div class="main_li_l">短信验证码</div>
+						<div class="main_li_r3"><input type="tel" placeholder="请输入验证码" maxlength="6" name="" id="CODE" value="" /></div>
+						<div class="main_li_r2">
+							<input type="button" name="" class="yzm_btn getCodeBtn" style="color: #FFFFFF;border-radius: 10px;display: inline-block;float: right;text-align:center;background-color: #F0932F;padding: 0 5px;height: 32px;line-height: 32px;font-size: 12px;" value="发送验证码" />
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<button class="submit_btn submitBtn" id="submitBtn" >确认</button>
+		<div class="popCon" style="display: none;">
+			<div id="loading">
+				<div id="loading-center">
+					<div id="loading-center-absolute" style="color: #FFFFFF;opacity: 1;">
+						<div class="object" id="object_one"></div>
+						<div class="object" id="object_two"></div>
+						<div class="object" id="object_three"></div>
+						<div class="object" id="object_four"></div>
+						<div class="object" id="object_five"></div>
+						<div class="object" id="object_six"></div>
+						<div class="object" id="object_seven"></div>
+						<div class="object" id="object_eight"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script src="../lib/layer/layer.js"></script>
+	<script src="../js/toPayDetail.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+</html>

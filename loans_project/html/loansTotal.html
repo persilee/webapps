@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>一键贷款</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.content_box{margin-top: 10px;background-color: #FFFFFF;}
+			.top_box{padding: 15px 0;margin: 0 12px;border-bottom: 1px solid #CECECE; overflow: hidden;}
+			.logo_box{
+				width: 27px;height: 27px;
+				border: 1px solid #CECECE;
+				border-radius: 50%;float: left;
+			}
+			.logo_box img{width: 100%;height: 100%;padding: 3px;}
+			.m_box{padding: 15px 12px;margin: 0 12px;border-bottom: 1px solid #CECECE; overflow: hidden;}
+			.bank_name{float: left; margin-left: 20px;font-size: 16px;line-height: 1.6;}
+			.title_box{margin: 5px 0;font-size: 18px;font-weight: bold;}
+			.flag_box{font-size: 24px;}
+			.m_box input{width: 88%;font-size: 24px;border: 0; outline: none;margin: 0;}
+			.b_box{margin: 0 12px; padding: 25px 0;font-size: 16px;}
+			.radius_box{padding: 2px;display: inline-block;width: 22px;height: 22px;border: 1px solid #F0932F;border-radius: 50%;}
+			.dolt_orange{
+				width: 100%;height: 100%;
+				background-color: #F0932F;
+				border-radius: 50%;display: inline-block;
+			}
+			.con_box{margin-left: 12px;}
+			.agree_box{color: #D53C27;}
+			.next_btn{
+				margin: 25px auto;width: 90%;text-align: center;
+				background-color: #D53C27;line-height: 44px;border-radius: 5px;
+				color: #FFFFFF;font-size: 16px;
+			}
+			.agree_pop_box{
+				
+				overflow: hidden;
+			}
+			.pop_box{
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #666666;
+				opacity: .7;
+				width: 100%;
+				height: 100%;
+			}
+			.agree_con_box{
+				border-radius: 10px;
+				position: absolute;
+				top: 0;
+				background-color: #FFFFFF;
+				opacity: 1;
+				width: 80%;
+				height: 70%;
+				margin: 25% 10%;
+				z-index: 2;
+				padding: 10px 8px;
+				overflow-x: hidden;
+				font-size: 12px;
+				line-height: 16px;
+				color: #666666;
+			}
+			.agree_title{font-weight: bold;font-size: 16px;text-align: center;line-height: 2;}
+			.agree_con_head1{text-indent: 2em;margin: 5px 0;}
+			.agree_con_head{font-size: 8px;}
+			.agree_con_head2{margin-top: 5px;font-weight: bold;font-size: 12px;}
+			.agree_con_head3{text-indent: 2em;}
+			.border_b{text-decoration:underline;}
+		</style>
+	</head>
+	<body>
+		<div class="content_box">
+			<div class="top_box">
+				<div class="logo_box goodsLogo">
+				</div>
+				<div class="bank_name goodsName"></div>
+			</div>
+			<div class="m_box">
+				<div class="title_box">贷款金额</div>
+				<span class="flag_box">￥ </span>
+				<input type="number" name="loansMon" oninput="if(value.length>9)value=value.slice(0,9); javascript:this.value=this.value.replace(/[^\d\.]/g,'');" class="loansMon" id="loansMon" placeholder="请输入贷款金额" />
+				
+			</div>
+			<div class="b_box">
+				<span class="radius_box">
+					<i class="dolt_orange"></i>
+				</span>
+				<span class="con_box">我已阅读并同意<span class="agree_box agreeBtn">《贷款协议》</span></span>
+			</div>
+			<div class="next_btn nextBtn">下一步</div>
+		</div>
+		<div class="agree_pop_box agreePop" style="display: none;">
+			<div class="pop_box popHide"></div>
+			<div class="agree_con_box">
+				<div class="agree_title">智卡易贷委托服务协议</div>
+				<div class="agree_con_head">尊敬的客户：</div>
+				<div class="agree_con_head1">
+					请您务必审慎阅读、充分理解各条款内容，以及支付该项服务相关费用的具体规定，如您对协议有任何疑问，可向平台客服咨询。
+				</div>
+				<div class="agree_con_head">甲方：<span class="border_b acctName"></span></div>
+				<div class="agree_con_head">身份证号：<span class="border_b idCard"></span></div>
+				<div class="agree_con_head">联系电话：<span class="border_b phoneNo"></span></div>
+				<div class="agree_con_head">乙方：深圳合创信息技术有限公司</div>
+				<div class="agree_con_head">地址：深圳市龙岗区满京华盈丰中心1604</div>
+				<div class="agree_con_head">邮编：518116</div>
+				<div class="agree_con_head">丙方：深圳合创信息技术有限公司</div>
+				<div class="agree_con_head">地址：深圳市龙岗区梅园路梅园大厦301室</div>
+				<div class="agree_con_head">邮编：518116</div>
+				<div class="agree_main">
+					<div class="agree_con_head1">
+						现根据《中华人民共和国合同法》及相关法律法规的规定，甲乙丙三方遵循诚实信用、平等自愿的原则，协商一致现达成协议内容如下：
+					</div>
+					<div class="agree_con_head2">
+						第一条 【协议的范围】
+					</div>
+					<div class="agree_con_head3">
+						本协议是您与合创之间关于您通过智卡易贷平台享受该项服务所订立的服务委托协议。
+					</div>
+					<div class="agree_con_head2">
+						第二条 【使用本服务的方式】
+					</div>
+					<div class="agree_con_head3">
+						本协议采用电子文本形式制成，自您通过智卡易贷平台勾选“一键贷款”签署本协议并勾选“我已阅读并同意《贷款协议》”时即视为本协议文本生效，本协议永久保存在乙方为此设立的专用服务器上备查，各方均认可该形式的协议效力。
+					</div>
+					<div class="agree_con_head2">
+						第三条 【委托主体】
+					</div>
+					<div class="agree_con_head3">
+						1、甲方需为完全行为能力人；
+					</div>
+					<div class="agree_con_head3">
+						2、您同意并确认勾选“我已阅读并同意《贷款协议》”，使用“一键贷款”即可通过智卡易贷平台进行委托贷款服务，同时您将通过智卡易贷平台以您的名义自动签署本协议，并且再次提醒您审慎阅读、充分理解各条款内容。
+					</div>
+					
+					<div class="agree_con_head2">
+						第四条 【委托服务费用】
+					</div>
+					<div class="agree_con_head3">
+						1、您同意并确认勾选本协议通过智卡易贷平台签署的法律文件生效后，合创即可根据本协议的相关规定，对有关款项进行划扣、支付、冻结以及行使其他合法权利，您将对此均予以接受和认可，此处再次提醒您审慎阅读并充分理解各条款内容；
+					
+					</div>
+					<div class="agree_con_head3">
+						2、智卡易贷平台向您提供的服务付出了大量的成本且是无偿的；
+					</div>
+					<div class="agree_con_head3">
+						3、合创依据本协议向您提供该项服务，现您需要并通过智卡易贷平台与合创签订本协议，您需按照签署的本协议依约定向合创信息（第三方）支付该项服务所需的费用，费用标准以委托服务时甲方选定产品当时显示的费用为标准，您通过智卡易贷平台成功获得贷款后，系统将自动从您绑定的储蓄卡中扣取对应费用，智卡易贷平台承诺在您没有成功获得贷款的情况下不会扣取该项服务的服务费用。
+					</div>
+					<div class="agree_con_head2">
+						第五条 【委托期限】
+					</div>
+					<div class="agree_con_head3">
+						自您在智卡易贷平台向合创支付的该项服务费用到账之日起至该项服务终了之日。
+					</div>
+					<div class="agree_con_head2">
+						第六条 【甲乙丙三方声明和保证】
+					</div>
+					<div class="agree_con_head3">
+						一： 甲方声明和保证
+					</div>
+					<div class="agree_con_head3">
+						1、甲方保证所使用的资金为合法取得且甲方对该笔资金拥有所有权及完全处分权；
+					</div>
+					<div class="agree_con_head3">
+						2、甲方保证为履行本协议而向乙方提供的全部资料均合法、真实、有效；
+					</div>
+					<div class="agree_con_head3">
+						3、甲方同意按本协议及智卡易贷平台的相关规则和说明，向合创支付该项服务费用；
+					</div>
+					<div class="agree_con_head3">
+						4、甲方已认真阅读了本协议的有关条款，且对有关条款已不存在任何疑问和异议，并对协议双方的权利、义务、责任与风险有清楚和准确的理解和认识；
+					</div>
+					<div class="agree_con_head3">
+						5、甲方已知悉并认可乙方不对甲方的收益提供任何承诺或保证；
+					</div>
+					<div class="agree_con_head3">
+						二： 乙方声明和保证
+					</div>
+					<div class="agree_con_head3">
+						1、乙方已就本协议及有关交易文件的全部条款和内容向甲方进行了详细的说明和解释；
+					</div>
+					<div class="agree_con_head3">
+						三： 丙方声明和保证
+					</div>
+					<div class="agree_con_head3">
+						1、在任何情形下，智卡易贷平台只是提供投融资网络交易信息及与合创综合服务平台，对甲方的收益不承担保证责任；
+					</div>
+					<div class="agree_con_head3">
+						2、智卡易贷平台保留对可疑交易、非法交易、高风险交易或交易纠纷的独立判断和确定，并有权依法采取暂停交易、终止交易、向有关单位报告等必要处理措施或依有关单位合法指示行事；
+					</div>
+					<div class="agree_con_head2">
+						第七条 【 违约责任】
+					</div>
+					<div class="agree_con_head3">
+						在本协议有效期内，任何一方违反本协议之条款，致使相关方遭受损失的，过错方须赔偿遭受损失方的一切经济损失（包括但不限于诉讼/仲裁费用、律师费、评估费、保全及担保费、差旅费、调查费及其他实现债权所产生的费用等）；双方均有过错的，应根据双方实际过错程度，分别承担各自的过错责任。
+					</div>
+					<div class="agree_con_head2">
+						第八条 【不可抗力、免责及责任限制】
+					</div>
+					<div class="agree_con_head3">
+						1、第三方支付、丙方平台系统停机维护或升级期间；
+					</div>
+					<div class="agree_con_head3">
+						2、电信设备出现故障不能进行数据传输的；
+					</div>
+					<div class="agree_con_head3">
+						3、因病毒、木马、恶意程序攻击、网络拥堵、网络供应商技术调整或故障、网站升级，系统不稳定、系统或设备故障、通讯故障、电力故障、银行原因 、第三方服务瑕疵或政府行为等原因而造成的服务中断或延迟；
+					</div>
+					<div class="agree_con_head3">
+						4、因台风、地震、海啸、洪水、雷电、停电、战争、恐怖袭击等不可抗力因素，造成系统障碍不能提供服务的；
+					</div>
+					<div class="agree_con_head3">
+						5、尽管有前款约定，丙方将采取合理行动积极促使服务恢复正常。
+					</div>
+					<div class="agree_con_head2">
+						第九条 【管辖与法律适用】
+					</div>
+					<div class="agree_con_head3">
+						1、本协议的成立、生效、履行、解释及纠纷解决，适用中华人民共和国法律；
+					</div>
+					<div class="agree_con_head3">
+						2、若本协议项下发生任何纠纷或争议，首先应友好协商解决；协商不成的，任何一方均可就该项争议提交至深圳仲裁委员会根据现行有效的仲裁规则在深圳通过仲裁解决；
+					</div>
+					<div class="agree_con_head2">
+						第十条 【附则】
+					</div>
+					<div class="agree_con_head3">
+						1、本协议系甲方通过智卡易贷平台勾选“一键委托”确认与乙方签订的委托服务协议，以及乙方在智卡易贷平台不时公示之交易规则、说明、公告等涉及甲乙丙三方权利义务的法律文件，共同构成了约束甲乙丙三方在本协议项下提供之该项服务时三方法律关系的协议之整体，甲方均须予以遵守，如有违反，应当自行承担相应的法律后果。
+					</div>
+					<div class="agree_con_head3">
+						2、本协议所需传递的通知、文件、资料等，可采用在智卡易贷金融平台（www.hechuang8.com）上发送站内留言、或联系客服、或联系服务专员等方式推送，协议三方均对此表示认可。
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,topBranchId,id,goodsId;
+		//获取参数
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return decodeURI(r[2]);
+				return null;
+				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			id = $.getUrlParam('goodsId');
+			repayment = $.getUrlParam('repayment');
+			console.log('repayment',decodeURI(repayment));
+			//需判空
+			console.log('id=====',id)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			getLoanGoodsInfoDetail();
+		});
+		
+		//商品详情信息loan/getLoanGoodsInfoDetail.do
+		function getLoanGoodsInfoDetail(){
+			var url = urlpath + 'loan/getLoanGoodsInfoDetail.do';
+			var loansFilter;
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					id:id,
+					merchId:merchId,
+					loansFilter:loansFilter,
+					version:version
+				},
+				success:function(data){
+					if(data.code == 200){
+						//头部信息
+						$('.goodsLogo').html(`<img class="logo_img" src=${data.data.head.goodsLogo} />`)
+						$('.goodsName').html(`${data.data.head.goodsName}`);
+					}else{
+						mui.alert(data.message);
+					}
+				}
+			});
+		}
+		var loansMon;
+		$('#loansMon').on('blur',function(){
+			loansMon = $('.loansMon').val();
+		})
+		
+		//新增贷款记录/loan/addLoanRecord.do
+		function addLoanRecord(){
+			var url = urlpath + 'loan/addLoanRecord.do';
+			var status = '00';
+			var loanTimes = 1;
+			var d = new Date();
+			var Y = d.getFullYear();
+			var M = (d.getMonth() + 1)>10?(d.getMonth() + 1):'0'+(d.getMonth() + 1);
+			var D = d.getDate()>10?d.getDate():'0'+d.getDate();
+			var H = d.getHours()>10?d.getHours():'0'+d.getHours();
+			var Min = d.getMinutes()>10?d.getMinutes():'0'+d.getMinutes();
+			var S = d.getSeconds()>10?d.getSeconds():'0'+d.getSeconds();
+			var insertTime = Y + '' + M + '' + D + '' + H + '' + Min + '' + S;
+			console.log('insertTime',insertTime);
+			loansMon = Number($('.loansMon').val())+'.00';
+			console.log('loansMon11==',loansMon);
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					status:status,
+					loanAmount:loansMon,
+					goodsId:id,
+					loanTimes:loanTimes,
+					repayment:repayment,
+					insertTime:insertTime,
+					version:version
+				},
+				success:function(data){
+					console.log('addLoanRecord==',data);
+					if(data.code == 200){
+						window.location.href = 'firstTrial.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&goodsId='+id+'&loansMon='+loansMon;
+					}else{
+						mui.alert(data.message);
+					}
+				}
+			});
+			
+		}
+		
+		//点击下一步
+		$('.nextBtn').on('click',function(){
+			console.log('loansMon=========',loansMon,typeof(loansMon));
+			if(loansMon>0){
+				var btnArray = ['否', '是'];
+				mui.confirm('确定贷款'+loansMon+'.00'+'元？',function(e){
+					if (e.index == 1) {
+						addLoanRecord();
+			        }
+				});
+			}else{
+				mui.alert('贷款金额必填且不能小于0元');
+			}
+		})
+		
+		//贷款协议按钮
+		$('.agreeBtn').on('click',function(){
+			$('.agreePop').show();
+		})
+		//协议隐藏
+		$('.popHide').on('click',function(){
+			$('.agreePop').hide();
+		})
+		
+		
+		//getMerchInfo.do
+		$(function getMerchInfo(){
+			var url = urlpath + 'merch/getMerchInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					version:'1.1'
+				},
+				success:function(data){
+					if(data.code == 200){
+						$('.acctName').html(data.data.acctName);
+						$('.idCard').html(data.data.idCard);
+						$('.phoneNo').html(data.data.phoneNo);
+					}else{
+						mui.alert(data.message);
+					}
+					
+				}
+			});
+		});
+		
+	</script>
+	
+</html>

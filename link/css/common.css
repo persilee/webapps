@@ -1,0 +1,38 @@
+html {
+	font-size: 62.5%;
+	/*10 ÷ 16 × 100% = 62.5%*/
+}
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #F2F2F2;
+	font-family: "微软雅黑" "arial, helvetica, sans-serif" "blackadder itc";
+	font-size: 1.4rem;
+	color: #333333;
+	/*1.4 × 10px = 14px */
+}
+h1 {
+	font-size: 2.4rem;
+	/*2.4 × 10px = 24px*/
+}
+p,div{margin: 0;padding: 0;}
+a,a:hover,a:active{ 
+	text-decoration: none;
+	color: #333333;
+}
+ul,li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+/*清除浮动代码*/
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	zoom: 1;
+}

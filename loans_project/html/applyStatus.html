@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>申请结果</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.status_pic_box{margin: 90px auto 0;width: 65px;height: 65px;}
+			.status_pic_box img{width: 100%;height: 100%;}
+			.status_name{font-size: 18px;font-weight: bold;text-align: center;margin-top: 18px;}
+			.status_tips{font-size: 16px;text-align: center;margin-top: 18px;}
+			.return_btn{
+				color: #D53C27;font-size: 16px;
+				line-height: 44px;text-align: center;
+				margin: 150px auto 0;border-radius: 5px;
+				border: 1px solid #D53C27;width: 70%;display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="status_pic_box">
+			<img src="../img/icon_chenggong.png" />
+		</div>
+		<div class="status_name">申请成功</div>
+		<div class="status_tips">您的贷款已申请成功，请等待客服联系</div>
+		<div class="return_btn returnBtn">查看我申请的贷款</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		var merchId,topBranchId,id,loansMon;
+		//获取参数
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			id = $.getUrlParam('goodsId');
+			loansMon = $.getUrlParam('loansMon');
+			console.log('loansMon==',loansMon);
+			//需判空
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			//贷款金额
+			$('.loansMon').html(`￥ ${loansMon}`);
+		});
+		
+		$('.returnBtn').on('click',function(){
+			window.location.href = 'loansIndex.html?topBranchNo='+topBranchNo+'&merchId='+merchId;
+		})
+	</script>
+</html>

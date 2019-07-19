@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>我要开通</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;overflow: hidden;}
+			.header_box{
+				height: 150px;width: 100%;
+				/*background: url(../img/bg_opentoubu.png) no-repeat;
+				background-size: 100%;*/
+			}
+			.header_box img{width: 100%;height: 100%;}
+			.slice_box{line-height: 25px;background-color: #D53C27;}
+			.slice_con{opacity: 0;}
+			.benefit_ul_box{
+				margin: 0 12px;
+				box-shadow: 0px 3px 5px #EBEBEB;
+				border-radius: 10px;
+				position: relative;
+				top: -25px;
+				background-color: #FFFFFF;
+			}
+			.benefit_li_box{
+				margin: 0 12px;
+				border-bottom: 1px solid #CECECE;
+				padding: 20px 0;
+				overflow: hidden;
+			}
+			.benefit_li_box:last-child{border: none;}
+			.benefit_li_first_box{padding-top: 40px;}
+			.pay_num{text-align: center;font-size: 18px;}
+			.l_pic_box{width: 40px;height: 40px;float: left;}
+			.l_pic_box img{width: 100%;height: 100%;}
+			.r_con_box{float: left;margin-left: 20px;}
+			.name_box{display: block;font-size: 18px;font-weight: bold;}
+			.con_box{display: block;padding-top: 5px;color: #666666;}
+			.confirm_btn_box{
+				margin: 15px auto;font-size: 16px;
+				width: 90%;line-height: 40px;
+				background-color: #D53C27;color: #FFFFFF;
+				text-align: center;border-radius: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header_box"><img src="../img/bg_opentoubu.png"/></div>
+		<div class="slice_box"><span class="slice_con">123</span></div>
+		<ul class="benefit_ul_box">
+			<!--<li class="benefit_li_box benefit_li_first_box">
+					<div class="pay_num">
+						
+					</div>
+			</li>-->
+			<li class="benefit_li_box benefit_li_first_box">
+				<div class="l_pic_box">
+					<img src="../img/open_yuetixian.png"/>
+				</div>
+				<div class="r_con_box">
+					<span class="name_box">余额提现</span>
+					<span class="con_box">开通后微创业分润余额可提现</span>
+				</div>
+			</li>
+			<li class="benefit_li_box">
+				<div class="l_pic_box">
+					<img src="../img/open_sharefanyong.png"/>
+				</div>
+				<div class="r_con_box">
+					<span class="name_box">分享返佣</span>
+					<span class="con_box">成功分享用户可享受返佣</span>
+				</div>
+			</li>
+			<li class="benefit_li_box">
+				<div class="l_pic_box">
+					<img src="../img/open_vipshengji.png"/>
+				</div>
+				<div class="r_con_box">
+					<span class="name_box">会员升级</span>
+					<span class="con_box">开通会员后可以参与会员升级计划</span>
+				</div>
+			</li>
+		</ul>
+		<div class="confirm_btn_box openBtn">确认开通微创业只需<span class="openVipPrice">xxx</span></div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			openacct = $.getUrlParam('openacct');
+		})
+		//merch/getOpenAmt.do
+		$(function(){
+			getOpenAmt();
+		})
+		function getOpenAmt(){
+			var url = urlpath + 'merch/getOpenAmt.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo,
+					type:'83',
+					version:version
+				},
+				success:function(data){
+					console.log('getOpenAmt==',data);
+					if(data.code == 200){
+						$('.openVipPrice').html(`￥ ${data.data[0].externFee}.00`)
+					}
+				}
+			});
+		}
+		
+		//判断平台下载apkmerch/getDownlandUrl.do
+		function getDownlandUrl(){
+			var url = urlpath + 'merch/getDownlandUrl.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo,
+					version:version
+				},
+				success:function(data){
+					console.log('获取apk===',data);
+					if(data.code == 200){
+						mui.confirm('下载并登录app进行操作',function(e){
+							if (e.index == 1) {
+								window.location.href = data.data;
+							}
+						})
+					}else{
+						mui.alert(data.message);
+					}
+				}
+			});
+		}
+		//点击开通
+		$('.openBtn').on('click',function(type){
+			price = $('.openVipPrice').html().substring(2,8);
+//			console.log('price===',price);
+			if(term_type == 0){
+				getDownlandUrl();
+			}else{
+				window.location.href = 'toPay.html?merchId='+merchId+'&price='+price+'&term_type='+term_type+'&openacct='+openacct+'&topBranchNo='+topBranchNo;
+			}
+		});
+	</script>
+</html>

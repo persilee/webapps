@@ -1,0 +1,34 @@
+<html>
+<HEAD>
+    <title>支付订单处理</title>
+    <meta charset="UTF-8">
+</HEAD>
+<BODY>
+<!--<div style="display:block">
+    <form id="orderForm" action="" th:object="${order}">
+        <input type="text" id="url" th:value="${order.url}"/>
+    </form>
+</div>
+<script language="javascript" type="text/javascript">
+    var URL = document.getElementById("url");
+   window.onload = function() {window.location.href=URL}
+</script>
+
+<script th:inline="javascript">
+    var message = [[${message}]];
+    alert("caiwei !");
+	window.onload = function() {top.location.href=weixin://wxpay/bizpayurl?pr=wjbs3y8}
+	//window.onload = function() {window.location.href=message}
+	
+</script>
+-->
+<script type="text/javascript">
+  //  var message = [[${message}]];
+  alert("caiwei !");
+	window.onload = function() {top.location.href="weixin://wxpay/bizpayurl?pr=wjbs3y8" ;}
+	//window.onload = function() {window.location.href=message}
+	
+</script>
+</BODY>
+</html>
+

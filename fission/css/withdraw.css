@@ -1,0 +1,31 @@
+.con_box{
+	background-color: #FFFFFF;
+	overflow: hidden;}
+.tx_ul_box{
+	overflow: hidden;
+}
+.tx_li_box{
+	margin: 0 12px;border-bottom: 1px solid #CECECE;
+}
+.tx_li_box:last-child{border: none;}
+.space_box{padding: 25px 0;overflow: hidden;}
+.tx_name,.logo_box,.bank_name{float: left;line-height: 25px;}
+.logo_box{width: 25px;height: 25px;margin: 0 14px 0 26px;}
+.logo_box img{width: 100%;height: 100%;}
+.tx_name,.tx_name1{font-size: 16px;}
+.bank_name{color: #666666;padding-left: 15px;font-size: 15px;}
+.input_num{font-size: 24px;padding: 5px 0 0 0;}
+.input_num input{
+	font-size: 24px;width: 80%;
+	display: inline-block;
+	border: none;outline: none;
+}
+.tx_li_box1{color: #666666;line-height: 48px;}
+.all_tx{display: inline-block;float: right;color: #D53C27;}
+.confirm_btn{
+	background-color: #D53C27;
+	width: 90%;margin: 32px auto 25px;
+	line-height: 40px;text-align: center;
+	color: #FFFFFF;
+	border-radius: 10px;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>闪付还款</title>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.head_box{
+				margin: 10px 12px 0;
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+				padding: 18px 0;
+				overflow: hidden;
+			}
+			.head_l,.head_m,.head_mr,.hrad_r{
+				float: left;
+			}
+			.head_l{
+				width: 40px;height: 40px;
+				background-color: #FFFFFF;
+				border-radius: 50%;margin-left: 12px;
+			}
+			.head_l img{
+				width: 85%;height: 85%;display: block;
+				position: relative;top: 3px;
+				margin: 0 auto;border-radius: 50%;
+			}
+			.bg_common{
+				background-color: #de475a;
+				box-shadow: 0px 3px 5px #F5CACF;
+			}
+			.bg_green{
+				box-shadow: 0px 3px 5px #C9DEE0;
+				background: -moz-linear-gradient(left,#3d8c87,#246261);
+				background: -webkit-linear-gradient(left,#3d8c87,#246261);
+			    background: -o-linear-gradient(left,#3d8c87,#246261); 
+			}
+			.bg_orange{
+				box-shadow: 0px 3px 5px #F6DFBC;
+				background: -moz-linear-gradient(left,#ebb136,#df901a);
+				background: -webkit-linear-gradient(left,#ebb136,#df901a);
+			    background: -o-linear-gradient(left,#ebb136,#df901a); 
+			}
+			.bg_blue{
+				box-shadow: 0px 3px 5px #C7D1E1;
+				background: -moz-linear-gradient(left,#4b72ad,#36598f);
+				background: -webkit-linear-gradient(left,#4b72ad,#36598f);
+			    background: -o-linear-gradient(left,#4b72ad,#36598f); 
+			}
+			.head_m,.head_mr,.hrad_r{
+				margin-left: 12px;color: #FFFFFF;
+				line-height: 40px;font-size: 16px;
+			}
+			.main_box{
+				margin: 25px 12px 0;overflow: hidden;
+				border-bottom: 1px solid #CECECE;
+			}
+			.main_title{font-size: 16px;margin-left: 12px;}
+			.main_input{line-height: 90px;font-size: 30px;margin-left: 12px;}
+			.main_input input{
+				width: 80%;line-height: 30px;font-size: 30px;
+				border: 0;outline: none;
+			}
+			.agree_box{margin: 18px 12px 0;overflow: hidden;}
+			.agree_l{float: left;width: 20px;height: 20px;}
+			.agree_l img{width: 100%;height: 100%;}
+			.agree_r{float: left;line-height: 20px;margin-left: 12px;color: #666666;}
+			.agree_con{color: #D53C27;}
+			.btn_box{
+				margin: 100px auto 0;text-align: center;
+				line-height: 40px;background-color: #D53C27;
+				color: #FFFFFF;width: 80%;border-radius: 10px;
+			}
+			.next_btn{
+				border: 1px solid #D43C27;
+				text-align: center;width: 80%;color: #D43C27;
+				margin: 20px auto;line-height: 40px;
+				border-radius: 10px;font-size: 16px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div class="head_box bg_common">
+			<div class="head_l"><img src="../../img/bank_logo.png"/></div>
+			<div class="head_m">中国工商银行</div>
+			<div class="head_mr">****<span>1234</span></div>
+			<div class="hrad_r">贷记卡</div>
+		</div>
+		<div class="main_box">
+			<div class="main_title">还款金额</div>
+			<label class="main_input">￥ <input type="number" name="" id="" placeholder="请输入还款金额" /></label>
+		</div>
+		<div class="agree_box">
+			<div class="agree_l"><img src="../../img/icon_selected.png"/></div>
+			<div class="agree_r">我已阅读并同意<span class="agree_con">《闪付还款电子协议》</span></div>
+		</div>
+		<div class="btn_box toNextBtn">去还款</div>
+		<div class="next_btn">查看历史记录</div>
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		
+		$('.toNextBtn').on('tap',function(){
+			var btnArray = ['取消','去认证'];
+			mui.confirm('您当前尚未开通闪付还款业务，请前往开通','提示',btnArray,function(e){
+				if (e.index == 1) {
+					window.location.href = 'toRealName.html';
+		        } else {
+		            
+		        }
+			});
+		})
+	</script>
+	
+</html>

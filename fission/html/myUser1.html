@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>我的商户</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.tab_box{
+				margin: 10px 0 0;
+				border-bottom: 1px solid #CECECE;
+				
+			}
+
+			.title_ul_box,.li_list_box{
+				border-bottom: 1px solid #CECECE;
+				overflow: hidden;
+			}
+			
+			.title_li_box{
+				display: inline-block;
+				width: 23%;text-align: center;
+				line-height: 52px;font-size: 12px;
+				font-weight: bold;
+			}
+			.user_list_box{
+				display: inline-block;
+				width: 24%;text-align: center;
+				line-height: 52px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="tab_box">
+			<div id="segmentedControl" style="line-height: 60px;" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
+				<a class="mui-control-item directType" style="font-weight:bold;" id="indirect"  href="#item2" data-type = "01">间推商户</a>
+			</div>
+		</div>
+		
+		<div>
+			
+			<div id="item2" class="mui-control-content ">
+				<ul class="title_ul_box indirectTitle">
+				
+					<li class="title_li_box">商户</li>
+					<li class="title_li_box">注册时间</li>
+					<li class="title_li_box">开通状态</li>
+					<li class="title_li_box">等级</li>
+				</ul>
+				<ul class="user_list indirectUserList">
+					<!--<li class="li_list_box">
+						<div class="user_list_box">12345678912</div>
+						<div class="user_list_box">20120122</div>
+						<div class="user_list_box">已开通</div>
+						<div class="user_list_box">普通用户</div>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		
+		mui.init();
+		var merchId,type;
+
+		//直推商户merch/getSubMerch.do
+		$(function(){
+            $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+				console.log(reg, r);
+			}
+			//得到url参数  
+			type = $.getUrlParam('type');
+			merchId = $.getUrlParam('merchId');
+			console.log(type);
+
+			console.log('切换1')
+			$('#indirect').remove('mui-active');
+			$('#item1').remove('mui-active');
+			$('#indirect').addClass('mui-active');
+			$('#item2').addClass('mui-active');
+			directType(type);
+		})
+		
+		//间推点击事件
+		$('#indirect').on('tap',function(e){
+			console.log('type2------',type)
+			console.log('click01==',$(this).attr('data-type'));
+			dType = $(this).attr('data-type')
+			directType(dType);
+		})
+		
+		//列表数据渲染
+		var pageSize =1000000000;
+		var flag =true;
+		var html = '';
+		var page = 1;
+		function directType(type){
+			var url = urlpath+'merch/getSubMerch.do';
+			console.log('page==type==',page,type);
+            $.ajax({
+                    type:"post",
+                    url:url,
+                    async:false,
+                    data:{
+                        merchId:merchId,
+                        type:type,
+                        page:page,
+						pageSize:pageSize, 
+                        version:version
+                    },
+                    success:function(data){
+                        console.log('获取间推商户信息',data);
+                        pageSize = data.data.list.length;
+
+                        if(data.code == 200){
+                            console.log('data.data',data.data.list)
+							
+                            //遍历生成列表
+                            console.log(data.data.list.length);
+                            if(data.data.list.length==10){
+                                page++;
+                                listShow(type,data);
+  		//return true;
+                            }else{
+                                
+                                if(flag){
+                                    flag=false;
+                                    listShow(type,data);
+                                }else{
+                                    return false;
+                                }
+                            }
+                            
+                        }else{
+                            mui.toast(data.message);
+                        }
+                        
+                    }
+                });
+		}
+		
+		function listShow(type,data){
+			console.log(type);
+				if(data.data.list.length>0){
+					for(var i = 0;i < data.data.list.length;i++){
+						if(data.data.list[i].isNetting == '已实名'){
+							data.data.list[i].isNetting = data.data.list[i].merchName;
+						}
+						html += '<li class="li_list_box">'+
+						
+							'<div class="user_list_box">'+data.data.list[i].merchId.substring(0, 3)+"****"+data.data.list[i].merchId.substr(data.data.list[i].merchId.length-4)+'</div>'+
+							'<div class="user_list_box" style="line-height: 1;position:relative;top:7px;">'+data.data.list[i].createTime+'</div>'+
+							'<div class="user_list_box">'+data.data.list[i].isNetting+'</div>'+
+							'<div class="user_list_box">'+data.data.list[i].merchLevel+'</div>'+
+						'</li>';
+					}
+					$('.indirectUserList').append(html);
+				}else{
+					/*$('.indirectTitle').hide();*/
+					mui.alert('您还未有推荐商户,赶紧去推荐吧~');
+				}
+		}
+		
+		
+		//计算滚动条滚动过的距离
+		$(window).scroll(function(){
+		    var scrollTop = $(this).scrollTop();//返回匹配元素的滚动条的垂直位置
+		    var scrollHeight = $(document).height();//代表了整个文档的高度
+		    var windowHeight = $(this).height();//代表了当前可见区域的大小
+		    if(scrollTop + windowHeight == scrollHeight){
+		    		directType(dType)
+//		    	console.log('page======',page)
+			}else{
+				
+			}
+		});
+		
+	</script>
+</html>

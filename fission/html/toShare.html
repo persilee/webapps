@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>我要分享</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<style type="text/css">
+			body{
+				background: url('../img/bg_share.png') no-repeat;
+				background-size: 100%;
+				background-color: #f6d410;
+			}
+			.bg_box{width: 100%;position: absolute;top: 0;}
+			.bg_box img{width: 100%;height: 100%;}
+			.big_box{margin: 0 auto;text-align: center;}
+			.code_img{
+				text-align: center;
+				margin: 0 auto;
+			}
+			#qrcode{
+				/*width: 45%;height: 45%;*/
+			}
+			#qrcode img{
+				background-color: #FFFFFF;padding: 7px;
+				margin: 80% auto 20%;
+				border-radius: 10px;
+				width: 50%;height: 50%;
+			}
+			/*.code_img{
+				position: absolute;
+				text-align: center;
+				right: 10%;
+				top: 10%;
+				width: 38%;
+			}
+			#qrcode img{
+				background-color: #FFFFFF;
+				padding: 7px;
+				width: 100%;height: 100%;
+			}*/
+			.save_btn{
+				width: 90%;line-height: 40px;color: #FFFFFF;
+				background-color: #D53C27;text-align: center;
+				border-radius: 10px;margin: 0 auto;
+			}
+			.tips{font-size: 16px;color: #FFFFFF;text-align: center;line-height: 50px;}
+		</style>
+	</head>
+	<body>
+		<!--<div class="bg_box">
+			<img src="../img/bg_share.png"/>
+		</div>-->
+		<div class="big_box">
+			<!--<img class="share_bg" src="../img/bg_share.png" alt="" />-->
+			<div class="code_img qrcodeBox" id="qrcode">
+				
+			</div>
+		</div>
+		<div class="tips" style="opacity: 0;">长按二维码可进行保存</div>
+		
+		<!--<div class="save_btn saveBtn">保存图片</div>-->
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../js/qrcode.js"></script>
+	<script src="../js/jweixin-1.1.0.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchI;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+		});
+		
+		
+		//显示二维码
+		//merch/getShareUrl.do
+		$(function(){
+			showQrcode();
+		})
+		function showQrcode(){
+			var url = urlpath + 'merch/getShareUrl.do';
+			console.log('topBranchNo===',topBranchNo);
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					topBranchNo:topBranchNo
+				},
+				success:function(data){
+					console.log(data);
+					console.log(data.data);
+					if(data.code == 200){
+						var qrcode = new QRCode(document.getElementById("qrcode"), {
+							width : 135,
+							height : 135,
+							correctLevel : QRCode.CorrectLevel.H
+						});
+//						console.log(qrcode);
+						function makeCode () {		
+							qrcode.clear();
+							qrcode.makeCode(data.data);
+						}
+						makeCode();
+					}
+				}
+			});
+		}
+		
+		//保存图片
+		$('.saveBtn').on('click',function(){
+//			mui.alert('图片已保存至')
+//			downloadImg();
+			//截图单击事件  
+			ctx.drawImage(video, 0, 0, width, height);  // 将video中的数据绘制到canvas里  
+			saveImage(canvas, 'screen_' + new Date().getTime() + '.png');  // 存储图片到本地 
+		})
+		
+		//变量声明  
+		var video = document.getElementById('video_1');  
+		var canvas = document.getElementById('canvas_1');  
+		var ctx = canvas.getContext('2d');  
+		var width = 800;  
+		var height = 600;  
+		  
+		canvas.width = width;  
+		canvas.height = height;  
+		
+		function saveImage (canvas, filename) {  
+		  //alert(canvas.toDataURL());  
+		    var image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');  
+		  
+		    saveFile(image, filename || 'file_' + new Date().getTime() + '.png');  
+		}
+		function saveFile(data, filename) {  
+		    var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');  
+		    save_link.href = data;  
+		    save_link.download = filename;  
+		  
+		    var event = document.createEvent('MouseEvents');  
+		    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);  
+		    save_link.dispatchEvent(event);  
+		}  
+		
+		
+		
+		
+		
+		/*function downloadImg(filename,con){
+//			var myCanvas = $('.qrcodeBox').find('canvas')[0].toDataURL('image/png').replace("image/png", "image/octet-stream");
+//			console.log(myCanvas);
+//			window.location.href=myCanvas;
+			var myCanvas = $('.qrcodeBox').find('canvas')[0];
+			var type = 'png';
+			var imgData = myCanvas.toDataURL(myCanvas);
+			var _fixType = function(type) {
+			    type = type.toLowerCase().replace(/png/i, 'png');
+			    var r = type.match(/png|jpeg|bmp|gif/)[0];
+			    return 'image/' + r;
+			};
+   
+			// 加工image data，替换mime type
+			imgData = imgData.replace(_fixType(type),'image/octet-stream');
+			
+			var saveFile = function(data, filename){
+			    var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+			    save_link.href = data;
+			    save_link.download = filename;
+			   
+			    var event = document.createEvent('MouseEvents');
+			    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			    save_link.dispatchEvent(event);
+			};
+			   
+			// 下载后的问题名
+			var filename = 'qrcode_' + (new Date()).getTime() + '.' + type;
+			// download
+			saveFile(imgData,filename);
+		}*/
+		
+	</script>
+</html>

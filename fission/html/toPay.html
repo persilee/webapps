@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>银联云闪付支付</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/toPay.css"/>
+		
+	</head>
+	<body>
+		<div class="bg_box">
+			<div class="pay_head_detail">
+				<div class="pay_title payTitle">--</div>
+				<div class="pay_num">￥<span class="payNum">--</span></div>
+			</div>
+			<div class="tips_box">当前支付方式</div>
+		</div>
+        <!--当前选择-->
+		<!-- mark by chizon 20190518
+        <ul class="paytype_ul_box">
+			<li class="mui-input-row mui-radio paytype_li_box2">
+				<label class="show_box">
+					<span class="icon_box logoUrl"></span>
+					<span class="type_name checkName" data-type=""></span>
+				</label>
+				<div class="icon_queren queRen"></div>
+			</li>
+		</ul> -->
+		
+		<!--银行列表-->
+		<!-- mark by chizon 20190518
+        <div class="tips_box1">可选择其他支付方式</div>
+		<div class="pay_type_box">
+			<div class="pay_con_box comPay">
+				<div class="l_con_box">微信/支付宝支付</div>
+				<div class="r_con_box"><img src="../img/icon_you.png"/></div>
+			</div>
+		</div> --> 
+		<div class="pay_type_box payType">
+			<div class="pay_con_box">
+				<div class="l_con_box">银联云闪付支付</div>
+				<div class="r_con_box"><img src="../img/icon_you.png"/></div>
+			</div>
+		</div>
+		
+		<!--银联快捷支付列表-->
+		<div class="popBOx" style="display: none;">
+			<div class="mui-popup-backdrop mui-active" style="display: block;"></div>
+			<ul class="pay_type_list payTypeSel payTypeList">
+				
+			</ul>
+		</div>
+		<!--微信-支付宝列表-->
+		<div class="popBOx1" style="display: none;">
+			<div class="mui-popup-backdrop mui-active shadowBox1" style="display: block;"></div>
+			<ul class="pay_type_list payTypeSel">
+				<!--<li class="mui-input-row mui-radio paytype_li_box">
+					<label>
+						<span class="icon_box selLogo"><img src="../img/icon_weixin.png"/></span>
+						<span class="type_name selName selWxName">微信支付</span>
+					</label>
+					<input name="radio1" class="radio1 wx0" type="radio" style="top: 10px;" checked="checked" value="-1" />
+				</li>-->
+				<li class="mui-input-row mui-radio paytype_li_box">
+					<label>
+						<span class="icon_box selLogo"><img src="../img/icon_zhifubao.png"/></span>
+						<span class="type_name selNamefbName">支付宝支付</span>
+					</label>
+					<input name="radio1" class="radio1 zfb" type="radio" checked="checked" style="top: 10px;" value="-2" />
+				</li>
+				<!--<li class="mui-input-row mui-radio paytype_li_box">
+					<label>
+						<span class="icon_box selLogo"><img src="../img/icon_weixin.png"/></span>
+						<span class="type_name selName">微信正扫支付</span>
+					</label>
+					<input name="radio1" class="radio1 wx1" type="radio" style="top: 10px;" value="-3" />
+				</li>-->
+				<li class="mui-input-row mui-radio paytype_li_box">
+					<label>
+						<span class="icon_box selLogo"><img src="../img/icon_zhifubao.png"/></span>
+						<span class="type_name selName">支付宝正扫支付</span>
+					</label>
+					<input name="radio1" class="radio1 zfb" type="radio" style="top: 10px;" value="-4" />
+				</li>
+			</ul>
+		</div>
+		
+		<div class="confirm_btn confirmBtn">确认</div>
+		
+		
+		<!--加载遮罩-->
+		<div class="loadBox" style="display: none;">
+			<div class="load_pop"></div>
+			<div class="load_text">正在加载。。。</div>
+		</div>
+		
+		<!--二维码显示-->
+		<div class="codeBox code_box" style="display: none;">
+			<div class="code_pop clickHide"></div>
+			<div class="code_con_box">
+				<div class="code_tips">请使用<span class="seledName">微信</span>扫码支付或保存图片</div>
+				<div class="code_con" id="codeCon"></div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../js/qrcode.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script src="../js/toPay.js"></script>
+	<script type="text/javascript">
+		
+		
+	</script>
+	
+</html>

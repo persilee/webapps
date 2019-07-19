@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>还款明细</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{
+				background-color: #fff;
+			}
+			.main_box1 {
+				margin: 0 12px;
+			}
+			
+			.ulbox1>li {
+				padding: 15px 0;
+			}
+			
+			.ulbox1>li:first-child {
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.ulbox2>li {
+				float: left;
+			}
+			.logo_box{width: 40px;height: 40px;padding: 7px;background-color: #F2F2F2;border-radius: 50%;}
+			.logo_box img{width: 100%;height: 100%;}
+			.ulbox2_2,
+			.ulbox2_3,
+			.ulbox2_4 {
+				line-height: 42px;
+				font-size: 15px;
+				color: #333333;
+			}
+			
+			.ulbox2_2 {
+				margin-left: 12px;
+			}
+			
+			.ulbox2_3 {
+				margin-left: 10px;
+				font-size: 12px;color: #666666;
+				
+			}
+			
+			.ulbox2_4 {
+				margin-left: 10px;
+				font-size: 12px;color: #666666;
+			}
+			
+			.ulbox3 {
+				width: 50%;
+				float: left;
+			}
+			
+			.ulbox3_two {
+				padding-top: 5px;
+			}
+			
+			.ulbox3_span1 {
+				display: inline-block;
+				width: 60px;
+				color: #666666;
+			}
+			.ulbox3_span3{
+				display: inline-block;
+				width: 48px;
+				color: #666666;
+			}
+			.ulbox3_span2 {
+				display: inline-block;
+				padding-left: 7px;
+				color: #333333;
+				font-size: 14px;
+				font-weight: bold;
+			}
+			hr{
+				margin: 0;
+			    padding: 5px 0;
+			    border: none;
+			    background-color: #F2F2F2;
+			}
+			
+			.ul_detail {
+				margin: 0 12px;
+			}
+			.ul_detail>li{
+				padding: 15px 0;
+				border-bottom: 1px solid #ccc;
+			}
+			.detail_list{height: 250px;overflow-x: hidden;}
+			.detail_list>li{border-bottom: 1px solid #CECECE;padding: 15px 0;}
+			.li1_detail {
+				font-weight: bold;
+				font-size: 16px;
+			}
+			.detail_box_s1{
+				color: #666666;
+				font-size: 16px;
+			}
+			
+			.detail_box_b1{
+				float: right;
+				color: #333333;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			.detail_p2{
+				text-align: right;
+				color: #666666;
+				padding-top:5px;
+			}
+			.detail_p3{
+				padding-top: 5px;
+			}
+			.detail_box_s2,.detail_box_s3{
+				color: #666666;
+			}
+			.detail_box_s3{
+				float: right;
+			}
+			.repay_color{color: #D53C27;}
+			.btn_repay{
+				text-align: center;
+				padding: 100px 0 25px;
+			}
+			.finish_btn{
+				background-color: #D43C27;width: 90%;
+				position: fixed;bottom: 2.5%;left: 5%;
+				line-height: 50px;text-align: center;
+				color: #fff;border-radius: 10px;font-size: 18px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main_box">
+			<div class="main_box1">
+				<ul class="ulbox1">
+					<li>
+						<ul class="ulbox2 clearfix">
+							<li class="logo_box cardInst">
+								<!--<img src="../../img/bank_logo.png" />-->
+							</li>
+							<li class="ulbox2_2 cardDesc">-</li>
+							<li class="ulbox2_3 acctNo">-</li>
+							<li class="ulbox2_4 cardType">-</li>
+						</ul>
+					</li>
+					<li class="clearfix">
+						<ul class="ulbox3 clearfix">
+							<li>
+								<span class="ulbox3_span1">还款总金额</span>
+								<span class="ulbox3_span2 Amount">-</span>
+							</li>
+							<li class="ulbox3_two">
+								<span class="ulbox3_span1">开始日期</span>
+								<span class="ulbox3_span2 startDate">-</span>
+							</li>
+						</ul>
+						<ul class="ulbox3 clearfix">
+							<li>
+								<span class="ulbox3_span3">总服务费</span>
+								<span class="ulbox3_span2 feeAmount">-</span>
+							</li>
+							<li class="ulbox3_two">
+								<span class="ulbox3_span3">结束日期</span>
+								<span class="ulbox3_span2 endDate">-</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<hr />
+		<div class="detail_box">
+			<ul class="ul_detail">
+				<li class="li1_detail">
+					还款明细
+				</li>
+				<div class="detail_list detailList">
+					
+				</div>
+				
+			</ul>
+		</div>
+		<div class="finish_btn toRepayBtn">去还款</div>
+		
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,term_type,topBranchNo,cardId,amount,phone,orderId;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			cardId = $.getUrlParam('cardId');
+			amount = $.getUrlParam('amount');
+			phone = $.getUrlParam('phone');
+			console.log(cardId,amount)
+			//需判空
+			console.log('term_type=====',term_type)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+		});
+		
+		//授信规划新增cardManager/createAuthRepayment.do
+		var html = '';
+		var transAmt,returnAmt,feeAmount,msg,msgCode;
+		$(function createAuthRepayment(){
+			var url = urlpath +'cardManager/createAuthRepayment.do';
+			var amount1 = amount+'00';
+			console.log('amount1',amount1)
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					cardId:cardId,
+					amount:amount1,
+					version:version
+				},
+				success:function(data){
+					console.log('授信规划新增createAuthRepayment.do',data);
+					msgCode = data.code;
+					msg = data.message;
+					var detail;
+					if(data.code == 200){
+						//feeAmount =(parseFloat(data.data.feeAmount)/100).toFixed(2);
+						feeAmount =(parseFloat(data.data.depositAmount)/100).toFixed(2);
+						$('.feeAmount').html(feeAmount);
+						$('.Amount').html(amount);
+						$('.startDate').html(data.data.startDate);
+						$('.endDate').html(data.data.endDate);
+						detail = $.parseJSON(data.data.detail);
+						orderId = data.data.orderId;
+						if(detail.length>0){
+							for(var i = 0;i<detail.length;i++){
+								transAmt = detail[i].transAmt;
+								transAmt = transAmt.substring(0,transAmt.length-2);
+								transAmt = transAmt+'.00';
+								returnAmt = detail[i].returnAmt;
+								returnAmt = returnAmt.substring(0,returnAmt.length-2);
+								returnAmt = returnAmt+'.00';
+								html += '<li><p class="detail_p1 clearfix">'+
+									'<span class="detail_box_s1 repay_color">还款</span>'+
+									'<span class="detail_box_b1 repay_color">'+returnAmt+'</span>'+
+								'</p>'+
+								'<p class="detail_p2">'+detail[i].returnDate+'</p>'+
+								'<p class="detail_p3">'+
+									'<span class="detail_box_s1">消费</span>'+
+									'<span class="detail_box_b1">'+transAmt+'</span>'+
+								'</p>'+
+								'<p class="detail_p3 clearfix">'+
+									'<span class="detail_box_s2"></span>'+
+									'<span class="detail_box_s3">'+detail[i].returnDate+'</span>'+
+								'</p></li>'
+								;
+							}
+							$('.detailList').html(html);
+						}
+						
+					}else{
+                        if(msg == "暂未升级，不能使用闪付还款功能！"){
+                            msg = "您是普通用户，暂不能使用闪付还款功能，请升级商家或者企业用户！";
+                        }
+						mui.alert(msg,function(){
+							history.back(-1);
+						});
+						
+					}
+				}
+			});
+		});
+		
+		
+		//获取银行
+		var acctNo;
+		$(function getCardInfo(){
+			var url = urlpath + 'merch/getCardInfo.do'
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					acctNo:cardId,
+					version:version
+				},
+				success:function(data){
+					console.log('获取银行merch/getCardInfo.do',data);
+					if(data.code == 200){
+						if(data.data.length>0){
+							for(var i = 0;i<data.data.length;i++){
+								$('.cardInst').html('<img src="../img/bankLogo/'+data.data[i].cardInst+'.png" />');
+								$('.cardDesc').html(data.data[i].cardDesc);
+								acctNo = data.data[i].acctNo.substr(data.data[i].acctNo.length-4);
+//								console.log('acctNo===',acctNo);
+								$('.acctNo').html('****'+ acctNo);
+								if(data.data[i].cardType == '00'){
+									$('.cardType').html('贷记卡');
+								}else if(data.data[i].cardType == '01'){
+									$('.cardType').html('借记卡');
+								}
+							}
+						}
+					}else{
+						mui.confirm(data.message);
+					}
+					
+					
+				}
+			});
+		});
+		
+		//点击页面跳转
+		var cardName;
+		$('.toRepayBtn').on('click',function(){
+			cardName = $('.cardDesc').html();
+			feeAmount = $('.feeAmount').html();
+			console.log(cardName,feeAmount)
+			if(msgCode == 200){
+				window.location.href = 'unionPay.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&amount='+amount+'&phone='+phone+'&term_type='+term_type+'&orderId='+orderId+'&cardId='+cardId+'&cardName='+cardName+'&feeAmount='+feeAmount;
+			}else{
+				mui.alert(msg);
+			}
+		})
+	</script>
+
+</html>

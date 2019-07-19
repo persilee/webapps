@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">  
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"> 
+		<title>支付订单</title>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.pay_title{
+				line-height: 65px;color: #FFFFFF;text-align: center;font-size: 16px;
+			}
+			.pay_num{text-align: center;font-size: 30px;color: #FFFFFF;padding: 0 0 34px 0;line-height: 30px;}
+			.pay_head_detail{background-color: #D53C27;}
+			.bg_box{background-color: #F2F2F2;overflow: hidden;}
+			.pay_num_box{
+				line-height: 52px;background-color: #FFFFFF;
+				margin: 10px 0 0;padding: 0 12px;
+				overflow: hidden;
+			}
+			.pay_name{float: left;font-size: 16px;color: #666666;}
+			.pay_r_box{float: right;font-weight: bold;}
+			.icon_flag{position: relative;top: -3px;}
+			.total_num{font-size: 16px;}
+			
+			.tips_box{line-height: 45px;font-size: 16px;font-weight: bold;margin-left: 12px;}
+			
+			.paytype_ul_box{background-color: #FFFFFF;}
+			.paytype_li_box{padding: 0 12px;border-bottom: 1px solid #CECECE;}
+			.icon_box{
+				width: 18px;height: 18px;
+				display: inline-block;position: relative;top: 3px;
+			}
+			.icon_box img{width: 100%;height: 100%;}
+			.type_name{margin-left: 10px;font-size: 16px;}
+			
+			.confirm_btn{
+				margin: 100px auto;
+				width: 90%;line-height: 40px;
+				background-color: #D53C27;
+				border-radius: 10px;text-align: center;
+				color: #FFFFFF;font-size: 16px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div class="bg_box">
+			<div class="pay_head_detail">
+				<div class="pay_title payTitle">--</div>
+				<div class="pay_num">￥<span class="payNum">--</span></div>
+			</div>
+			<div class="tips_box">请选择支付方式</div>
+		</div>
+		<ul class="paytype_ul_box">
+			<li class="mui-input-row mui-radio paytype_li_box">
+				<label>
+					<span class="icon_box"><img src="../img/icon_weixin.png"/></span>
+					<span class="type_name">微信支付</span>
+				</label>
+				<input name="radio1" class="radio1" type="radio" style="top: 10px;" value="3503" checked>
+			</li>
+			<!--<li class="mui-input-row mui-radio paytype_li_box">
+				<label>
+					<span class="icon_box"><img src="../img/icon_zhifubao.png"/></span>
+					<span class="type_name">支付宝支付</span>
+				</label>
+				<input name="radio1" class="radio1"  type="radio" value="3505" style="top: 10px;">
+			</li>
+			<li class="mui-input-row mui-radio paytype_li_box">
+				<label>
+					<span class="icon_box"><img src="../img/icon_zhifubao.png"/></span>
+					<span class="type_name">纯API快捷</span>
+				</label>
+				<input name="radio1" class="radio2"  type="radio" value="1031" style="top: 10px;">
+			</li>
+			-->
+		</ul>
+		<div class="confirm_btn confirmBtn">确认支付</div>
+		
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,price,payTotal,levl,typename;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			price = $.getUrlParam('price');
+			openacct = $.getUrlParam('openacct');
+			term_type = $.getUrlParam('term_type');
+			typename = $.getUrlParam('typename');
+			levl = $.getUrlParam('levl');
+			console.log('typename,levl',typename,levl);
+			console.log('typename,levl',typeof(typename),typeof(levl));
+			console.log('price====',price)
+			topBranchNo = $.getUrlParam('topBranchNo');
+			console.log('term_type===',term_type);
+			if(openacct == 01){
+				payTotal= $('.payNum').html(price);
+				$('.payTitle').html('在线升级')
+			}else{
+				//执行获取开通业务金额
+				if(openacct == 00) {
+					openBus();
+					$('.payTitle').html('开通业务')
+				}
+				
+			}
+		});
+		
+		
+		//获取开通业务的金额
+		function openBus(){
+			//trade/openTrans.do
+			var url = urlpath + 'merch/getOpenAmt.do';
+			var data = {
+				merchId:merchId,
+				topBranchNo:topBranchNo,
+				type:'83',
+				version:''
+			}
+			console.log(url);
+			$.ajax({
+				type:"post",
+				url:url,
+				data:data,
+				async:false,
+				success:function(data){
+					console.log('金额===',data)
+					if(data.code == 200){
+						//data.data[0].externFee
+						
+						payTotal =$('.payNum').html(`${price}`);
+						console.log('payTotal111===',payTotal);
+					}
+				}
+			});
+		}
+		
+		//点击确认支付交易
+		$('.confirmBtn').on('click',function(){
+			if(openacct==00){
+				console.log('开通openacct00=',openacct);
+				openTrans();
+				
+			}else if(openacct == 01){
+				console.log('升级openacct01=',openacct);
+				upGrade();
+			}
+		})
+		
+		
+		//开通业务
+		function openTrans(){
+			var ORDER_ID,BUS_CODE;
+			var d = new Date();
+			var times = d.getFullYear() + '' + (d.getMonth() + 1) + '' + d.getDate() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
+	//		console.log(times);
+			console.log('term_type===',term_type)
+			if(term_type == 0){
+				ORDER_ID = 'WX'+times+Math.floor(Math.random()*10000);
+			}else if(term_type == 1){
+				ORDER_ID = 'iOS'+times+Math.floor(Math.random()*10000);
+			}else if(term_type == 2){
+				ORDER_ID = 'And'+times+Math.floor(Math.random()*10000);
+			}
+			console.log(ORDER_ID);
+			var radio1 = $("input[name='radio1']:checked").val();
+			console.log(radio1);
+			var paytotal = $('.payNum').html();
+			console.log('paytotal====',paytotal)
+			if(radio1=="3505"){
+				mui.alert("支付宝支付暂未开通");
+			}else if(radio1=="1031"){
+				mui.alert("纯API快捷支付暂未开通");
+			}else if(radio1=="3503"){
+				var data = {
+					ORDER_ID:ORDER_ID,
+					ORDER_AMT:paytotal,
+					ORDER_TIME:times,
+					USER_TYPE:'02',
+					USER_ID:merchId,
+					SIGN_TYPE:'03',
+					BUS_CODE:'8301',
+					PAY_TYPE:'3503',
+					CCT:'CNY',
+					GOODS_NAME:'业务开通',
+					GOODS_DESC:'业务开通',
+					version:'',
+					
+				}
+				var url = urlpath+'trade/openTrans.do?merchId='+merchId;
+				$.ajax({
+					type:"post",
+					url:url,
+					async:true,
+					data:data,
+					success:function(data){
+						console.log('data=',data);
+						console.log('data==',data.data);
+						if(data.code == 200){
+							var html = `${data.data}`;
+							console.log(html);
+							$('body').html(html);
+						}else{
+							mui.alert(data.message);
+						}
+					}
+				});
+			}
+		}
+		
+		//升级
+		function upGrade(){
+			var ORDER_ID,BUS_CODE;
+			var d = new Date();
+			var times = d.getFullYear() + '' + (d.getMonth() + 1) + '' + d.getDate() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
+	//		console.log(times);
+			console.log('term_type===',term_type)
+			if(term_type == 0){
+				ORDER_ID = 'WX'+times+Math.floor(Math.random()*10000);
+			}else if(term_type == 1){
+				ORDER_ID = 'iOS'+times+Math.floor(Math.random()*10000);
+			}else if(term_type == 2){
+				ORDER_ID = 'And'+times+Math.floor(Math.random()*10000);
+			}
+			if(typename == '3'){
+				if(levl=='0'){
+					BUS_CODE = '8701';
+				}else if(levl=='1'){
+					BUS_CODE = '8601';
+				}else if(levl=='2'){
+					BUS_CODE = '8501';
+				}
+			}else if(typename == '2'){
+				if(levl=='0'){
+					BUS_CODE = '8901';
+				}else if(levl=='1'){
+					BUS_CODE = '8801';
+				}
+			}else if(typename == '1'){
+				if(levl=='0'){
+					BUS_CODE = '8401';
+				}
+			}
+			console.log('BUS_CODE',BUS_CODE);
+			console.log('ORDER_ID',ORDER_ID);
+			var radio1 = $("input[name='radio1']:checked").val();
+			console.log(radio1);
+			var paytotal = $('.payNum').html();
+			console.log('paytotal====',paytotal);
+			if(radio1=="3505"){
+				mui.alert("支付宝支付暂未开通");
+			}else if(radio1=="1031"){
+				mui.alert("纯API快捷支付暂未开通");
+			}else{
+				var data = {
+					ORDER_ID:ORDER_ID,
+					ORDER_AMT:paytotal,
+					ORDER_TIME:times,
+					USER_TYPE:'02',
+					USER_ID:merchId,
+					SIGN_TYPE:'03',
+					BUS_CODE:BUS_CODE,
+					PAY_TYPE:'3503',
+					ADD1:levl,
+					CCT:'CNY',
+					GOODS_NAME:'在线升级',
+					GOODS_DESC:'在线升级',
+					version:''
+				}
+				var url = urlpath+'trade/openTrans.do?merchId='+merchId;
+				$.ajax({
+					type:"post",
+					url:url,
+					async:true,
+					data:data,
+					success:function(data){
+						console.log('data=',data);
+						if(data.code == 200){
+							var html = `${data.data}`;
+							console.log(html);
+							$('body').html(html);
+						}else{
+							mui.alert(data.message);
+						}
+					}
+				});
+			}
+			
+		}
+	</script>
+	
+</html>

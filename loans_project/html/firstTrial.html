@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>贷款初审</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../lib/font_nic/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<style type="text/css">
+			.head_box{
+				position: fixed;top: 0;
+				width: 100%;
+				background-color: #FFFFFF;overflow: hidden;
+			}
+			.loans_money_box{
+				font-size: 24px;margin-top: 20px;color: #D53C27;
+				text-align: center;
+			}
+			.loans_name_box{text-align: center;color: #666666;margin: 10px auto 18px;font-size: 12px;}
+			.content_box{
+				margin-top: 100px;background-color: #FFFFFF;
+				overflow-x: hidden;
+			}
+			.title_box{
+				font-size: 18px;font-weight: bold;
+				margin: 0 12px;line-height: 54px;
+				border-bottom: 1px solid #CECECE;
+			}
+			.ul_list_box{
+				font-size: 16px;
+				overflow: hidden;
+			}
+			.li_list_box{
+				margin: 0 12px;padding: 18px 0;
+				border-bottom: 1px solid #CECECE;
+				overflow: hidden;
+			}
+			.l_con_box{float: left;line-height: 26px;width: 28%;}
+			.r_con_box{float: right;width: 70%;overflow: hidden;}
+			.r_con_box input{
+				line-height: 26px;
+				height: 26px;
+				margin: 0;text-align: right;
+				outline: none;
+				border: 0;width: 90%;
+				float: left;
+				color: #666666;
+				font-size: 14px;
+			}
+			.r_con_box .type_sel{float: right;line-height: 26px;height: 26px;}
+			.tips_box{margin: 18px 12px 0;color: #D53C27;font-size: 12px;}
+			.conmit_btn{
+				line-height: 44px;font-size: 16px;color: #FFFFFF;
+				text-align: center;margin: 50px auto ;width: 90%;
+				background-color: #D53C27;border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="head_box">
+			<div class="loans_money_box loansMon"></div>
+			<div class="loans_name_box">您当前预申请贷款金额</div>
+		</div>
+		<div class="content_box">
+			<div class="title_box">请如实填写以下初审信息</div>
+			<ul class="ul_list_box">
+				<li class="li_list_box">
+					<div class="l_con_box">是否有房</div>
+					<div class="r_con_box isHouse">
+						<input type="text" class="select_con_box isHouseType " placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">是否有车</div>
+					<div class="r_con_box isCar">
+						<input type="text" class="select_con_box isCarType" placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover2" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">有无保单</div>
+					<div class="r_con_box isBaodan">
+						<input type="text" class="select_con_box isBaodanType" placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover3" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">有无社保</div>
+					<div class="r_con_box isShebao">
+						<input type="text" class="select_con_box isShebaoType" placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover4" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">有无公积金</div>
+					<div class="r_con_box isGongjijin">
+						<input type="text" class="select_con_box isGongjijinType" placeholder="请选择" id="" value="" readonly="readonly"/>
+						<span id="openPopover5" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">有无信用卡</div>
+					<div class="r_con_box isCreditCard">
+						<input type="text" class="select_con_box isCreditCardType" placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover6" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">有无微粒贷</div>
+					<div class="r_con_box iswld">
+						<input type="text" class="select_con_box iswldType" placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover7" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">当前学历</div>
+					<div class="r_con_box isEdu">
+						<input type="text" class="select_con_box isEduType" placeholder="请选择" id="" value="" readonly="readonly" />
+						<span id="openPopover8" class="type_sel iconfont icon-you"></span>
+					</div>
+				</li>
+				<li class="li_list_box">
+					<div class="l_con_box">芝麻信用分</div>
+					<div class="r_con_box">
+						<input type="tel" class="creditPoints" oninput="if(value.length>5)value=value.slice(0,5); javascript:this.value=this.value.replace(/[^\d]/g,'');" id="" placeholder="请填写" />
+					</div>
+				</li>
+			</ul>
+			<div class="tips_box">注：最终下款额度取决于您提供的实际真实信息</div>
+			<div class="conmit_btn commitBtn">提交</div>
+		</div>
+		<!--选择菜单-->
+		<div id="popover" class="mui-popover mui-popover1">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType1"><a name="house_01" href="#">无房产</a></li>
+		    	<li class="mui-table-view-cell selectType1"><a name="house_02" href="#">全款购房</a></li>
+		   		<li class="mui-table-view-cell selectType1"><a name="house_03" href="#">一个月以上月供房</a></li>
+		  	</ul>
+		</div>
+		<div id="popover2" class="mui-popover mui-popover2">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType2"><a name="car_01" href="#">无车</a></li>
+		    	<li class="mui-table-view-cell selectType2"><a name="car_02" href="#">全款购车</a></li>
+		   		<li class="mui-table-view-cell selectType2"><a name="car_03" href="#">一年以上月供车</a></li>
+		  	</ul>
+		</div>
+		<div id="popover3" class="mui-popover mui-popover3">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType3"><a name="bao_01" href="#">无保单</a></li>
+		    	<li class="mui-table-view-cell selectType3"><a name="bao_02" href="#">保单满半年</a></li>
+		   		<li class="mui-table-view-cell selectType3"><a name="bao_03" href="#">保单满1年</a></li>
+		   		<li class="mui-table-view-cell selectType3"><a name="bao_04" href="#">保单满2年</a></li>
+		   		<li class="mui-table-view-cell selectType3"><a name="bao_05" href="#">保单满3年以上</a></li>
+		  	</ul>
+		</div>
+		<div id="popover4" class="mui-popover mui-popover4">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType4"><a name="she_01" href="#">无社保</a></li>
+		    	<li class="mui-table-view-cell selectType4"><a name="she_02" href="#">已缴费满一年以上且未间断</a></li>
+		  	</ul>
+		</div>
+		<div id="popover5" class="mui-popover mui-popover5">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType5"><a name="gong_01" href="#">无公积金</a></li>
+		    	<li class="mui-table-view-cell selectType5"><a name="gong_02" href="#">已缴费满一年以上且未间断</a></li>
+		  	</ul>
+		</div>
+		<div id="popover6" class="mui-popover mui-popover6">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType6"><a name="card_01" href="#">无信用卡</a></li>
+		    	<li class="mui-table-view-cell selectType6"><a name="card_02" href="#">已有消费记录且满半年以上</a></li>
+		  	</ul>
+		</div>
+		<div id="popover7" class="mui-popover mui-popover7">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType7"><a name="wei_01" href="#">未开通</a></li>
+		    	<li class="mui-table-view-cell selectType7"><a name="wei_02" href="#">已开通但未使用</a></li>
+		    	<li class="mui-table-view-cell selectType7"><a name="wei_03" href="#">已开通且已使用过</a></li>
+		  	</ul>
+		</div>
+		<div id="popover8" class="mui-popover mui-popover8">
+		  	<ul class="mui-table-view">
+		    	<li class="mui-table-view-cell selectType8"><a name="edu_01" href="#">初中</a></li>
+		    	<li class="mui-table-view-cell selectType8"><a name="edu_02" href="#">高中</a></li>
+		    	<li class="mui-table-view-cell selectType8"><a name="edu_03" href="#">专科</a></li>
+		    	<li class="mui-table-view-cell selectType8"><a name="edu_04" href="#">本科</a></li>
+		    	<li class="mui-table-view-cell selectType8"><a name="edu_05" href="#">本科以上</a></li>
+		    	<li class="mui-table-view-cell selectType8"><a name="edu_06" href="#">其他</a></li>
+		  	</ul>
+		</div>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,topBranchId,id,loansMon;
+		//获取参数
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			id = $.getUrlParam('goodsId');
+			loansMon = $.getUrlParam('loansMon');
+			console.log('loansMon==',loansMon);
+			//需判空
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			
+			//贷款金额
+			$('.loansMon').html(`￥ ${loansMon}`)
+			
+		});
+		
+		//loan/addMerchLoanInfo.do
+		var houseType,carType,policyType,socialSecurityType,providentFundType,creditType,wldType,educationType,creditPoints;
+		var type,merchInfoLoan;
+		
+		function addMerchLoanInfo(){
+			console.log('houseType222==',houseType);
+			console.log('carType222==',carType);
+			console.log('policyType222==',policyType);
+			console.log('socialSecurityType222==',socialSecurityType);
+			console.log('providentFundType222==',providentFundType);
+			console.log('creditType222==',creditType);
+			console.log('wldType222==',wldType);
+			console.log('educationType222==',educationType);
+			creditPoints = Number($('.creditPoints').val());
+			console.log('creditPoints222===',creditPoints);
+			
+			var url = urlpath + 'loan/addMerchLoanInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					merchId:merchId,
+					type:'00',
+					houseType:houseType,
+					carType:carType,
+					policyType:policyType,
+					socialSecurityType:socialSecurityType,
+					providentFundType:providentFundType,
+					creditType:creditType,
+					wldType:wldType,
+					educationType:educationType,
+					creditPoints:creditPoints,
+					version:version
+				},
+				success:function(data){
+					console.log('addMerchLoanInfo',data);
+				}
+				
+			});
+			
+		}
+			
+		
+		//提交
+		$('.commitBtn').on('click',function(){
+			creditPoints = $('.creditPoints').val();
+			console.log('creditPoints========',creditPoints,typeof(creditPoints));
+			if(houseType == '' || houseType == null || houseType == undefined){
+				mui.alert('尚未选择是否有房，请重新选择');
+			}else if(carType == '' || carType == null || carType == undefined){
+				mui.alert('尚未选择是否有车，请重新选择');
+			}else if(policyType == '' || policyType == null || policyType == undefined){
+				mui.alert('尚未选择是否有保单，请重新选择');
+			}else if(socialSecurityType == '' || socialSecurityType == null || socialSecurityType == undefined){
+				mui.alert('尚未选择是否有社保，请重新选择');
+			}else if(providentFundType == '' || providentFundType == null || providentFundType == undefined){
+				mui.alert('尚未选择有无公积金，请重新选择');
+			}else if(creditType == '' || creditType == null || creditType == undefined){
+				mui.alert('尚未选择有无信用卡，请重新选择');
+			}else if(wldType == '' || wldType == null || wldType == undefined){
+				mui.alert('尚未选择有无微粒贷，请重新选择');
+			}else if(educationType == '' || educationType == null || educationType == undefined){
+				mui.alert('尚未选择有无当前学历，请重新选择');
+			}else if(creditPoints == '' || creditPoints == null || creditPoints == undefined || creditPoints < 0){
+				console.log('creditPoints=======',creditPoints)
+				mui.alert('尚未填写芝麻信用分或格式不正确，请重新填写');
+			}else{
+				var btnArray = ['否', '是'];
+				mui.confirm('是否确认提交初审信息？',function(e){
+					if (e.index == 1) {
+			            addMerchLoanInfo();
+			            window.location.href = 'applyStatus.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&goodsId='+id+'&loansMon='+loansMon;
+			        } else {
+			            
+			        }
+				});
+			}
+			
+		})
+		
+		
+		//有无房
+		$('.isHouse').on('click',function(){
+			console.log('选择有无房')
+			mui('.mui-popover1').popover('toggle',document.getElementById("openPopover"));
+		});
+		$('.selectType1').on('click',function(){
+			var isHouseType = $('.isHouseType').val();
+			var selectType1 = $('.selectType1').html();
+			var thisDom = $(this).find('a').attr('name');
+			if(thisDom=='house_01'){
+				var trick = $('.isHouseType').val('无房产');
+				houseType = $('.isHouseType').val();
+				console.log('houseType==',houseType);
+//				console.log("$('.isHouseType').val()==",$('.isHouseType').val())
+				console.log('thisDom1==',thisDom);
+//				console.log('trick1==',trick)
+				mui('.mui-popover1').popover('hide',document.getElementById("openPopover"));
+			}else if(thisDom=='house_02'){
+				var trick = $('.isHouseType').val('全款购房');
+				houseType = $('.isHouseType').val();
+				console.log('houseType==',houseType);
+				console.log('thisDom2==',thisDom)
+//				console.log('trick2==',trick)
+				mui('.mui-popover1').popover('hide',document.getElementById("openPopover"));
+			}else if(thisDom=='house_03'){
+				var trick = $('.isHouseType').val('一个月以上月供房');
+				houseType = $('.isHouseType').val();
+				console.log('houseType==',houseType);
+				console.log('thisDom3==',thisDom)
+//				console.log('trick3==',trick)
+				mui('.mui-popover1').popover('hide',document.getElementById("openPopover"));
+			}
+		});
+		
+		//有无车
+		$('.isCar').on('click',function(){
+			console.log('选择有无车')
+			mui('.mui-popover2').popover('toggle',document.getElementById("openPopover2"));
+		});
+		$('.selectType2').on('click',function(){
+			var isCarType = $('.isCarType').val();
+			var selectType2 = $('.selectType2').html();
+			var thisDom2 = $(this).find('a').attr('name');
+			if(thisDom2=='car_01'){
+				var trick = $('.isCarType').val('无车');
+//				console.log("$('.isCarType').val()==",$('.isCarType').val())
+				carType = $('.isCarType').val();
+				console.log('carType=',carType);
+				console.log('thisDom1==',thisDom2);
+//				console.log('trick1==',trick)
+				mui('.mui-popover2').popover('hide',document.getElementById("openPopover2"));
+			}else if(thisDom2=='car_02'){
+				var trick = $('.isCarType').val('全款购车');
+				carType = $('.isCarType').val();
+				console.log('carType=',carType);
+				console.log('thisDom2==',thisDom2)
+//				console.log('trick2==',trick)
+				mui('.mui-popover2').popover('hide',document.getElementById("openPopover2"));
+			}else if(thisDom2=='car_03'){
+				var trick = $('.isCarType').val('一年以上月供车');
+				carType = $('.isCarType').val();
+				console.log('carType=',carType);
+				console.log('thisDom3==',thisDom2)
+//				console.log('trick3==',trick)
+				mui('.mui-popover2').popover('hide',document.getElementById("openPopover2"));
+			}
+		});
+		
+		
+		//有无保单
+		$('.isBaodan').on('click',function(){
+			console.log('选择有无保单')
+			mui('.mui-popover3').popover('toggle',document.getElementById("openPopover3"));
+		});
+		$('.selectType3').on('click',function(){
+			var isBaodanType = $('.isBaodanType').val();
+			var selectType3 = $('.selectType3').html();
+			var thisDom3 = $(this).find('a').attr('name');
+			if(thisDom3=='bao_01'){
+				var trick = $('.isBaodanType').val('无保单');
+//				console.log("$('.isBaodanType').val()==",$('.isBaodanType').val())
+				policyType = $('.isBaodanType').val();
+				console.log('policyType===',policyType);
+				console.log('thisDom1==',thisDom3);
+//				console.log('trick1==',trick)
+				mui('.mui-popover3').popover('hide',document.getElementById("openPopover3"));
+			}else if(thisDom3=='bao_02'){
+				var trick = $('.isBaodanType').val('保单满半年');
+				policyType = $('.isBaodanType').val();
+				console.log('policyType===',policyType);
+				console.log('thisDom2==',thisDom3)
+//				console.log('trick2==',trick)
+				mui('.mui-popover3').popover('hide',document.getElementById("openPopover3"));
+			}else if(thisDom3=='bao_03'){
+				var trick = $('.isBaodanType').val('保单满1年');
+				policyType = $('.isBaodanType').val();
+				console.log('policyType===',policyType);
+				console.log('thisDom3==',thisDom3)
+//				console.log('trick3==',trick)
+				mui('.mui-popover3').popover('hide',document.getElementById("openPopover3"));
+			}else if(thisDom3=='bao_04'){
+				var trick = $('.isBaodanType').val('保单满2年');
+				policyType = $('.isBaodanType').val();
+				console.log('policyType===',policyType);
+				console.log('thisDom3==',thisDom3)
+//				console.log('trick3==',trick)
+				mui('.mui-popover3').popover('hide',document.getElementById("openPopover3"));
+			}else if(thisDom3=='bao_05'){
+				var trick = $('.isBaodanType').val('保单满3年以上');
+				policyType = $('.isBaodanType').val();
+				console.log('policyType===',policyType);
+				console.log('thisDom3==',thisDom3)
+//				console.log('trick3==',trick)
+				mui('.mui-popover3').popover('hide',document.getElementById("openPopover3"));
+			}
+		});
+		
+		//有无社保socialSecurityType
+		$('.isShebao').on('click',function(){
+			console.log('选择有无保单')
+			mui('.mui-popover4').popover('toggle',document.getElementById("openPopover4"));
+		});
+		$('.selectType4').on('click',function(){
+			var isShebaoType = $('.isShebaoType').val();
+			var selectType4 = $('.selectType4').html();
+			var thisDom4 = $(this).find('a').attr('name');
+			if(thisDom4=='she_01'){
+				var trick = $('.isShebaoType').val('无社保');
+				console.log("$('.isShebaoType').val()==",$('.isShebaoType').val())
+				socialSecurityType = $('.isShebaoType').val();
+				console.log('socialSecurityType===',socialSecurityType);
+				console.log('thisDom1==',thisDom4);
+//				console.log('trick1==',trick)
+				mui('.mui-popover4').popover('hide',document.getElementById("openPopover4"));
+			}else if(thisDom4=='she_02'){
+				var trick = $('.isShebaoType').val('已缴费满一年以上且未间断');
+				socialSecurityType = $('.isShebaoType').val();
+				console.log('socialSecurityType===',socialSecurityType);
+				console.log('thisDom2==',thisDom4)
+//				console.log('trick2==',trick)
+				mui('.mui-popover4').popover('hide',document.getElementById("openPopover4"));
+			}
+		});
+		
+		//有无公积金providentFundType
+		$('.isGongjijin').on('click',function(){
+			console.log('选择有无公积金')
+			mui('.mui-popover5').popover('toggle',document.getElementById("openPopover5"));
+		});
+		$('.selectType5').on('click',function(){
+			var isGongjijinType = $('.isGongjijinType').val();
+			var selectType5 = $('.selectType5').html();
+			var thisDom5 = $(this).find('a').attr('name');
+			if(thisDom5=='gong_01'){
+				var trick = $('.isGongjijinType').val('无公积金');
+				console.log("$('.isGongjijinType').val()==",$('.isGongjijinType').val())
+				providentFundType = $('.isGongjijinType').val();
+				console.log('providentFundType===',providentFundType);
+				console.log('thisDom1==',thisDom5);
+//				console.log('trick1==',trick)
+				mui('.mui-popover5').popover('hide',document.getElementById("openPopover5"));
+			}else if(thisDom5=='gong_02'){
+				var trick = $('.isGongjijinType').val('已缴费满一年以上且未间断');
+				providentFundType = $('.isGongjijinType').val();
+				console.log('providentFundType===',providentFundType);
+				console.log('thisDom2==',thisDom5)
+//				console.log('trick2==',trick)
+				mui('.mui-popover5').popover('hide',document.getElementById("openPopover5"));
+			}
+		});
+		
+		//有无信用卡,creditType,
+		$('.isCreditCard').on('click',function(){
+			console.log('选择有无信用卡')
+			mui('.mui-popover6').popover('toggle',document.getElementById("openPopover6"));
+		});
+		$('.selectType6').on('click',function(){
+			var isCreditCardType = $('.isCreditCardType').val();
+			var selectType6 = $('.selectType6').html();
+			var thisDom6 = $(this).find('a').attr('name');
+			if(thisDom6=='card_01'){
+				var trick = $('.isCreditCardType').val('无信用卡');
+//				console.log("$('.isCreditCardType').val()==",$('.isCreditCardType').val());
+				creditType = $('.isCreditCardType').val();
+				console.log('creditType===',creditType);
+				console.log('thisDom1==',thisDom6);
+//				console.log('trick1==',trick)
+				mui('.mui-popover6').popover('hide',document.getElementById("openPopover6"));
+			}else if(thisDom6=='card_02'){
+				var trick = $('.isCreditCardType').val('已有消费记录且满半年以上');
+				creditType = $('.isCreditCardType').val();
+				console.log('creditType===',creditType);
+				console.log('thisDom2==',thisDom6)
+//				console.log('trick2==',trick)
+				mui('.mui-popover6').popover('hide',document.getElementById("openPopover6"));
+			}
+		});
+		
+		//有无微粒贷7  wldType,
+		$('.iswld').on('click',function(){
+			console.log('选择有无微粒贷')
+			mui('.mui-popover7').popover('toggle',document.getElementById("openPopover7"));
+		});
+		$('.selectType7').on('click',function(){
+			var iswldType = $('.iswldType').val();
+			var selectType7 = $('.selectType7').html();
+			var thisDom7 = $(this).find('a').attr('name');
+			if(thisDom7=='wei_01'){
+				var trick = $('.iswldType').val('未开通');
+//				console.log("$('.iswldType').val()==",$('.iswldType').val());
+				wldType = $('.iswldType').val();
+				console.log('wldType===',wldType);
+				console.log('thisDom1==',thisDom7);
+//				console.log('trick1==',trick)
+				mui('.mui-popover7').popover('hide',document.getElementById("openPopover7"));
+			}else if(thisDom7=='wei_02'){
+				var trick = $('.iswldType').val('已开通但未使用');
+				wldType = $('.iswldType').val();
+				console.log('wldType===',wldType);
+				console.log('thisDom2==',thisDom7)
+//				console.log('trick2==',trick)
+				mui('.mui-popover7').popover('hide',document.getElementById("openPopover7"));
+			}else if(thisDom7=='wei_03'){
+				var trick = $('.iswldType').val('已开通且已使用过');
+				wldType = $('.iswldType').val();
+				console.log('wldType===',wldType);
+				console.log('thisDom3==',thisDom7)
+//				console.log('trick2==',trick)
+				mui('.mui-popover7').popover('hide',document.getElementById("openPopover7"));
+			}
+		});
+		
+		//当前学历8 educationType
+		$('.isEdu').on('click',function(){
+			console.log('选择当前学历')
+			mui('.mui-popover8').popover('toggle',document.getElementById("openPopover8"));
+		});
+		$('.selectType8').on('click',function(){
+			var isEduType = $('.isEduType').val();
+			var selectType8 = $('.selectType8').html();
+			var thisDom8 = $(this).find('a').attr('name');
+			if(thisDom8=='edu_01'){
+				var trick = $('.isEduType').val('初中');
+//				console.log("$('.isEduType').val()==",$('.isEduType').val())
+				educationType = $('.isEduType').val();
+				console.log('educationType===',educationType);
+				console.log('thisDom1==',thisDom8);
+//				console.log('trick1==',trick)
+				mui('.mui-popover8').popover('hide',document.getElementById("openPopover8"));
+			}else if(thisDom8=='edu_02'){
+				var trick = $('.isEduType').val('高中');
+				educationType = $('.isEduType').val();
+				console.log('educationType===',educationType);
+				console.log('thisDom2==',thisDom7)
+//				console.log('trick2==',trick)
+				mui('.mui-popover8').popover('hide',document.getElementById("openPopover8"));
+			}else if(thisDom8=='edu_03'){
+				var trick = $('.isEduType').val('专科');
+				educationType = $('.isEduType').val();
+				console.log('educationType===',educationType);
+				console.log('thisDom3==',thisDom8)
+//				console.log('trick2==',trick)
+				mui('.mui-popover8').popover('hide',document.getElementById("openPopover8"));
+			}else if(thisDom8=='edu_04'){
+				var trick = $('.isEduType').val('本科');
+				educationType = $('.isEduType').val();
+				console.log('educationType===',educationType);
+				console.log('thisDom4==',thisDom8)
+//				console.log('trick2==',trick)
+				mui('.mui-popover8').popover('hide',document.getElementById("openPopover8"));
+			}else if(thisDom8=='edu_05'){
+				var trick = $('.isEduType').val('本科以上');
+				educationType = $('.isEduType').val();
+				console.log('educationType===',educationType);
+				console.log('thisDom5==',thisDom8)
+//				console.log('trick2==',trick)
+				mui('.mui-popover8').popover('hide',document.getElementById("openPopover8"));
+			}else if(thisDom8=='edu_06'){
+				var trick = $('.isEduType').val('其他');
+				educationType = $('.isEduType').val();
+				console.log('educationType===',educationType);
+				console.log('thisDom6==',thisDom8)
+//				console.log('trick2==',trick)
+				mui('.mui-popover8').popover('hide',document.getElementById("openPopover8"));
+			}
+		});
+	</script>
+</html>

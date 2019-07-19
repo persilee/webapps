@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>线下贷款</title>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../lib/mui-master/dist/css/mui.css"/>
+		<style type="text/css">
+			/*body{background-color: #FFFFFF;}*/
+			.search_box{margin: 10px 12px;}
+			.big_box,.hot_box{background-color: #FFFFFF;}
+			.header_box{height: 150px;}
+			.header_box img{width: 100%;height: 100%;}
+			.menu_ul_box{
+				position: relative;top: -25px;
+				margin: 0 12px;
+				background-color: #FFFFFF;
+				box-shadow: 0px 3px 3px #cecece;
+				border-radius: 5px;overflow: hidden;
+			}
+			.menu_li_box{
+				margin: 18px 0;float: left;
+				width: 49%;
+				overflow: hidden;
+			}
+			.menu_li_box:first-child{
+				border-right: 1px solid #CECECE;
+			}
+			.icon_box{
+				width: 40%;
+				margin: 0 auto;
+				display: inline-block;
+				text-align: center;
+			}
+			.icon_pic_box{
+				height: 30px;width: 30px;
+				position: relative;top: 10px;
+				margin: 0 auto;
+			}
+			.icon_pic_box img{width: 100%;height: 100%;}
+			.menu_name{
+				display: inline-block;
+				line-height: 50px;
+			}
+			.hot_title_box{
+				margin: 0 12px;font-size: 18px;
+				font-weight: bold;padding: 0 0 15px;
+				/*border-bottom: 1px solid #CECECE;*/
+			}
+			.hot_ul_box{
+				overflow: hidden;
+			}
+			.hot_li_box{
+				padding: 16px 0;
+				margin: 0 12px;
+				margin-top: 10px;
+				/*border-bottom: 1px solid #CECECE;*/
+			}
+			.hot_li_box:last-child{margin-bottom: 10px;}
+			.hot_l_box{
+				display: inline-block;
+				width: 40px;height: 40px;
+			}
+			.hot_l_box img{width: 100%;height: 100%;}
+			.hot_r_box{display: inline-block;margin-left: 16px;}
+			.hot_r_top_box{font-size: 16px;line-height: 2;}
+			.hot_r_bot_box{font-size: 12px;}
+			.flag_tips{
+				margin: 5px 3px 0;
+				border: 1px solid #CECECE;color: #666666;
+				border-radius: 5px;padding: 1px 3px;
+			}
+			.flag_tips:first-child{background-color: #d94f3c;color: #FFFFFF;}
+			.hot_bot_box{margin: 10px 0 0;}
+			.det_box{font-size: 16px;width: 32%;display: inline-block;}
+			.num_box{line-height: 2;font-weight: bold; color: #666666;display: block;text-align: center;}
+			.num_box1{color: #d53c27;}
+			.name_box{display: block;color: #666666;text-align: center;}
+		</style>
+	</head>
+	<body>
+		<!--<div class="search_box">
+			<div class="mui-input-row mui-search">
+			    <input type="search" class="mui-input-clear" style="margin-bottom: 0px;" placeholder="">
+			</div>
+		</div>-->
+		<div class="big_box">
+			<div class="header_box">
+				<img src="../img/ban.png"/>
+			</div>
+			<ul class="menu_ul_box">
+				<li class="menu_li_box myApply">
+					<div class="icon_box">
+						<div class="icon_pic_box">
+							<img src="../img/icon_shenqing.png"/>
+						</div>
+					</div>
+					<div class="menu_name">我的申请</div>
+				</li>
+				<li class="menu_li_box feeRecord">
+					<div class="icon_box">
+						<div class="icon_pic_box">
+							<img src="../img/icon_jilu.png"/>
+						</div>
+					</div>
+					<div class="menu_name">服务费记录</div>
+				</li>
+			</ul>
+		</div>
+		<div class="hot_box"><div class="hot_title_box">热门推荐</div></div>
+		<ul class="hot_ul_box getLoanGoods"></ul>
+	</body>
+	<script src="../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var page = 1;
+		var html = '';
+		var merchId,topBranchId;
+		//获取参数
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return unescape(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			//需判空
+			console.log('merchId=====',merchId)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			getLoanGoodsInfo();
+			
+		});
+		//贷款商品信息loan/getLoanGoodsInfo.do
+		function getLoanGoodsInfo(){
+			var id,loansFilter;
+			var bankLogo = '';
+			var url = urlpath + 'loan/getLoanGoodsInfo.do';
+			$.ajax({
+				type:"post",
+				url:url,
+				async:false,
+				data:{
+					id:id,
+					merchId:merchId,
+					page:page,
+					pageSize:10,
+					loansFilter:loansFilter,
+					version:version
+				},
+				success:function(data){
+					console.log('getLoanGoodsInfo==',data);
+					if(data.code == 200){
+						console.log(data.data.length);
+						if(data.data.length >0){
+							for(var i = 0;i<data.data.length;i++){
+//								console.log('data.data[i].goodsTag',data.data[i].goodsTag.length);
+//								console.log('data.data[i].id',data.data[i].id);
+							    var html2 = '';
+							    for(var j = 0;j<data.data[i].goodsTag.length;j++){
+//								    console.log('data.data[i].goodsTag1==',data.data[i].goodsTag[j]);
+									html2+=`<span class="flag_tips">${data.data[i].goodsTag[j]}</span>`;
+							    }
+							    
+								html += `<div class="big_box"><li class="hot_li_box loansDet" data-type=${data.data[i].id}>
+									<div class="hot_top_box">
+										<div class="hot_l_box"><img src=${data.data[i].goodsLogo} /></div>
+										<div class="hot_r_box">
+											<div class="hot_r_top_box">${data.data[i].goodsName}</div>
+											<div class="hot_r_bot_box">
+												${html2}
+											</div>
+										</div>
+									</div>
+									<div class="hot_bot_box">
+										<div class="det_box">
+											<span class="num_box num_box1">${data.data[i].loanAmount}</span>
+											<span class="name_box">最高额度</span>
+										</div>
+										<div class="det_box">
+											<span class="num_box">${data.data[i].interest}</span>
+											<span class="name_box">月利息</span>
+										</div>
+										<div class="det_box">
+											<span class="num_box">${data.data[i].lendingDays}天</span>
+											<span class="name_box">放款期限</span>
+										</div>
+									</div>
+								</li></div>
+								`;
+							}
+							$(".getLoanGoods").html(html);
+						}else{
+							mui.alert('暂无贷款产品推荐')
+						}
+					}else{
+						mui.alert(data.message);
+					}
+				}
+			});
+				
+		};
+		
+		
+		//我的申请
+		$('.myApply').on('click',function(){
+//			mui.alert('正在升级中...');
+			window.location.href = 'myApply.html?topBranchNo='+topBranchNo+'&merchId='+merchId;
+		})
+		
+		//服务费记录
+		$('.feeRecord').on('click',function(){
+			mui.alert('正在挖掘中...');
+		})
+		//贷款详情
+		$('.getLoanGoods').on('click','.loansDet',function(){
+			console.log('贷款详情',$(this).data('type'))
+			var goodsid = $(this).data('type');
+			var href = 'loansDetail.html?topBranchNo='+topBranchNo+'&merchId='+merchId+'&goodsId='+goodsid;
+			console.log('href==',href);
+			window.location.href = href;
+		})
+	</script>
+</html>

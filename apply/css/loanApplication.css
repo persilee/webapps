@@ -1,0 +1,324 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #F2F2F2;
+	font-size: 12px;
+	font-family: "微软雅黑" "arial, helvetica, sans-serif" "blackadder itc";
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+ul,
+li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+/*推荐产品*/
+
+.tj_big_box,
+.dk_all_box {
+	margin: 10px 0 0;
+	background-color: #fff;
+}
+
+.tj_title {
+	padding: 10px 12px;
+}
+
+.tj_icon {
+	display: inline-block;
+	width: 5px;
+	height: 20px;
+	background: url('../img/tj_icon.png');
+}
+
+.tj_title span {
+	font-size: 16px;
+	display: inline-block;
+	line-height: 20px;
+	position: relative;
+	left: 5px;
+	top: -4px;
+}
+
+.tj_con_box {
+	background-color: #FFFFFF;
+	padding: 10px 0 16px;
+}
+
+.tj_con_top {
+	margin: 0 12px;
+}
+
+.bank_logo {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+}
+
+.bank_logo img {
+	width: 100%;
+	height: 100%;
+}
+
+.tj_bank_name {
+	position: relative;
+	left: 15px;
+	top: -10px;
+	font-size: 16px;
+}
+
+.tj_bank_pro {
+	padding-left: 25px;
+	color: #666666;
+	position: relative;
+	left: 15px;
+	top: -10px;
+	font-size: 12px;
+}
+
+.tj_pro_ul {
+	padding: 5px 0 0;
+	color: #666;
+	text-align: center;
+	margin: 20px auto 0;
+	overflow: hidden;
+}
+
+.tj_pro_li {
+	width: 33%;
+	float: left;
+}
+
+.pic_box {
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+.pic_box img {
+	width: 100%;
+	height: 100%;
+}
+
+.con_box {
+	margin-top: 10px;
+}
+
+
+/*所有产品*/
+
+.dk_all_box {
+	margin-top: 10px;
+}
+
+.pro_li_box {
+	position: relative;
+	overflow: hidden;
+	margin: 16px 12px 0;
+	border-bottom: 1px solid #CECECE;
+	padding: 11px 0;
+}
+
+.ul_box .pro_li_box:last-child {
+	border-bottom: 0;
+}
+
+.pro_logo_box,
+.pro_con_box {
+	display: inline-block;
+}
+
+.pro_logo_box {
+	width: 40px;
+	height: 40px;
+}
+
+.pro_logo_box img {
+	width: 100%;
+	height: 100%;
+}
+
+.pro_con_box {
+	padding-left: 10px;
+	width: 80%;
+	overflow: hidden;
+}
+
+.pro_name {
+	line-height: 20px;
+	font-size: 14px;
+	position: relative;
+	top: -3px;
+}
+
+.pro_con_pro {
+	line-height: 20px;
+	color: #666666;
+	position: relative;
+	top: 3px;
+}
+
+.hot {
+	display: inline-block;
+	padding: 2px 5px;
+	color: #fff;
+	background-color: #F0932F;
+	border-radius: 7px;
+	position: absolute;
+	right: 35%;
+	top: 5px;
+}
+
+.lx_tips {
+	display: inline-block;
+	padding: 2px 5px;
+	color: #fff;
+	background-color: #F0932F;
+	border-radius: 7px;
+	position: absolute;
+	right: 0%;
+	top: 5px;
+}
+
+.auto_box {
+	background-color: #FFFFFF;
+}
+
+.ul_con_box {
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.li_goods_box {
+	margin: 0 12px;
+	padding: 10px 0;
+	overflow: hidden;
+}
+
+.auto_con_box {
+	overflow: hidden;
+}
+
+.goods_logo_box {
+	float: left;
+	width: 40px;
+	height: 40px;
+}
+
+.goods_logo_box img {
+	width: 100%;
+	height: 100%;
+}
+
+.goods_con_box {
+	margin-left: 10px;
+	float: left;
+	width: 70%;
+}
+
+.goods_name {
+	line-height: 40px;
+	font-size: 16px;
+}
+
+.you_box {
+	float: right;
+	width: 8px;
+	height: 14px;
+	position: relative;
+	top: 15px;
+}
+
+.you_box img {
+	width: 100%;
+	height: 100%;
+}
+
+.tj_big_box1 {
+	background-color: #FFFFFF;
+}
+
+.top_box {
+	margin: 0 12px;
+	padding: 18px 0;
+}
+
+.top_t_t {
+	overflow: hidden;
+}
+
+.top_t_t_l {
+	width: 22px;
+	height: 22px;
+	float: left;
+}
+
+.top_t_t_l img {
+	width: 100%;
+	height: 100%;
+}
+
+.top_t_t_r {
+	float: left;
+	margin-left: 12px;
+	line-height: 22px;
+	font-size: 16px;
+}
+
+.top_t_tips {
+	margin-top: 20px;
+	text-align: center;
+	color: #999999;
+}
+
+.top_t_n {
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.top_ul {
+	overflow: hidden;
+	margin-top: 15px;
+}
+
+.top_li {
+	float: left;
+	width: 30%;
+	overflow: hidden;
+}
+
+.top_icon_l {
+	float: left;
+	width: 14px;
+	height: 14px;
+	margin-left: 35px;
+}
+
+.top_icon_l img {
+	width: 100%;
+	height: 100%;
+}
+
+.top_icon_t {
+	margin-left: 10px;
+	text-align: center;
+}
+
+.btn_box {
+	margin: 18px auto 0;
+	text-align: center;
+	background-color: #D53C27;
+	width: 80%;
+	line-height: 40px;
+	color: #FFFFFF;
+	font-size: 16px;
+	border-radius: 20px;
+}

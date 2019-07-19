@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>闪付还款</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style type="text/css">
+			.process_box{background-color: #FFFFFF;padding: 18px;}
+			.process_top{overflow: hidden;}
+			.icon_li{float: left;}
+			.icon_li:first-child{margin-left: 47px;width: 33%;}
+			.icon_li:nth-child(2){width: 33%;}
+			.icon_temp{width: 20px;height: 20px;}
+			.icon_temp img{width: 100%;height: 100%;}
+			.process_bottom{overflow: hidden;margin-top: 10px;}
+			.temp_con{float: left;width: 33%;text-align: center;color: #999999;}
+			.process_bottom .active{color: #333333;}
+			.border_box{
+				height: 1px;background-color: #CECECE;
+				margin-left: 20px;
+			    position: relative;
+			    top: -10px;
+			}
+			.content_box{background-color: #fff;margin-top: 10px;overflow: hidden;}
+			.img_box{margin: 0 28px;}
+			.title_name{line-height: 50px;text-align: center;}
+			.pic_box{margin: 2px 0;}
+			.pic_box img{width: 100%;height: 100%;}
+			.finish_btn{background-color: #D43C27;width: 80%;
+				margin: 50px auto;line-height: 50px;text-align: center;
+				color: #fff;border-radius: 10px;font-size: 18px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="process_box">
+			<div class="process_top">
+				<li class="icon_li">
+					<div class="icon_temp"><img src="../img/icon_one_ing.png"/></div>
+					<div class="border_box"></div>
+				</li>
+				<li class="icon_li">
+					<div class="icon_temp"><img src="../img/icon_two_un.png"/></div>
+					<div class="border_box"></div>
+				</li>
+				<li class="icon_li">
+					<div class="icon_temp"><img src="../img/icon_three_un.png"/></div>
+				</li>
+			</div>
+			<div class="process_bottom">
+				<li class="temp_con active">授信认证</li>
+				<li class="temp_con">芝麻授权</li>
+				<li class="temp_con">认证付费</li>
+			</div>
+		</div>
+		<div class="content_box">
+			<div class="img_box">
+				<div class="title_name">请拍摄身份证正面照片</div>
+				<div class="pic_box"><img src="../img/bg_idFront.png"/></div>
+			</div>
+			<div class="img_box">
+				<div class="title_name">请拍摄人像面部照片</div>
+				<div class="pic_box"><img src="../img/bg_people.png"/></div>
+			</div>
+			<div class="finish_btn conNextBtn">确认并下一步</div>
+		</div>
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		$('.conNextBtn').on('click',function(){
+			window.location.href = 'toRealOrg.html';
+		})
+	</script>
+</html>

@@ -1,0 +1,37 @@
+body{background-color: #FFFFFF;overflow: hidden;height: 100%;}
+.header_box{
+	height: 150px;width: 100%;
+	/*background: url(../img/bg_opentoubu.png) no-repeat;
+	background-size: 100%;*/
+}
+.header_box img{width: 100%;height: 100%;}
+.slice_box{line-height: 25px;background-color: #D53C27;}
+.slice_con{opacity: 0;}
+.benefit_ul_box{
+	margin: 0 12px;
+	box-shadow: 0px 3px 5px #EBEBEB;
+	border-radius: 10px;
+	position: relative;
+	top: -25px;
+	background-color: #FFFFFF;
+}
+.benefit_li_box{
+	margin: 0 12px;
+	border-bottom: 1px solid #CECECE;
+	padding: 15px 0;
+	overflow: hidden;
+}
+.benefit_li_box:last-child{border: none;}
+.benefit_li_first_box{padding-top: 30px;}
+.pay_num{text-align: center;font-size: 18px;}
+.l_pic_box{width: 40px;height: 40px;float: left;}
+.l_pic_box img{width: 100%;height: 100%;}
+.r_con_box{float: left;margin-left: 20px;}
+.name_box{display: block;font-size: 18px;font-weight: bold;}
+.con_box{display: block;padding-top: 5px;color: #666666;}
+.confirm_btn_box{
+	margin: 15px auto 60px;font-size: 16px;
+	width: 90%;line-height: 40px;
+	background-color: #D53C27;color: #FFFFFF;
+	text-align: center;border-radius: 10px;
+}

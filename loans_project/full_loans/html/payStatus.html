@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta content="yes" name="apple-touch-fullscreen">    
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style">    
+	    <meta content="telephone=no" name="format-detection">
+		<title>闪付还款</title>
+		<link rel="stylesheet" type="text/css" href="../../lib/mui-master/dist/css/mui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<style type="text/css">
+			body{background-color: #FFFFFF;}
+			.bg_box{
+				overflow: hidden;
+			}
+			.blj_box_con{margin: 0 15px;}
+			.success_icon{width:50px;height: 50px; margin: 90px auto 10px; line-height: 30px;font-size: 16px;text-align: center;color: #333;}
+			.success_icon img{width: 100%;}
+			.tips2{text-align: center;font-weight: bold; line-height: 18px;color: #333;}
+			.money_total{font-size: 18px;font-weight: bold; text-align: center;line-height: 3;}
+			
+			.blj_det{margin-top: 0;padding: 10px 15px;}
+			.jy_box{line-height: 34px;color: #666;}
+			.jy_total_num{float: right;}
+			
+			.jy_tips{
+				line-height: 2;font-size: 14px;text-align: center;
+				padding: 0 0 60px 0;
+			}
+			.next_btn{
+				border: 1px solid #D43C27;
+				text-align: center;width: 80%;color: #D43C27;
+				margin: 50px auto;line-height: 50px;
+				border-radius: 10px;font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bg_box">
+			<div class="blj_box">
+				<div class="blj_box_con">
+					<div class="success_icon"><img src="../img/icon_chenggong.png"/></div>
+					<div class="money_total msg">-</div>
+					<div class="jy_tips tipsDet"></div>
+				</div>
+			</div>
+		</div>
+		<!--<div class="next_btn toNextBtn">查看明细</div>-->
+		
+	</body>
+	<script src="../../js/jquery-3.2.1.js"></script>
+	<script src="../js/pathUrl.js"></script>
+	<script src="../../lib/mui-master/dist/js/mui.js"></script>
+	<script type="text/javascript">
+		var merchId,term_type,topBranchNo,cardId,cardName,orderId,msg,msgCode;
+		$(function(){
+			 $.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) return decodeURI(r[2]);
+				return null;
+//				console.log(reg, r);
+			}
+			//得到url参数  
+			merchId = $.getUrlParam('merchId');
+			term_type = $.getUrlParam('term_type');
+			topBranchNo = $.getUrlParam('topBranchNo');
+			cardName = $.getUrlParam('cardName');
+			orderId = $.getUrlParam('orderId');
+			cardId = $.getUrlParam('cardId');
+			msg = $.getUrlParam('msg');
+			msgCode = $.getUrlParam('msgCode');
+			//需判空
+			console.log('term_type=====',term_type)
+			if(topBranchNo==''||topBranchNo==null){
+				mui.alert('机构编号为空，请刷新重试');
+			}
+			$('.msg').html(msg);
+			
+			if(msgCode == 100){
+				$('.tipsDet').html('您的'+cardName+'银行卡尾号（'+cardId+'）'+'的闪付还款服务费支付订单正在处理中，请稍后查看交易账单，如果这笔交易成功我们会为您按时完成还款服务。如果不成功，请重新支付。')
+			}else if(msgCode == 200){
+				$('.tipsDet').html('您的'+cardName+'银行卡尾号（'+cardId+'）'+msg);
+			}else if(msgCode == 400){
+				$('.tipsDet').html('您的'+cardName+'银行卡尾号（'+cardId+'）'+'的还款服务费支付失败，请联系客服。');
+			}
+			
+		});
+		
+		$('.toNextBtn').on('click',function(){
+//			window.location.href = 'recordPage.html';
+		})
+	</script>
+	
+</html>

@@ -1,0 +1,68 @@
+body {
+	overflow: hidden;
+}
+
+.sel_box {
+	/*margin: 0 12px;*/
+	font-size: 18px;
+	line-height: 56px;
+	height: 56px;
+	z-index: 1000;
+	overflow: hidden;
+}
+
+.rili_box {
+	display: inline-block;
+	float: right;
+	width: 20px;
+}
+
+.rili_box img {
+	width: 100%;
+	height: 100%;
+}
+
+.sy_ul_box {
+	background-color: #FFFFFF;
+}
+
+.sy_li_box {
+	margin: 0 12px;
+	border-bottom: 1px solid #CECECE;
+	padding: 10px 0;
+}
+
+.sy_li_box:last-child {
+	border: none;
+}
+
+.sy_top_box {
+	font-size: 16px;
+	overflow: hidden;
+}
+
+.order_num {
+	padding: 0 10px 0 0;
+}
+
+.shouyi_num {
+	color: #F0922E;
+	display: inline-block;
+	float: right;
+}
+
+.sy_bottom_box {
+	color: #666666;
+	overflow: hidden;
+	line-height: 26px;
+}
+
+.r_box {
+	display: inline-block;
+	float: right;
+}
+
+.type_name1 {
+	padding: 0 10px 0 0;
+}
+			
